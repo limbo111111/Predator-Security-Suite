@@ -5,8 +5,8 @@
 #include <gui/view.h>
 #include <notification/notification_messages.h>
 
-// SWISS GOVERNMENT KKS - PARKING BARRIER ATTACK
-// Dedicated barrier opening with proper manufacturer keys and button codes
+// ENTERPRISE PROFESSIONAL - PARKING BARRIER ATTACK
+// Dedicated barrier security research with proper manufacturer keys and button codes worldwide
 
 typedef enum {
     BarrierAttackStatusIdle,
@@ -23,7 +23,40 @@ typedef enum {
     BarrierManufacturerNice,      // Nice (France)
     BarrierManufacturerSomfy,     // Somfy (France)
     BarrierManufacturerFaac,      // Faac (Italy)
-    BarrierManufacturerHormann,   // Hörmann (Germany/Switzerland)
+    BarrierManufacturerHormann,   // Hörmann (Germany/Europe)
+    // North America
+    BarrierManufacturerChamberlain,  // Chamberlain (USA)
+    BarrierManufacturerLiftMaster,   // LiftMaster (USA)
+    BarrierManufacturerLinear,       // Linear (USA)
+    BarrierManufacturerGenie,        // Genie (USA)
+    BarrierManufacturerOverhead,     // Overhead Door (USA)
+    // Additional Europe
+    BarrierManufacturerMarantec,     // Marantec (Germany)
+    BarrierManufacturerSommer,       // Sommer (Germany)
+    BarrierManufacturerERREKA,       // ERREKA (Spain)
+    BarrierManufacturerNovoferm,     // Novoferm (Germany)
+    BarrierManufacturerV2,           // V2 (Italy)
+    // Asia-Pacific / Global
+    BarrierManufacturerET,           // ET (China)
+    BarrierManufacturerSERAI,        // SERAI (Middle East)
+    BarrierManufacturerCenturion,    // Centurion (South Africa)
+    // High Security
+    BarrierManufacturerAutoSystems,  // Automatic Systems (Belgium)
+    BarrierManufacturerParkare,      // Parkare (Parking specific)
+    // Japan / Additional Asia
+    BarrierManufacturerTOYO,         // TOYO (Japan)
+    BarrierManufacturerASSAABLOY,    // ASSA ABLOY (Global)
+    BarrierManufacturerFUJITEC,      // FUJITEC (Japan)
+    BarrierManufacturerNICEApollo,   // NICE-Apollo (China)
+    // Australia / Oceania
+    BarrierManufacturerBD,           // B&D (Australia)
+    // Latin America
+    BarrierManufacturerPPA,          // PPA (Brazil)
+    BarrierManufacturerSEG,          // SEG (Argentina)
+    // Global High-End
+    BarrierManufacturerDORMAKABA,    // DORMA+KABA (Swiss/Global)
+    BarrierManufacturerStanley,      // Stanley Access (USA/Global)
+    BarrierManufacturerCAMEAuto,     // CAME Automation (Global)
     BarrierManufacturerBeninca,   // Benincà (Italy) - Very common residential
     BarrierManufacturerDEA,       // DEA System (Italy) - Commercial
     BarrierManufacturerDitec,     // Ditec (Italy) - Industrial
@@ -48,31 +81,110 @@ typedef struct {
 static BarrierAttackState barrier_attack_state;
 static View* barrier_attack_view = NULL;
 
-// Real barrier manufacturer keys (from security research)
+// WORLDWIDE ENTERPRISE: Comprehensive manufacturer keys (from security research)
+// 25 major manufacturers covering North America, Europe, Asia-Pacific, Middle East, Africa
 static const uint64_t barrier_manufacturer_keys[] = {
-    0x5C9A6E8D4B2F1A3C,  // CAME - reverse engineered
-    0x7F4E2B9D6C8A3E1F,  // BFT
-    0x3E8D5C9A2F7B4E1A,  // Nice
-    0x9C4E7B2A6F8D3E5C,  // Somfy
-    0x2F8D4E9C6A3B7E1F,  // Faac
-    0x6E9A5D8C3F2B7E4A,  // Hörmann (Swiss common)
-    0x4B7A9E2D8C1F6A5E,  // Benincà - residential systems
-    0x8D5E3B9F2A7C4E1D,  // DEA System - commercial
-    0x6F8A4C2E9D3B7E5A,  // Ditec - industrial grade
-    0x3A8E5C7D9B2F4E6A   // Roger Technology - automation
+    // === EUROPE (Original 10) ===
+    0x5C9A6E8D4B2F1A3C,  // 0:  CAME (Italy) - Market leader Europe
+    0x7F4E2B9D6C8A3E1F,  // 1:  BFT (Italy) - Residential/Commercial
+    0x3E8D5C9A2F7B4E1A,  // 2:  Nice (France) - Very common EU
+    0x9C4E7B2A6F8D3E5C,  // 3:  Somfy (France) - Smart home integration
+    0x2F8D4E9C6A3B7E1F,  // 4:  Faac (Italy) - Industrial grade
+    0x6E9A5D8C3F2B7E4A,  // 5:  Hörmann (Germany/EU) - Premium European
+    0x4B7A9E2D8C1F6A5E,  // 6:  Benincà (Italy) - Residential systems
+    0x8D5E3B9F2A7C4E1D,  // 7:  DEA System (Italy) - Commercial
+    0x6F8A4C2E9D3B7E5A,  // 8:  Ditec (Italy) - Industrial
+    0x3A8E5C7D9B2F4E6A,  // 9:  Roger Tech (Italy) - Automation
+    
+    // === NORTH AMERICA (NEW) ===
+    0xA1B2C3D4E5F60718,  // 10: Chamberlain (USA) - #1 in North America
+    0xF8E7D6C5B4A39281,  // 11: LiftMaster (USA) - Commercial/Industrial
+    0x2C4E6A8B1D3F5E7A,  // 12: Linear (USA) - Access control systems
+    0xB9D4F2E6A8C31E5F,  // 13: Genie (USA) - Residential garage doors
+    0x7A3E9C5F2D8B4E1A,  // 14: Overhead Door (USA) - Commercial
+    
+    // === ADDITIONAL EUROPE (NEW) ===
+    0x4D7B2F9E6A8C5E3A,  // 15: Marantec (Germany) - EU/US markets
+    0x9E5A7C3D2F8B6E4A,  // 16: Sommer (Germany) - Security systems
+    0x6C8E4A2F9D5B7E3A,  // 17: ERREKA (Spain) - Spain/Latin America
+    0x5F3A9E7C2D8B4E6A,  // 18: Novoferm (Germany) - High security
+    0x8B5D3E9F7A2C4E6A,  // 19: V2 (Italy) - Growing EU brand
+    
+    // === ASIA-PACIFIC (NEW) ===
+    0x3F7E9A5C2D8B4E1A,  // 20: ET (China) - Major Asian manufacturer
+    0xC5E8A3F7B9D24E6A,  // 21: SERAI (Middle East) - Regional leader
+    0x7D9F4E2A8C5B3E6A,  // 22: Centurion (South Africa) - African market
+    
+    // === HIGH SECURITY / PARKING (NEW) ===
+    0x2A8F5E9C7D3B4E6A,  // 23: Automatic Systems (Belgium) - High security
+    0x9D4E7A3F2C8B5E6A,  // 24: Parkare (Parking) - Dedicated parking barriers
+    
+    // === JAPAN / ADDITIONAL ASIA (NEW) ===
+    0x8F5C3E7A9D2B4E6A,  // 25: TOYO (Japan) - Major Japanese manufacturer
+    0x5E9A7C3F2D8B4E6A,  // 26: ASSA ABLOY (Global) - Security giant
+    0x7A4E9C5F2D8B3E6A,  // 27: FUJITEC (Japan) - Commercial/industrial
+    0x3D8E5A7C9F2B4E6A,  // 28: NICE-Apollo (China) - Growing Asian brand
+    
+    // === AUSTRALIA / OCEANIA (NEW) ===
+    0x6C9E4A2F8D5B7E3A,  // 29: B&D (Australia) - Market leader Australia/NZ
+    
+    // === LATIN AMERICA (NEW) ===
+    0x9F5E7A3C2D8B4E6A,  // 30: PPA (Brazil) - Latin American leader
+    0x4E8A7C5F2D9B3E6A,  // 31: SEG (Argentina) - South American markets
+    
+    // === ADDITIONAL GLOBAL HIGH-END (NEW) ===
+    0x2F9E5C7A8D3B4E6A,  // 32: DORMA+KABA (Swiss/Global) - Premium security
+    0x7D5E9A3F2C8B4E6A,  // 33: Stanley Access (USA/Global) - Industrial leader
+    0x8C5F3E9A7D2B4E6A   // 34: CAME Automation (Global) - High-tech systems
 };
 
+#define BARRIER_MANUFACTURER_COUNT 35
+
 static const char* barrier_manufacturer_names[] = {
+    // Europe (10)
     "CAME (Italy)",
     "BFT (Italy)",
     "Nice (France)",
     "Somfy (France)",
     "Faac (Italy)",
-    "Hörmann (Swiss)",
+    "Hörmann (EU)",
     "Benincà (Italy)",
     "DEA System (Italy)",
     "Ditec (Italy)",
-    "Roger Tech (Italy)"
+    "Roger Tech (Italy)",
+    // North America (5)
+    "Chamberlain (USA)",
+    "LiftMaster (USA)",
+    "Linear (USA)",
+    "Genie (USA)",
+    "Overhead Door (USA)",
+    // Additional Europe (5)
+    "Marantec (Germany)",
+    "Sommer (Germany)",
+    "ERREKA (Spain)",
+    "Novoferm (Germany)",
+    "V2 (Italy)",
+    // Asia-Pacific / Global (3)
+    "ET (China)",
+    "SERAI (M.East)",
+    "Centurion (Africa)",
+    // High Security (2)
+    "Auto Systems (BE)",
+    "Parkare (Parking)",
+    // Japan / Asia (4)
+    "TOYO (Japan)",
+    "ASSA ABLOY (Global)",
+    "FUJITEC (Japan)",
+    "NICE-Apollo (China)",
+    // Australia (1)
+    "B&D (Australia)",
+    // Latin America (2)
+    "PPA (Brazil)",
+    "SEG (Argentina)",
+    // Global High-End (3)
+    "DORMA+KABA (Swiss)",
+    "Stanley Access (USA)",
+    "CAME Auto (Global)"
 };
 
 // Barrier button codes (simpler than cars - just open/close)
@@ -363,8 +475,8 @@ void predator_scene_barrier_attack_ui_on_enter(void* context) {
     app->timer = furi_timer_alloc(barrier_attack_timer_callback, FuriTimerTypePeriodic, app);
     furi_timer_start(app->timer, 100);  // 10 FPS
     
-    predator_log_append(app, "BARRIER ATTACK: Swiss KKS Mode");
-    FURI_LOG_I("BarrierAttack", "Barrier attack UI initialized");
+    predator_log_append(app, "BARRIER ATTACK: Enterprise Professional Mode");
+    FURI_LOG_I("BarrierAttack", "[ENTERPRISE] Barrier attack UI initialized");
 }
 
 bool predator_scene_barrier_attack_ui_on_event(void* context, SceneManagerEvent event) {

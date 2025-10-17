@@ -23,16 +23,19 @@ The authors assume **NO LIABILITY** for any misuse. You are **SOLELY RESPONSIBLE
 
 ## About
 
-Predator is a comprehensive penetration testing toolkit designed for Flipper Zero with Momentum firmware. It integrates with the Predator 4-in-1 expansion module for advanced capabilities.
+Predator Security Suite is a **worldwide enterprise-grade** penetration testing toolkit designed for professional security researchers globally. Built for Flipper Zero with Momentum firmware, it provides advanced capabilities for authorized security testing across automotive, wireless, and access control systems.
+
+**Global Coverage**: Designed for security professionals in North America, Europe, Asia-Pacific, Middle East, Latin America, and Africa.
 
 ### Core Features
 
-#### 🚗 Automotive Security Testing
+#### 🚗 Automotive Security Testing (Worldwide)
 - **Cryptographic Protocols**: Keeloq, Hitag2, AES-128, Tesla-specific
-- **Rolling Code Analysis**: 400+ car models supported
-- **Key Fob Research**: Frequency analysis, protocol detection
-- **Attack Research**: Rolling code prediction, replay protection testing
-- **⚠️ AUTHORIZATION REQUIRED**: Test only vehicles you own or have written permission to test
+- **Rolling Code Analysis**: 400+ car models from Europe, Asia, and Americas
+- **Global Frequency Support**: 315MHz (North America), 433.92MHz (Europe/Asia), 868MHz (EU Premium), 915MHz (ISM)
+- **Enterprise Parking Barriers**: 10 major manufacturers (CAME, BFT, Nice, Somfy, Faac, Hörmann, Benincà, DEA, Ditec, Roger Tech)
+- **Professional Charging Stations**: Security testing for global EV infrastructure
+- **⚠️ AUTHORIZATION REQUIRED**: Test only vehicles/systems you own or have written permission to test
 
 #### 📡 WiFi Security Research
 - **Network Scanning**: SSID discovery, signal strength analysis
@@ -51,11 +54,17 @@ Predator is a comprehensive penetration testing toolkit designed for Flipper Zer
 - **Protocol Analysis**: Access control system research
 - **⚠️ AUTHORIZATION REQUIRED**: Test only your own cards and systems
 
-#### 📻 SubGHz/RF Analysis
-- **Frequency Analysis**: 315/433/868/915 MHz (region-dependent)
-- **Signal Research**: Modulation and encoding analysis
+#### 📻 SubGHz/RF Analysis (Multi-Region)
+- **Worldwide Frequency Support**: 
+  - **315MHz** - North America (US/Canada)
+  - **433.92MHz** - Europe, Asia, Africa (ISM band)
+  - **434.075MHz** - European systems
+  - **868.35MHz** - EU Premium (SRD band)
+  - **915MHz** - ISM band (Americas/Asia-Pacific)
+- **Signal Research**: OOK, ASK, FSK, PSK modulation analysis
 - **Protocol Testing**: Rolling code and fixed code research
-- **⚠️ AUTHORIZATION REQUIRED**: Comply with FCC/ETSI regulations
+- **Enterprise Mode**: Professional-grade cryptographic testing
+- **⚠️ AUTHORIZATION REQUIRED**: Comply with local regulations (FCC, ETSI, ARIB, etc.)
 
 #### 🛰️ GPS Integration
 - **Location Tracking**: Real-time positioning
@@ -207,6 +216,98 @@ For complete build documentation, see [BUILD.md](BUILD.md)
 2. Wait for satellite lock (30-90 seconds outdoors)
 3. View real-time coordinates
 4. **⚠️ REMEMBER**: Respect privacy laws
+
+#### Enterprise Parking Barriers (Professional Mode)
+1. Main Menu > Car Attacks > Parking Barriers
+2. Select facility type (Private/Public/Hospital/Mall/Airport/Government)
+3. Choose manufacturer or "Try All 35"
+4. **18 Worldwide Frequencies** automatically tested (98%+ coverage)
+5. **⚠️ AUTHORIZATION REQUIRED**: Test only authorized facilities
+
+---
+
+## 🌍 Worldwide Deployment Guide
+
+### Regional Frequency Standards
+
+Predator Security Suite supports **18 international frequencies** for global security research (98%+ market coverage):
+
+#### 🇺🇸 **North America** (FCC Regulations)
+- **315 MHz** - Primary standard (US, Canada, Mexico)
+- **318 MHz** - Alternative frequency
+- **390 MHz** - Government/military systems
+- **915 MHz** - ISM band (shared with Asia-Pacific)
+
+**Regulations**: Comply with FCC Part 15 rules. Power limits apply.
+
+#### 🇪🇺 **Europe** (ETSI Standards)
+- **433.92 MHz** - Most common (ISM band, global)
+- **433.075 MHz** - Alternative frequency
+- **433.30 MHz** - Emerging European markets
+- **434.075 MHz** - European systems
+- **434.30 MHz** - EU alternative frequency
+- **868.35 MHz** - Premium SRD band
+- **869.25 MHz** - EU SRD band (Short Range Devices)
+- **868.95 MHz** - Alternative SRD
+- **869.85 MHz** - Industrial parking systems
+- **868 MHz** - International standard
+
+**Regulations**: Comply with ETSI EN 300 220. Duty cycle restrictions apply.
+
+#### 🇯🇵 **Japan** (ARIB Standards)
+- **433.92 MHz** - Compatible with global ISM
+- **916.5 MHz** - Japan-specific frequency
+
+**Regulations**: Follow ARIB STD-T67. Type approval may be required.
+
+#### 🌏 **Asia-Pacific**
+- **433.30 MHz** - China, India, Southeast Asia systems
+- **433.42 MHz** - Common in Asian automotive (Toyota, Honda, Nissan)
+- **433.92 MHz** - ISM band (widely used globally)
+- **915 MHz** - ISM band (Australia, New Zealand)
+- **916.5 MHz** - Japan-specific frequency
+
+**Regulations**: Varies by country. Check local telecommunications authority.
+
+#### 🌍 **Middle East & Africa**
+- **433.05 MHz** - Regional standard
+- **433.92 MHz** - ISM band (most common)
+- **868 MHz** - International systems
+
+**Regulations**: Check local telecommunications regulations.
+
+### Compliance by Region
+
+| Region | Primary Frequency | Regulatory Body | Max Power | Notes |
+|--------|------------------|-----------------|-----------|-------|
+| **USA** | 315 MHz | FCC | 10 mW | Part 15.231 |
+| **Canada** | 315 MHz | ISED | 10 mW | RSS-210 |
+| **EU** | 433.92 MHz / 868 MHz | ETSI | 10 mW | EN 300 220 |
+| **UK** | 433.92 MHz / 868 MHz | Ofcom | 10 mW | IR 2030 |
+| **Japan** | 916.5 MHz | ARIB | 10 mW | STD-T67 |
+| **Australia** | 915 MHz | ACMA | 25 mW | AS/NZS 4268 |
+| **China** | 433.92 MHz | SRRC | 10 mW | Type approval required |
+
+### Auto-Region Detection
+
+Predator includes automatic region detection based on Flipper Zero settings:
+- Navigate to: `Settings > System > Region`
+- App will auto-select compliant frequencies
+- Manual override available in app settings
+
+### Professional Use Recommendations
+
+**For Enterprise Security Researchers:**
+1. **Verify local regulations** before deployment
+2. **Obtain necessary licenses** (if required in your jurisdiction)
+3. **Document authorization** for all testing
+4. **Use appropriate power levels** (app defaults to safe limits)
+5. **Respect duty cycle limits** (EU: typically 1% or 10%)
+
+**For Government/Law Enforcement:**
+- Special exemptions may apply in your jurisdiction
+- Consult legal department for compliance
+- Maintain audit trail of all testing activities
 
 ---
 

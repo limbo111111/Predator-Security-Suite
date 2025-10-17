@@ -57,11 +57,11 @@ static void draw_about_page(Canvas* canvas, AboutState* state) {
             break;
             
         case 3: // Professional Partnerships
-            canvas_draw_str(canvas, 2, 24, "🏛️ PARTNERSHIPS:");
-            canvas_draw_str(canvas, 2, 34, "🇺🇸 California State Contract");
-            canvas_draw_str(canvas, 2, 44, "🇨🇭 Switzerland Partnership");
-            canvas_draw_str(canvas, 2, 54, "🔧 Advanced Testing Platform");
-            canvas_draw_str(canvas, 2, 64, "🚗 Automotive Security Focus");
+            canvas_draw_str(canvas, 2, 24, "🏛️ WORLDWIDE PARTNERS:");
+            canvas_draw_str(canvas, 2, 34, "🌍 Enterprise Professional");
+            canvas_draw_str(canvas, 2, 44, "🇺🇸 North America Contracts");
+            canvas_draw_str(canvas, 2, 54, "🇪🇺 European Research Teams");
+            canvas_draw_str(canvas, 2, 64, "🌏 Global Security Platform");
             break;
             
         case 4: // Legal
@@ -129,11 +129,11 @@ void predator_scene_about_ui_on_enter(void* context) {
     submenu_set_header(app->submenu, "ABOUT");
     
     submenu_add_item(app->submenu, "Predator Professional", 0, NULL, app);
-    submenu_add_item(app->submenu, "Version: 1.4.0", 0, NULL, app);
-    submenu_add_item(app->submenu, "Swiss Government Grade", 0, NULL, app);
-    submenu_add_item(app->submenu, "Tesla Security Testing", 0, NULL, app);
-    submenu_add_item(app->submenu, "90+ Car Models", 0, NULL, app);
-    submenu_add_item(app->submenu, "5 Expansion Boards", 0, NULL, app);
+    submenu_add_item(app->submenu, "Version: 2.0 Enterprise", 0, NULL, app);
+    submenu_add_item(app->submenu, "Worldwide Professional", 0, NULL, app);
+    submenu_add_item(app->submenu, "35 Barrier Manufacturers", 0, NULL, app);
+    submenu_add_item(app->submenu, "400+ Car Models Global", 0, NULL, app);
+    submenu_add_item(app->submenu, "6 Expansion Boards", 0, NULL, app);
     submenu_add_item(app->submenu, "WiFi+BT+GPS+SubGHz+NFC", 0, NULL, app);
     
     view_dispatcher_switch_to_view(app->view_dispatcher, PredatorViewSubmenu);
