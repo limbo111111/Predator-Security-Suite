@@ -1,148 +1,433 @@
-# Predator App for Flipper Zero Momentum
+# Predator App for Flipper Zero
 
-A comprehensive penetration testing toolkit designed for Flipper Zero with the Predator module.
+## ⚠️ LEGAL DISCLAIMER - EDUCATIONAL USE ONLY ⚠️
 
-## Features
+**THIS SOFTWARE IS FOR AUTHORIZED SECURITY RESEARCH AND EDUCATIONAL PURPOSES ONLY**
 
-- **WiFi Attacks**: Scanning, deauthentication, evil twin access points
-- **Bluetooth Attacks**: BLE scanning, Bluetooth spam
-- **SubGHz/RF Attacks**: Signal analysis and replay
-- **Car Attacks**: Key bruteforce, jamming, Tesla-specific attacks, passive entry
-- **RFID/NFC Attacks**: Card cloning, bruteforce
-- **GPS Tracking**: Real-time location tracking
-- **Wardriving**: WiFi network mapping with GPS
-- **Social Engineering**: Captive portals, phishing tools
+**YOU MUST READ AND ACCEPT THE [LICENSE](../LICENSE) AND [ROOT README](../README.md) BEFORE USING THIS SOFTWARE.**
 
-## Hardware Requirements
+### Critical Warnings
 
-The Predator app is designed to work with the Predator 4-in-1 module which includes:
-- 433MHz RF module with A07 (10dBm)
-- ESP32S2 module with Marauder firmware
-- GPS module
-- 2.8-inch display with Marauder interface
+- ❌ **DO NOT** use this on property you don't own
+- ❌ **DO NOT** test systems without written authorization
+- ❌ **DO NOT** violate any local, state, or federal laws
+- ✅ **DO** use only on your own devices in controlled environments
+- ✅ **DO** obtain explicit written permission before any testing
+- ✅ **DO** comply with all applicable regulations
+
+**UNAUTHORIZED USE IS ILLEGAL AND MAY RESULT IN CRIMINAL PROSECUTION.**
+
+The authors assume **NO LIABILITY** for any misuse. You are **SOLELY RESPONSIBLE** for your actions.
+
+---
+
+## About
+
+Predator is a comprehensive penetration testing toolkit designed for Flipper Zero with Momentum firmware. It integrates with the Predator 4-in-1 expansion module for advanced capabilities.
+
+### Core Features
+
+#### 🚗 Automotive Security Testing
+- **Cryptographic Protocols**: Keeloq, Hitag2, AES-128, Tesla-specific
+- **Rolling Code Analysis**: 400+ car models supported
+- **Key Fob Research**: Frequency analysis, protocol detection
+- **Attack Research**: Rolling code prediction, replay protection testing
+- **⚠️ AUTHORIZATION REQUIRED**: Test only vehicles you own or have written permission to test
+
+#### 📡 WiFi Security Research
+- **Network Scanning**: SSID discovery, signal strength analysis
+- **Deauthentication Research**: Protocol testing in controlled environments
+- **Evil Twin Research**: Rogue AP security analysis
+- **PMKID Capture**: WPA2 security research
+- **⚠️ AUTHORIZATION REQUIRED**: Test only networks you own or administer
+
+#### 🔵 Bluetooth Security Testing
+- **BLE Scanning**: Device discovery and enumeration
+- **Advertisement Analysis**: Protocol research
+- **⚠️ AUTHORIZATION REQUIRED**: Test only devices you own
+
+#### 🎫 RFID/NFC Research
+- **Card Emulation**: EM4100, HID Prox research
+- **Protocol Analysis**: Access control system research
+- **⚠️ AUTHORIZATION REQUIRED**: Test only your own cards and systems
+
+#### 📻 SubGHz/RF Analysis
+- **Frequency Analysis**: 315/433/868/915 MHz (region-dependent)
+- **Signal Research**: Modulation and encoding analysis
+- **Protocol Testing**: Rolling code and fixed code research
+- **⚠️ AUTHORIZATION REQUIRED**: Comply with FCC/ETSI regulations
+
+#### 🛰️ GPS Integration
+- **Location Tracking**: Real-time positioning
+- **Wardriving Research**: Network mapping with GPS tagging
+- **⚠️ PRIVACY NOTICE**: Respect privacy laws when collecting location data
+
+### Hardware Requirements
+
+#### Required Hardware
+- **Flipper Zero** device with **Momentum firmware** installed
+- SD card (for data storage and app installation)
+
+#### Recommended Expansion Module
+**Predator 4-in-1 Module** includes:
+- **ESP32-S2** with Marauder firmware (WiFi/BLE attacks)
+- **GPS Module** with 20dBi antenna
+- **433MHz RF Module** (A07, 10dBm power)
+- **2.8-inch Display** (optional, on some models)
+
+#### Supported Expansion Boards
+1. **Original Predator** - Basic Flipper Zero (SubGHz only)
+2. **3in1-AIO** - Integrated ESP32 + GPS + RF
+3. **DrB0rk Multi v2** - Multi-protocol board
+4. **3-in-1 NRF24+CC1101+ESP32** - Full-featured board
+5. **2.8" Screen Model** - Display-equipped version
+
+### Pin Configuration
+
+**Predator 4-in-1 Module Pinout:**
+- **ESP32 UART**: Pins 15, 16 (PC0/PC1) @ 115200 baud
+- **GPS UART**: Pins 13, 14 (PB2/PB3) @ 9600 baud
+- **GPS Power Switch**: PA4 (front left switch - DOWN before connecting)
+- **Marauder Switch**: PA7 (front right)
+- **External RF**: A07 433MHz @ 10dBm
+
+**Configuration in Momentum Firmware:**
+1. Navigate to: `Momentum > Protocol Settings > GPIO Pin Settings > ESP32`
+2. Set ESP32 pins: 15, 16
+3. Navigate to: `Momentum > Protocol Settings > GPIO Pin Settings > GPS Pin Settings`
+4. Set GPS pins: 13, 14
+5. Enter SubGHz menu > Advanced Settings > Set module to **External**
+
+---
 
 ## Building the App
 
 ### Prerequisites
 
-- Python 3.6+
-- Git
-- ufbt (Flipper Build Tool)
+1. **Python 3.6+** - [Download](https://www.python.org/downloads/)
+2. **Git** - [Download](https://git-scm.com/downloads)
+3. **ufbt** (micro Flipper Build Tool)
 
-### Installation Steps
+### Installation
 
-1. **Install ufbt**
-   ```
-   pip install --upgrade ufbt
-   ```
+#### 1. Install ufbt
+```bash
+pip install --upgrade ufbt
+```
 
-2. **Clone the repository** (if you haven't already)
-   ```
-   git clone https://github.com/your-repo/predator.git
-   cd predator
-   ```
+#### 2. Navigate to Project
+```bash
+cd predator_app
+```
 
-3. **Build the app**
-   ```
-   cd predator_app
-   ufbt
-   ```
+#### 3. Build the App
+```bash
+ufbt
+```
 
-4. **Install to Flipper Zero**
-   ```
-   ufbt launch
-   ```
-   
-   Alternatively, copy the generated `.fap` file from `dist/` directory to your Flipper Zero's SD card at `/ext/apps/Tools/`.
+This will:
+- Download the Momentum firmware SDK
+- Compile the application
+- Generate `predator_professional.fap` in the `dist/` directory
 
-### Building for Momentum Firmware
+#### 4. Deploy to Flipper Zero
 
-The app has been configured to work specifically with Momentum firmware. There are two ways to install it:
+**Option A: Direct USB Deployment (Recommended)**
+```bash
+ufbt launch
+```
 
-#### Option 1: Direct FAP Installation
+**Option B: Manual Installation**
+1. Copy `dist/predator_professional.fap` to your Flipper Zero SD card
+2. Place in: `/ext/apps/Tools/`
+3. Launch from: `Apps > Tools > Predator Security Suite`
 
-1. Build with ufbt as described above
-2. Copy the `.fap` file to `/ext/apps/Tools/` on your Flipper Zero's SD card
-3. Run the app from Apps > Tools > Predator
+### Build Commands
 
-#### Option 2: Integration with Momentum Firmware
+```bash
+ufbt              # Build the application
+ufbt clean        # Clean build artifacts
+ufbt launch       # Build and deploy to device
+ufbt update       # Update SDK to latest version
+ufbt cli          # Open Flipper CLI for debugging
+```
 
-For tighter integration with Momentum:
+### Build Configuration
 
-1. Clone the Momentum firmware repository
-   ```
-   git clone https://github.com/Next-Flip/Momentum-Firmware.git
-   cd Momentum-Firmware
-   ```
+The app is configured in `application.fam`:
+- **App ID**: `predator_professional`
+- **Stack Size**: 3KB (memory optimized)
+- **Heap Size**: 6000 bytes
+- **API Target**: Momentum firmware dev branch
+- **Category**: Tools
 
-2. Copy the Predator app to the applications directory
-   ```
-   mkdir -p applications_user
-   cp -r /path/to/predator/predator_app applications_user/predator
-   ```
+For complete build documentation, see [BUILD.md](BUILD.md)
 
-3. Build the firmware with Predator integrated
-   ```
-   ./fbt COMPACT=1
-   ```
-
-4. Flash the firmware to your Flipper Zero
+---
 
 ## Using the App
 
 ### Initial Setup
 
-1. Connect your Predator module to the Flipper Zero
-2. Make sure the GPS switch (left side) is in the DOWN position before connecting
-3. Launch the Predator app from the Apps > Tools menu
+1. **Connect Hardware Module** (if using expansion board)
+   - Ensure GPS switch (left side) is in DOWN position before connecting
+   - Connect Predator module to Flipper Zero GPIO pins
 
-### Module Configuration
+2. **Launch Application**
+   - Navigate to: `Apps > Tools > Predator Security Suite`
+   - Allow board detection to complete (first launch)
 
-#### ESP32 Module
-- Navigate to Momentum > Protocol Settings > GPIO Pin Settings > ESP32
-- Set pins to 15, 16
+3. **Board Selection** (if needed)
+   - Main Menu > Settings > Board Selection
+   - Choose your expansion board type
+   - Configuration is saved automatically
 
-#### GPS Module
-- Navigate to Momentum > Protocol Settings > GPIO Pin Settings > GPS Pin Settings
-- Change GPS pins to 13, 14
+### Module Status Check
 
-#### RF Module
-- Enter Sub GHz menu
-- Click on Advanced Settings to set the module to external
+- Main Menu > Module Status
+- Verify ESP32, GPS, and RF module detection
+- Check signal strengths and connectivity
 
-### Basic Operation
+### Basic Operations
 
-- **WiFi Scanning**: Navigate to WiFi Attacks > WiFi Scan
-- **GPS Tracking**: Navigate to GPS Tracker
-- **Car Attacks**: Navigate to Car Attacks menu for various options
+#### WiFi Scanning (ESP32 Required)
+1. Main Menu > WiFi Attacks > WiFi Scan
+2. Wait for scan to complete
+3. View discovered networks with RSSI/channel info
+4. **⚠️ REMEMBER**: Only scan your own networks
+
+#### Car Security Research (SubGHz Required)
+1. Main Menu > Car Attacks > Select Continent
+2. Choose manufacturer and model
+3. Select protocol testing mode
+4. **⚠️ REMEMBER**: Test only your own vehicles
+
+#### GPS Tracking (GPS Module Required)
+1. Main Menu > GPS Tracker
+2. Wait for satellite lock (30-90 seconds outdoors)
+3. View real-time coordinates
+4. **⚠️ REMEMBER**: Respect privacy laws
+
+---
 
 ## Troubleshooting
 
-### Common Issues
+### Module Not Detected
+- **Check physical connections** - Ensure proper pin alignment
+- **Verify power switches** - GPS switch must be DOWN before connecting
+- **Confirm GPIO configuration** - Check Momentum settings for correct pins
+- **Try board reselection** - Settings > Board Selection
 
-1. **Module Not Detected**
-   - Check physical connections
-   - Verify power switch positions
-   - Ensure GPIO pins are configured correctly
+### GPS Not Acquiring Satellites
+- **Clear sky required** - GPS needs unobstructed view of sky
+- **Wait time** - Initial acquisition can take 30-90 seconds
+- **Check antenna** - Ensure GPS antenna is connected
+- **Indoor limitation** - GPS typically doesn't work indoors
 
-2. **GPS Not Acquiring Satellites**
-   - Make sure you have a clear view of the sky
-   - Wait 30-90 seconds for initial acquisition
-   - Check GPS debug screen for signal strength
+### ESP32 Not Responding
+- **Reboot Flipper** - Power cycle the device
+- **Check UART pins** - Verify pins 15,16 are configured
+- **Marauder firmware** - Ensure ESP32 has Marauder firmware installed
+- **Try different commands** - Test with simple status command first
 
-3. **ESP32 Commands Not Working**
-   - Try rebooting the Flipper Zero
-   - Verify UART connections
-   - Update Marauder firmware if needed
+### Memory Issues
+- **Close other apps** - Exit all running applications
+- **Restart device** - Full reboot clears memory
+- **Reduce features** - Some scenes disabled for memory optimization
 
-## License
+### Build Errors
+- **Update ufbt**: `pip install --upgrade ufbt`
+- **Update SDK**: `ufbt update`
+- **Clean build**: `ufbt clean && ufbt`
+- **Check firmware version** - Ensure Momentum dev branch
 
-This project is licensed under the MIT License - see the LICENSE file for details.
+---
+
+## Architecture Overview
+
+### Core Components
+
+- **Main Application** (`predator.c`, `predator_i.h`) - Entry point and state management
+- **Scene System** (`scenes/`) - UI navigation and user interactions
+- **Helper Modules** (`helpers/`) - Core functionality libraries
+- **UART Communication** (`predator_uart.c/h`) - ESP32 and GPS communication
+
+### Key Systems
+
+#### Hardware Detection
+- Multi-method board detection at startup
+- GPIO probing and validation
+- Automatic configuration per board type
+- Persistent storage of user selection
+
+#### Error Handling
+- Comprehensive error tracking system
+- Progressive recovery strategies
+- Watchdog monitoring (5-second timeout)
+- Safe mode with crash counter
+
+#### Cryptographic Engine
+- **Keeloq**: 528-round rolling code algorithm
+- **Hitag2**: LFSR-based cipher
+- **AES-128**: Smart key challenge-response
+- **CRC Validation**: CRC16, CRC8 checksums
+
+#### Compliance System
+- Regional frequency restrictions
+- Legal framework compliance
+- Authorization requirements
+- Feature gating based on region
+
+### Memory Optimization (v2.0)
+
+- **Stack**: 3KB (optimized from 4KB)
+- **Heap**: 6000 bytes with EMERGENCY_MODE
+- **Modular SubGHz**: 4 files @ 12-15KB each (was 52KB single file)
+- **Reduced buffers**: WiFi APs (16), BLE devices (8)
+- **Scene optimization**: Non-essential scenes disabled
+
+---
+
+## Development
+
+### Project Structure
+
+```
+predator_app/
+├── predator.c              # Main application entry
+├── predator_i.h            # Internal header with app structure
+├── predator_uart.c/h       # UART abstraction layer
+├── application.fam         # Build configuration
+├── BUILD.md                # Comprehensive build guide
+├── helpers/                # Core functionality
+│   ├── predator_boards.*   # Board detection/config
+│   ├── predator_crypto_engine.*  # Cryptographic protocols
+│   ├── predator_real_attack_engine.*  # Attack execution
+│   ├── predator_esp32.*    # ESP32 Marauder integration
+│   ├── predator_gps.*      # GPS NMEA parsing
+│   ├── predator_error.*    # Error handling
+│   ├── predator_watchdog.* # Crash protection
+│   ├── predator_compliance.* # Regional gating
+│   └── subghz/             # Modular SubGHz system
+├── scenes/                 # UI scenes (30+ files)
+│   ├── predator_scene.h    # Scene system
+│   ├── predator_scene_config.h  # Scene registration
+│   └── *.c                 # Individual scene implementations
+└── dist/                   # Build output (generated)
+```
+
+### Adding Features
+
+To add new features:
+
+1. **Study existing code** - Review similar scenes and helpers
+2. **Follow memory guidelines** - Keep allocations minimal
+3. **Add legal notices** - Include authorization warnings
+4. **Test thoroughly** - Verify on actual hardware
+5. **Document clearly** - Update README and BUILD.md
+
+### Contributing
+
+Contributions are welcome for:
+- Bug fixes and stability improvements
+- Memory optimization
+- Hardware compatibility
+- Documentation enhancements
+- **Legal use cases only**
+
+**All contributions must:**
+- Maintain legal disclaimers
+- Follow ethical guidelines
+- Not enable illegal activities
+- Include proper testing
+
+---
+
+## Legal & Ethical Guidelines
+
+### Responsible Use Principles
+
+1. **Authorization First** - Always obtain written permission
+2. **Scope Compliance** - Stay within authorized testing boundaries
+3. **Do No Harm** - Never cause damage or disruption
+4. **Responsible Disclosure** - Report vulnerabilities ethically
+5. **Privacy Respect** - Handle all data responsibly
+6. **Legal Compliance** - Follow all applicable laws
+
+### Professional Standards
+
+For professional security researchers:
+- Maintain professional liability insurance
+- Use written contracts for all engagements
+- Follow OWASP, PTES, or similar frameworks
+- Document all testing activities
+- Adhere to responsible disclosure timelines
+
+### Educational Standards
+
+For academic users:
+- Use only in controlled laboratory environments
+- Obtain institutional ethics board approval
+- Operate under qualified instructor supervision
+- Never test production or unauthorized systems
+- Focus on learning, not exploitation
+
+---
+
+## Resources
+
+### Documentation
+- [BUILD.md](BUILD.md) - Complete build and compilation guide
+- [LICENSE](../LICENSE) - Full legal terms and conditions
+- [Root README](../README.md) - Project overview and warnings
+
+### External Resources
+- [Flipper Zero Official Docs](https://docs.flipperzero.one/)
+- [Momentum Firmware](https://github.com/Next-Flip/Momentum-Firmware)
+- [ufbt Documentation](https://pypi.org/project/ufbt/)
+
+### Community
+- Security research should be conducted ethically
+- Share knowledge, not exploits
+- Help improve security for everyone
+- Report illegal use to authorities
+
+---
 
 ## Credits
 
-Developed by Anthrobic for Flipper Zero Momentum.
+**Developed by:** Nico Lococo - Elon's Startup  
+**For:** Authorized security researchers and educational institutions  
+**License:** Educational and Authorized Security Research License (EASRL)
 
-## Legal Notice
+Special thanks to:
+- Momentum firmware team
+- Flipper Zero community
+- Ethical security researchers worldwide
 
-This tool is provided for educational and testing purposes only. Users are responsible for ensuring all usage complies with local laws and regulations. The developers do not condone or support illegal activities.
+---
+
+## ⚠️ FINAL LEGAL NOTICE ⚠️
+
+**BY USING THIS SOFTWARE, YOU AGREE:**
+
+1. ✅ You will use it ONLY for authorized, legal purposes
+2. ✅ You have read and understood all warnings and disclaimers
+3. ✅ You accept FULL RESPONSIBILITY for your actions
+4. ✅ You will comply with ALL applicable laws and regulations
+5. ✅ You release the authors from ANY and ALL liability
+
+**IF YOU DO NOT AGREE, DO NOT USE THIS SOFTWARE.**
+
+**REMEMBER:**
+- This is a **RESEARCH TOOL**, not a weapon
+- Your actions have **LEGAL CONSEQUENCES**
+- **Unauthorized use** is a **CRIME**
+- The security community depends on **ETHICAL BEHAVIOR**
+
+**Use responsibly. Test legally. Research ethically.**
+
+---
+
+*Predator Security Suite v2.0 - Professional Edition*  
+*For Authorized Security Research Only*
