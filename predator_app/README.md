@@ -217,6 +217,93 @@ For complete build documentation, see [BUILD.md](BUILD.md)
 3. View real-time coordinates
 4. **⚠️ REMEMBER**: Respect privacy laws
 
+#### Enterprise Parking Barriers (Professional Mode)
+1. Main Menu > Car Attacks > Parking Barriers
+2. Select facility type (Private/Public/Hospital/Mall/Airport/Government)
+3. Choose manufacturer or "Try All 10"
+4. **15 Worldwide Frequencies** automatically tested
+5. **⚠️ AUTHORIZATION REQUIRED**: Test only authorized facilities
+
+---
+
+## 🌍 Worldwide Deployment Guide
+
+### Regional Frequency Standards
+
+Predator Security Suite supports **15 international frequencies** for global security research:
+
+#### 🇺🇸 **North America** (FCC Regulations)
+- **315 MHz** - Primary standard (US, Canada, Mexico)
+- **318 MHz** - Alternative frequency
+- **390 MHz** - Government/military systems
+- **915 MHz** - ISM band (shared with Asia-Pacific)
+
+**Regulations**: Comply with FCC Part 15 rules. Power limits apply.
+
+#### 🇪🇺 **Europe** (ETSI Standards)
+- **433.92 MHz** - Most common (ISM band, global)
+- **433.075 MHz** - Alternative frequency
+- **434.075 MHz** - European systems
+- **868.35 MHz** - Premium SRD band
+- **868.95 MHz** - Alternative SRD
+- **869.85 MHz** - Industrial parking systems
+- **868 MHz** - International standard
+
+**Regulations**: Comply with ETSI EN 300 220. Duty cycle restrictions apply.
+
+#### 🇯🇵 **Japan** (ARIB Standards)
+- **433.92 MHz** - Compatible with global ISM
+- **916.5 MHz** - Japan-specific frequency
+
+**Regulations**: Follow ARIB STD-T67. Type approval may be required.
+
+#### 🌏 **Asia-Pacific**
+- **433.42 MHz** - Common in Asian systems (Toyota, Honda, Nissan)
+- **433.92 MHz** - ISM band (widely used)
+- **915 MHz** - ISM band (Australia, New Zealand)
+
+**Regulations**: Varies by country. Check local telecommunications authority.
+
+#### 🌍 **Middle East & Africa**
+- **433.05 MHz** - Regional standard
+- **433.92 MHz** - ISM band (most common)
+- **868 MHz** - International systems
+
+**Regulations**: Check local telecommunications regulations.
+
+### Compliance by Region
+
+| Region | Primary Frequency | Regulatory Body | Max Power | Notes |
+|--------|------------------|-----------------|-----------|-------|
+| **USA** | 315 MHz | FCC | 10 mW | Part 15.231 |
+| **Canada** | 315 MHz | ISED | 10 mW | RSS-210 |
+| **EU** | 433.92 MHz / 868 MHz | ETSI | 10 mW | EN 300 220 |
+| **UK** | 433.92 MHz / 868 MHz | Ofcom | 10 mW | IR 2030 |
+| **Japan** | 916.5 MHz | ARIB | 10 mW | STD-T67 |
+| **Australia** | 915 MHz | ACMA | 25 mW | AS/NZS 4268 |
+| **China** | 433.92 MHz | SRRC | 10 mW | Type approval required |
+
+### Auto-Region Detection
+
+Predator includes automatic region detection based on Flipper Zero settings:
+- Navigate to: `Settings > System > Region`
+- App will auto-select compliant frequencies
+- Manual override available in app settings
+
+### Professional Use Recommendations
+
+**For Enterprise Security Researchers:**
+1. **Verify local regulations** before deployment
+2. **Obtain necessary licenses** (if required in your jurisdiction)
+3. **Document authorization** for all testing
+4. **Use appropriate power levels** (app defaults to safe limits)
+5. **Respect duty cycle limits** (EU: typically 1% or 10%)
+
+**For Government/Law Enforcement:**
+- Special exemptions may apply in your jurisdiction
+- Consult legal department for compliance
+- Maintain audit trail of all testing activities
+
 ---
 
 ## Troubleshooting

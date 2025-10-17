@@ -17,20 +17,61 @@ void predator_scene_barrier_manufacturer_select_ui_on_enter(void* context) {
     submenu_reset(app->submenu);
     submenu_set_header(app->submenu, "SELECT MANUFACTURER");
     
-    // Option 1: Try all manufacturers automatically (now tries all 10!)
-    submenu_add_item(app->submenu, "🔄 Try All 10 (Auto)", 0, manufacturer_select_submenu_cb, app);
+    // Option 0: Try ALL 35 manufacturers automatically
+    submenu_add_item(app->submenu, "⚡ Try All 35 (Auto)", 0, manufacturer_select_submenu_cb, app);
     
-    // Option 2-11: Individual manufacturers (10 total)
-    submenu_add_item(app->submenu, "🏭 CAME (Italy)", 1, manufacturer_select_submenu_cb, app);
-    submenu_add_item(app->submenu, "🏭 BFT (Italy)", 2, manufacturer_select_submenu_cb, app);
-    submenu_add_item(app->submenu, "🏭 Nice (France)", 3, manufacturer_select_submenu_cb, app);
-    submenu_add_item(app->submenu, "🏭 Somfy (France)", 4, manufacturer_select_submenu_cb, app);
-    submenu_add_item(app->submenu, "🏭 Faac (Italy)", 5, manufacturer_select_submenu_cb, app);
-    submenu_add_item(app->submenu, "🏭 Hörmann (EU)", 6, manufacturer_select_submenu_cb, app);
-    submenu_add_item(app->submenu, "🏭 Benincà (Italy)", 7, manufacturer_select_submenu_cb, app);
-    submenu_add_item(app->submenu, "🏭 DEA System (Italy)", 8, manufacturer_select_submenu_cb, app);
-    submenu_add_item(app->submenu, "🏭 Ditec (Italy)", 9, manufacturer_select_submenu_cb, app);
-    submenu_add_item(app->submenu, "🏭 Roger Tech (Italy)", 10, manufacturer_select_submenu_cb, app);
+    // === EUROPE (10 manufacturers) ===
+    submenu_add_item(app->submenu, "🇪🇺 CAME (Italy)", 1, manufacturer_select_submenu_cb, app);
+    submenu_add_item(app->submenu, "🇪🇺 BFT (Italy)", 2, manufacturer_select_submenu_cb, app);
+    submenu_add_item(app->submenu, "🇪🇺 Nice (France)", 3, manufacturer_select_submenu_cb, app);
+    submenu_add_item(app->submenu, "🇪🇺 Somfy (France)", 4, manufacturer_select_submenu_cb, app);
+    submenu_add_item(app->submenu, "🇪🇺 Faac (Italy)", 5, manufacturer_select_submenu_cb, app);
+    submenu_add_item(app->submenu, "🇪🇺 Hörmann (EU)", 6, manufacturer_select_submenu_cb, app);
+    submenu_add_item(app->submenu, "🇪🇺 Benincà (Italy)", 7, manufacturer_select_submenu_cb, app);
+    submenu_add_item(app->submenu, "🇪🇺 DEA System (Italy)", 8, manufacturer_select_submenu_cb, app);
+    submenu_add_item(app->submenu, "🇪🇺 Ditec (Italy)", 9, manufacturer_select_submenu_cb, app);
+    submenu_add_item(app->submenu, "🇪🇺 Roger Tech (Italy)", 10, manufacturer_select_submenu_cb, app);
+    
+    // === NORTH AMERICA (5 manufacturers) ===
+    submenu_add_item(app->submenu, "🇺🇸 Chamberlain (USA)", 11, manufacturer_select_submenu_cb, app);
+    submenu_add_item(app->submenu, "🇺🇸 LiftMaster (USA)", 12, manufacturer_select_submenu_cb, app);
+    submenu_add_item(app->submenu, "🇺🇸 Linear (USA)", 13, manufacturer_select_submenu_cb, app);
+    submenu_add_item(app->submenu, "🇺🇸 Genie (USA)", 14, manufacturer_select_submenu_cb, app);
+    submenu_add_item(app->submenu, "🇺🇸 Overhead Door (USA)", 15, manufacturer_select_submenu_cb, app);
+    
+    // === ADDITIONAL EUROPE (5 manufacturers) ===
+    submenu_add_item(app->submenu, "🇩🇪 Marantec (Germany)", 16, manufacturer_select_submenu_cb, app);
+    submenu_add_item(app->submenu, "🇩🇪 Sommer (Germany)", 17, manufacturer_select_submenu_cb, app);
+    submenu_add_item(app->submenu, "🇪🇸 ERREKA (Spain)", 18, manufacturer_select_submenu_cb, app);
+    submenu_add_item(app->submenu, "🇩🇪 Novoferm (Germany)", 19, manufacturer_select_submenu_cb, app);
+    submenu_add_item(app->submenu, "🇮🇹 V2 (Italy)", 20, manufacturer_select_submenu_cb, app);
+    
+    // === ASIA-PACIFIC / GLOBAL (3 manufacturers) ===
+    submenu_add_item(app->submenu, "🇨🇳 ET (China)", 21, manufacturer_select_submenu_cb, app);
+    submenu_add_item(app->submenu, "🌍 SERAI (M.East)", 22, manufacturer_select_submenu_cb, app);
+    submenu_add_item(app->submenu, "🇿🇦 Centurion (Africa)", 23, manufacturer_select_submenu_cb, app);
+    
+    // === HIGH SECURITY / PARKING (2 manufacturers) ===
+    submenu_add_item(app->submenu, "🔒 Auto Systems (BE)", 24, manufacturer_select_submenu_cb, app);
+    submenu_add_item(app->submenu, "🏛️ Parkare (Parking)", 25, manufacturer_select_submenu_cb, app);
+    
+    // === JAPAN / ADDITIONAL ASIA (4 manufacturers) ===
+    submenu_add_item(app->submenu, "🇯🇵 TOYO (Japan)", 26, manufacturer_select_submenu_cb, app);
+    submenu_add_item(app->submenu, "🌍 ASSA ABLOY (Global)", 27, manufacturer_select_submenu_cb, app);
+    submenu_add_item(app->submenu, "🇯🇵 FUJITEC (Japan)", 28, manufacturer_select_submenu_cb, app);
+    submenu_add_item(app->submenu, "🇨🇳 NICE-Apollo (China)", 29, manufacturer_select_submenu_cb, app);
+    
+    // === AUSTRALIA / OCEANIA (1 manufacturer) ===
+    submenu_add_item(app->submenu, "🇦🇺 B&D (Australia)", 30, manufacturer_select_submenu_cb, app);
+    
+    // === LATIN AMERICA (2 manufacturers) ===
+    submenu_add_item(app->submenu, "🇧🇷 PPA (Brazil)", 31, manufacturer_select_submenu_cb, app);
+    submenu_add_item(app->submenu, "🇦🇷 SEG (Argentina)", 32, manufacturer_select_submenu_cb, app);
+    
+    // === GLOBAL HIGH-END (3 manufacturers) ===
+    submenu_add_item(app->submenu, "🇨🇭 DORMA+KABA (Swiss)", 33, manufacturer_select_submenu_cb, app);
+    submenu_add_item(app->submenu, "🌟 Stanley Access (USA)", 34, manufacturer_select_submenu_cb, app);
+    submenu_add_item(app->submenu, "🌐 CAME Auto (Global)", 35, manufacturer_select_submenu_cb, app);
     
     submenu_set_selected_item(app->submenu, 0);
     view_dispatcher_switch_to_view(app->view_dispatcher, PredatorViewSubmenu);
@@ -51,20 +92,39 @@ bool predator_scene_barrier_manufacturer_select_ui_on_event(void* context, Scene
     
     // Handle manufacturer selection
     if(event.type == SceneManagerEventTypeCustom) {
-        if(event.event <= 10) {
+        if(event.event <= 35) {
             // Store manufacturer selection
             if(event.event == 0) {
-                // Try all manufacturers (now 10 total!)
+                // Try all manufacturers (now 35 total!)
                 app->selected_barrier_manufacturer = 0xFF;  // Special value for "try all"
-                predator_log_append(app, "MODE: Try All 10 Manufacturers");
+                predator_log_append(app, "MODE: Try All 35 Manufacturers Worldwide");
             } else {
-                // Specific manufacturer (1-10 maps to BarrierManufacturer enum 0-9)
+                // Specific manufacturer (1-35 maps to BarrierManufacturer enum 0-34)
                 app->selected_barrier_manufacturer = event.event - 1;
                 
                 const char* manufacturer_names[] = {
+                    // Europe (10)
                     "CAME (Italy)", "BFT (Italy)", "Nice (France)",
                     "Somfy (France)", "Faac (Italy)", "Hörmann (EU)",
-                    "Benincà (Italy)", "DEA System (Italy)", "Ditec (Italy)", "Roger Tech (Italy)"
+                    "Benincà (Italy)", "DEA System (Italy)", "Ditec (Italy)", "Roger Tech (Italy)",
+                    // North America (5)
+                    "Chamberlain (USA)", "LiftMaster (USA)", "Linear (USA)",
+                    "Genie (USA)", "Overhead Door (USA)",
+                    // Additional Europe (5)
+                    "Marantec (Germany)", "Sommer (Germany)", "ERREKA (Spain)",
+                    "Novoferm (Germany)", "V2 (Italy)",
+                    // Asia-Pacific / Global (3)
+                    "ET (China)", "SERAI (M.East)", "Centurion (Africa)",
+                    // High Security (2)
+                    "Auto Systems (BE)", "Parkare (Parking)",
+                    // Japan / Asia (4)
+                    "TOYO (Japan)", "ASSA ABLOY (Global)", "FUJITEC (Japan)", "NICE-Apollo (China)",
+                    // Australia (1)
+                    "B&D (Australia)",
+                    // Latin America (2)
+                    "PPA (Brazil)", "SEG (Argentina)",
+                    // Global High-End (3)
+                    "DORMA+KABA (Swiss)", "Stanley Access (USA)", "CAME Auto (Global)"
                 };
                 
                 char log_msg[64];
