@@ -134,12 +134,12 @@ bool predator_subghz_start_parking_attack(PredatorApp* app, uint32_t frequency, 
             FURI_LOG_I("PredatorSubGHz", "Somfy barrier protocol");
             break;
             
-        case 5: // KKS (Switzerland - Government contract)
-            packet[0] = 0x4B;
-            packet[1] = 0x4B;
-            packet[2] = 0x53;
+        case 5: // Enterprise Professional (Worldwide)
+            packet[0] = 0x45;
+            packet[1] = 0x4E;
+            packet[2] = 0x54;
             packet[3] = 0xAA;
-            FURI_LOG_I("PredatorSubGHz", "KKS barrier protocol (Swiss Government)");
+            FURI_LOG_I("PredatorSubGHz", "Enterprise Professional protocol (Worldwide)");
             break;
             
         default:

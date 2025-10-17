@@ -80,7 +80,7 @@ typedef enum {
     BarrierTypeCAME,            ///< CAME (Italy/International)
     BarrierTypeNice,            ///< Nice (France/International)
     BarrierTypeSomfy,           ///< Somfy (France)
-    BarrierTypeKKS,             ///< KKS (Switzerland - Gov contract)
+    BarrierTypeEnterprise,      ///< Enterprise Professional (Worldwide)
     BarrierTypeGeneric,         ///< Generic barrier
     BarrierTypeCount
 } BarrierType;
@@ -179,7 +179,7 @@ static inline const char* car_barrier_name(BarrierType barrier) {
         case BarrierTypeCAME: return "CAME";
         case BarrierTypeNice: return "Nice";
         case BarrierTypeSomfy: return "Somfy";
-        case BarrierTypeKKS: return "KKS (Swiss Gov)";
+        case BarrierTypeEnterprise: return "Enterprise Pro";
         case BarrierTypeGeneric: return "Generic";
         default: return "Unknown";
     }

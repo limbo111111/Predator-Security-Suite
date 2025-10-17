@@ -475,8 +475,8 @@ void predator_scene_barrier_attack_ui_on_enter(void* context) {
     app->timer = furi_timer_alloc(barrier_attack_timer_callback, FuriTimerTypePeriodic, app);
     furi_timer_start(app->timer, 100);  // 10 FPS
     
-    predator_log_append(app, "BARRIER ATTACK: Swiss KKS Mode");
-    FURI_LOG_I("BarrierAttack", "Barrier attack UI initialized");
+    predator_log_append(app, "BARRIER ATTACK: Enterprise Professional Mode");
+    FURI_LOG_I("BarrierAttack", "[ENTERPRISE] Barrier attack UI initialized");
 }
 
 bool predator_scene_barrier_attack_ui_on_event(void* context, SceneManagerEvent event) {
