@@ -559,9 +559,17 @@ void predator_scene_parking_barriers_ui_on_enter(void* context) {
         FURI_LOG_I("ParkingBarriers", "Enterprise Professional - barrier type selection");
     }
     
-    // Log Enterprise Professional activation
-    predator_log_append(app, "PARKING BARRIERS: Enterprise Professional");
-    predator_log_append(app, "Enterprise Mode: 15 Worldwide Frequencies");
+    // Log Enterprise Professional activation with region info
+    const char* region_names[] = {
+        "Worldwide (All 35)", "Europe", "North America", "Japan/Asia", 
+        "Australia", "Latin America", "M.East/Africa", "High Security"
+    };
+    
+    char log_msg[64];
+    snprintf(log_msg, sizeof(log_msg), "BARRIERS: %s", 
+             app->selected_barrier_region < 8 ? region_names[app->selected_barrier_region] : "Unknown");
+    predator_log_append(app, log_msg);
+    predator_log_append(app, "SELECT FACILITY TYPE");
 }
 
 bool predator_scene_parking_barriers_ui_on_event(void* context, SceneManagerEvent event) {

@@ -188,9 +188,10 @@ typedef struct PredatorApp {
     char selected_model_make[16];
     char selected_model_name[40];
     
-    // Barrier attack selection
+    // Barrier attack selection (ENTERPRISE: Region → Facility → Auto-Attack)
+    uint8_t selected_barrier_region;        // 0-7: Region selection (Worldwide, EU, NA, Asia, etc.)
     uint8_t selected_barrier_type;          // 1-6: Public, Private, Hospital, Mall, Airport, Government
-    uint8_t selected_barrier_manufacturer;  // 0-5: Manufacturer, 0xFF: Try all
+    uint8_t selected_barrier_manufacturer;  // 0-34: Manufacturer, 0xFF: Try all
 } PredatorApp;
 
 

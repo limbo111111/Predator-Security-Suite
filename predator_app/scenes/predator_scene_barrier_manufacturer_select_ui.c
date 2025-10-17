@@ -2,18 +2,53 @@
 #include "../helpers/predator_logging.h"
 
 // ENTERPRISE PROFESSIONAL - BARRIER MANUFACTURER SELECTION
-// Allows user to try all manufacturers or select a specific one worldwide
+// NEW FLOW: Auto-navigates based on region, no manual selection needed
 
+// OLD: Manual selection callback (unused in new streamlined flow)
+/*
 static void manufacturer_select_submenu_cb(void* context, uint32_t index) {
     PredatorApp* app = context;
     if(!app || !app->view_dispatcher) return;
     view_dispatcher_send_custom_event(app->view_dispatcher, index);
 }
+*/
 
 void predator_scene_barrier_manufacturer_select_ui_on_enter(void* context) {
     PredatorApp* app = context;
-    if(!app || !app->submenu) return;
+    if(!app) return;
     
+    // SMART FLOW: Auto-select manufacturers based on region and skip directly to attack
+    // Region 0 = Worldwide (try all 35), Regions 1-7 = specific regions
+    
+    if(app->selected_barrier_region == 0) {
+        // Worldwide - try all 35 manufacturers
+        app->selected_barrier_manufacturer = 0xFF;
+        predator_log_append(app, "AUTO: Trying All 35 Manufacturers Worldwide");
+        scene_manager_next_scene(app->scene_manager, PredatorSceneBarrierAttackUI);
+        return;
+    }
+    
+    // Region-specific auto-selection
+    // For now, auto-try all manufacturers in the selected region
+    app->selected_barrier_manufacturer = 0xFF;  // Will be filtered by region in attack scene
+    
+    const char* region_names[] = {
+        "Worldwide", "Europe (15)", "N.America (5)", "Japan/Asia (5)",
+        "Australia (1)", "LatinAm (2)", "MEA (2)", "HighSec (5)"
+    };
+    
+    char log_msg[64];
+    snprintf(log_msg, sizeof(log_msg), "AUTO: Trying %s manufacturers",
+             app->selected_barrier_region < 8 ? region_names[app->selected_barrier_region] : "Unknown");
+    predator_log_append(app, log_msg);
+    
+    // Skip manufacturer selection - go directly to attack
+    scene_manager_next_scene(app->scene_manager, PredatorSceneBarrierAttackUI);
+    return;
+    
+    // OLD CODE: Manual manufacturer selection (commented out for streamlined flow)
+    /*
+    if(!app->submenu) return;
     submenu_reset(app->submenu);
     submenu_set_header(app->submenu, "SELECT MANUFACTURER");
     
@@ -137,13 +172,21 @@ bool predator_scene_barrier_manufacturer_select_ui_on_event(void* context, Scene
             scene_manager_next_scene(app->scene_manager, PredatorSceneBarrierAttackUI);
             return true;
         }
+        return true;
     }
     
+    return false;
+    */
+}
+
+// Event handler - not needed since scene auto-navigates
+bool predator_scene_barrier_manufacturer_select_ui_on_event(void* context, SceneManagerEvent event) {
+    (void)context;
+    (void)event;
     return false;
 }
 
 void predator_scene_barrier_manufacturer_select_ui_on_exit(void* context) {
-    PredatorApp* app = context;
-    if(!app) return;
-    // Nothing to cleanup: using shared submenu (match CarModelsUI pattern)
+    (void)context;
+    // Nothing to cleanup
 }
