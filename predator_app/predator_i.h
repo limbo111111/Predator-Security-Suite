@@ -158,10 +158,10 @@ typedef struct PredatorApp {
     // SubGHz data
     void* subghz_txrx;
     
-    // VIP mode for unlocking all Tesla stations in Switzerland
+    // Professional VIP mode for advanced testing capabilities worldwide
     bool vip_mode;
-    // Mode for testing security of other electric car stations in Switzerland
-    bool swiss_station_test;
+    // Enterprise mode for testing charging station security globally
+    bool enterprise_station_test;
 
     // WiFi scan results (simple ring buffer for UI) - Memory optimized
     #define PREDATOR_WIFI_MAX_APS 16  // Reduced from 32 to optimize memory

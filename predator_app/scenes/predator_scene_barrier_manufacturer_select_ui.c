@@ -1,8 +1,8 @@
 #include "../predator_i.h"
 #include "../helpers/predator_logging.h"
 
-// SWISS GOVERNMENT KKS - BARRIER MANUFACTURER SELECTION
-// Allows user to try all manufacturers or select a specific one
+// ENTERPRISE PROFESSIONAL - BARRIER MANUFACTURER SELECTION
+// Allows user to try all manufacturers or select a specific one worldwide
 
 static void manufacturer_select_submenu_cb(void* context, uint32_t index) {
     PredatorApp* app = context;
@@ -26,7 +26,7 @@ void predator_scene_barrier_manufacturer_select_ui_on_enter(void* context) {
     submenu_add_item(app->submenu, "🏭 Nice (France)", 3, manufacturer_select_submenu_cb, app);
     submenu_add_item(app->submenu, "🏭 Somfy (France)", 4, manufacturer_select_submenu_cb, app);
     submenu_add_item(app->submenu, "🏭 Faac (Italy)", 5, manufacturer_select_submenu_cb, app);
-    submenu_add_item(app->submenu, "🏭 Hörmann (Swiss)", 6, manufacturer_select_submenu_cb, app);
+    submenu_add_item(app->submenu, "🏭 Hörmann (EU)", 6, manufacturer_select_submenu_cb, app);
     submenu_add_item(app->submenu, "🏭 Benincà (Italy)", 7, manufacturer_select_submenu_cb, app);
     submenu_add_item(app->submenu, "🏭 DEA System (Italy)", 8, manufacturer_select_submenu_cb, app);
     submenu_add_item(app->submenu, "🏭 Ditec (Italy)", 9, manufacturer_select_submenu_cb, app);
@@ -63,7 +63,7 @@ bool predator_scene_barrier_manufacturer_select_ui_on_event(void* context, Scene
                 
                 const char* manufacturer_names[] = {
                     "CAME (Italy)", "BFT (Italy)", "Nice (France)",
-                    "Somfy (France)", "Faac (Italy)", "Hörmann (Swiss)",
+                    "Somfy (France)", "Faac (Italy)", "Hörmann (EU)",
                     "Benincà (Italy)", "DEA System (Italy)", "Ditec (Italy)", "Roger Tech (Italy)"
                 };
                 

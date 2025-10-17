@@ -5,8 +5,8 @@
 #include <gui/view.h>
 #include <notification/notification_messages.h>
 
-// SWISS GOVERNMENT KKS - PARKING BARRIER ATTACK
-// Dedicated barrier opening with proper manufacturer keys and button codes
+// ENTERPRISE PROFESSIONAL - PARKING BARRIER ATTACK
+// Dedicated barrier security research with proper manufacturer keys and button codes worldwide
 
 typedef enum {
     BarrierAttackStatusIdle,
@@ -23,7 +23,7 @@ typedef enum {
     BarrierManufacturerNice,      // Nice (France)
     BarrierManufacturerSomfy,     // Somfy (France)
     BarrierManufacturerFaac,      // Faac (Italy)
-    BarrierManufacturerHormann,   // Hörmann (Germany/Switzerland)
+    BarrierManufacturerHormann,   // Hörmann (Germany/Europe)
     BarrierManufacturerBeninca,   // Benincà (Italy) - Very common residential
     BarrierManufacturerDEA,       // DEA System (Italy) - Commercial
     BarrierManufacturerDitec,     // Ditec (Italy) - Industrial

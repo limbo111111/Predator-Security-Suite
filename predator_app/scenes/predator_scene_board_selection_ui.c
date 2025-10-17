@@ -7,8 +7,8 @@
 #include <gui/view.h>
 #include <notification/notification_messages.h>
 
-// ULTIMATE BOARD SELECTION - SWISS GOVERNMENT GRADE
-// The BEST Flipper Zero board selection experience ever created
+// ULTIMATE BOARD SELECTION - ENTERPRISE PROFESSIONAL GRADE
+// The BEST Flipper Zero board selection experience for worldwide security research
 
 typedef enum {
     BoardScreenMain,
@@ -144,7 +144,7 @@ static void draw_success_screen(Canvas* canvas) {
     uint8_t anim = (board_state.animation_tick / 5) % 4;
     const char* success_icons[] = {"✓", "✓✓", "✓✓✓", "✓✓✓✓"};
     canvas_draw_str(canvas, 2, 45, success_icons[anim]);
-    canvas_draw_str(canvas, 20, 45, "Ready for Swiss Demo!");
+    canvas_draw_str(canvas, 20, 45, "Ready for Research!");
     
     canvas_draw_str(canvas, 2, 58, "Any key=Back  Back=Main Menu");
 }

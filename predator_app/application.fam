@@ -52,9 +52,9 @@ App(
         "scenes/predator_scene_car_models_ui.c",           # Simple model picker (WORKING)
         "scenes/predator_scene_car_model_attacks_ui.c",    # Attacks for selected model (WORKING)
         "scenes/predator_scene_protocol_test_ui.c",        # Protocol testing (Keeloq/Hitag2/AES)
-        "scenes/predator_scene_parking_barriers_ui.c",  # SWISS GOVERNMENT KKS - RE-ADDED: Testing stability
-        "scenes/predator_scene_barrier_manufacturer_select_ui.c",  # SWISS KKS: Choose manufacturer or try all
-        "scenes/predator_scene_barrier_attack_ui.c",   # SWISS KKS: Dedicated barrier opening attack
+        "scenes/predator_scene_parking_barriers_ui.c",  # ENTERPRISE: Professional parking barrier testing
+        "scenes/predator_scene_barrier_manufacturer_select_ui.c",  # ENTERPRISE: Choose manufacturer or try all
+        "scenes/predator_scene_barrier_attack_ui.c",   # ENTERPRISE: Dedicated barrier security research
         # "scenes/predator_scene_walking_open_ui.c",    # REMOVED: Konami code easter egg replaces this
         "scenes/predator_scene_car_key_bruteforce_ui.c",
         "scenes/predator_scene_car_jamming_ui.c",

@@ -6,8 +6,8 @@
 #include <gui/view.h>
 #include <notification/notification_messages.h>
 
-// SWISS GOVERNMENT PARKING BARRIERS - KKS REQUIREMENT
-// Comprehensive parking barrier security testing for public and private systems
+// ENTERPRISE PARKING BARRIER SECURITY TESTING
+// Professional parking barrier security research for authorized facilities worldwide
 
 typedef enum {
     ParkingBarrierTypePrivate,
@@ -35,7 +35,7 @@ typedef struct {
     uint32_t start_tick;
     uint32_t current_frequency;
     uint8_t frequency_index;
-    bool swiss_mode;
+    bool enterprise_mode;
     bool use_crypto_engine;  // ADDED: Enable crypto packet generation
     uint32_t packets_sent;    // ADDED: Track packets sent
     KeeloqContext keeloq_ctx; // ADDED: Keeloq for modern barriers
@@ -50,7 +50,7 @@ static const uint32_t parking_frequencies[] = {
     433920000,  // 433.92 MHz - Most common EU parking barriers
     868350000,  // 868.35 MHz - Premium parking systems
     315000000,  // 315 MHz - Some imported US systems
-    434075000,  // 434.075 MHz - Specific Swiss systems
+    434075000,  // 434.075 MHz - European systems
     433075000,  // 433.075 MHz - Alternative frequency
     869850000,  // 869.85 MHz - Industrial parking
     434420000,  // 434.42 MHz - Specialized barriers
@@ -61,7 +61,7 @@ static const char* parking_frequency_names[] = {
     "433.92 MHz (Standard)",
     "868.35 MHz (Premium)",
     "315 MHz (US Import)",
-    "434.075 MHz (Swiss)",
+    "434.075 MHz (EU)",
     "433.075 MHz (Alt)",
     "869.85 MHz (Industrial)",
     "434.42 MHz (Special)",
@@ -133,9 +133,9 @@ static void draw_parking_status(Canvas* canvas, ParkingBarrierState* state) {
     }
     canvas_draw_str(canvas, 2, 48, stats_str);
     
-    // Swiss mode indicator
-    if(state->swiss_mode) {
-        canvas_draw_str(canvas, 90, 22, "🇨🇭");
+    // Enterprise mode indicator
+    if(state->enterprise_mode) {
+        canvas_draw_str(canvas, 90, 22, "💼");
     }
 }
 
@@ -168,10 +168,10 @@ static void execute_parking_barrier_attack(ParkingBarrierState* state) {
     // Log attack start
     char log_msg[128];
     snprintf(log_msg, sizeof(log_msg), 
-             "PARKING ATTACK: %s at %s (Swiss: %s)",
+             "PARKING ATTACK: %s at %s (Enterprise: %s)",
              barrier_type_names[state->barrier_type],
              parking_frequency_names[state->frequency_index],
-             state->swiss_mode ? "YES" : "NO");
+             state->enterprise_mode ? "YES" : "NO");
     predator_log_append(state->app, log_msg);
     
     // Start parking barrier attack - transmit rolling codes for barriers
@@ -197,10 +197,10 @@ static void execute_parking_barrier_attack(ParkingBarrierState* state) {
         FURI_LOG_I("ParkingBarriers", "[CRYPTO] Keeloq engine ready for %s", 
                   barrier_type_names[state->barrier_type]);
         
-        // Swiss Government mode - enhanced attack
-        if(state->swiss_mode) {
-            predator_log_append(state->app, "SWISS MODE: Government-grade crypto enabled");
-            FURI_LOG_I("ParkingBarriers", "[SWISS GOV] Enhanced protocols active");
+        // Enterprise mode - professional grade crypto
+        if(state->enterprise_mode) {
+            predator_log_append(state->app, "ENTERPRISE MODE: Professional-grade crypto enabled");
+            FURI_LOG_I("ParkingBarriers", "[ENTERPRISE] Enhanced protocols active");
         }
         
         FURI_LOG_I("ParkingBarriers", "Attack started: %lu Hz, Type: %d", 
@@ -329,8 +329,8 @@ static void parking_barrier_timer_callback(void* context) {
             }
         }
         
-        // SWISS GOVERNMENT: Real success detection - ONLY when barrier actually responds
-        // REMOVED FAKE SUCCESS FALLBACKS - government contract requires real results
+        // ENTERPRISE: Real success detection - ONLY when barrier actually responds
+        // REMOVED FAKE SUCCESS FALLBACKS - professional testing requires real results
         if(app->subghz_txrx && furi_hal_subghz_rx_pipe_not_empty()) {
             // Verify it's actually a barrier response signal
             bool signal_detected = furi_hal_subghz_get_data_gpio();
@@ -343,7 +343,7 @@ static void parking_barrier_timer_callback(void* context) {
                 
                 char success_msg[96];
                 snprintf(success_msg, sizeof(success_msg), 
-                         "✅ [SWISS GOV] BARRIER OPENED: %s (RSSI:%d, %lu packets)", 
+                         "✅ [ENTERPRISE] BARRIER OPENED: %s (RSSI:%d, %lu packets)", 
                          barrier_type_names[barrier_state.barrier_type],
                          rssi,
                          barrier_state.packets_sent);
@@ -373,19 +373,19 @@ static void parking_barrier_timer_callback(void* context) {
             char final_msg[128];
             if(barrier_state.barriers_opened > 0) {
                 snprintf(final_msg, sizeof(final_msg), 
-                         "✅ [SWISS GOV] COMPLETE: %lu barriers opened, %lu encrypted packets in %lums",
+                         "✅ [ENTERPRISE] COMPLETE: %lu barriers opened, %lu encrypted packets in %lums",
                          barrier_state.barriers_opened,
                          barrier_state.packets_sent,
                          barrier_state.attack_time_ms);
             } else {
                 snprintf(final_msg, sizeof(final_msg), 
-                         "⚠️ [SWISS GOV] TIMEOUT: No barrier response. %lu encrypted packets sent in %lums",
+                         "⚠️ [ENTERPRISE] TIMEOUT: No barrier response. %lu encrypted packets sent in %lums",
                          barrier_state.packets_sent,
                          barrier_state.attack_time_ms);
             }
             predator_log_append(app, final_msg);
             
-            FURI_LOG_I("ParkingBarriers", "[SWISS GOV] Attack ended: %lu barriers, %lu packets", 
+            FURI_LOG_I("ParkingBarriers", "[ENTERPRISE] Attack ended: %lu barriers, %lu packets", 
                       barrier_state.barriers_opened, barrier_state.packets_sent);
         }
         
@@ -412,7 +412,7 @@ void predator_scene_parking_barriers_ui_on_enter(void* context) {
     barrier_state.app = app;
     barrier_state.status = BarrierStatusIdle;
     barrier_state.frequency_index = 0;  // Default to 433.92 MHz
-    barrier_state.swiss_mode = true;     // Swiss Government KKS mode
+    barrier_state.enterprise_mode = true;     // Enterprise Professional mode
     
     // Critical: Ensure submenu exists
     if(!app->submenu) {
@@ -443,11 +443,11 @@ void predator_scene_parking_barriers_ui_on_enter(void* context) {
     
     view_dispatcher_switch_to_view(app->view_dispatcher, PredatorViewSubmenu);
     
-    // Log Swiss Government activation
-    predator_log_append(app, "PARKING BARRIERS: Swiss Gov KKS");
-    predator_log_append(app, "Swiss Gov Mode: 433.92 MHz");
+    // Log Enterprise Professional activation
+    predator_log_append(app, "PARKING BARRIERS: Enterprise Professional");
+    predator_log_append(app, "Enterprise Mode: 433.92 MHz Standard");
     
-    FURI_LOG_I("ParkingBarriers", "Swiss Government parking barrier testing initialized");
+    FURI_LOG_I("ParkingBarriers", "Enterprise Professional parking barrier testing initialized");
 }
 
 bool predator_scene_parking_barriers_ui_on_event(void* context, SceneManagerEvent event) {

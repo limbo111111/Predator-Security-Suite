@@ -149,7 +149,7 @@ bool predator_scene_main_menu_ui_on_event(void* context, SceneManagerEvent event
         case 2: // Car Models
             scene_manager_next_scene(app->scene_manager, PredatorSceneCarContinentUI);
             break;
-        case 15: // Parking Barriers - Swiss Government
+        case 15: // Parking Barriers - Enterprise Professional
             scene_manager_next_scene(app->scene_manager, PredatorSceneParkingBarriersUI);
             break;
         case 4: // WiFi Attacks
