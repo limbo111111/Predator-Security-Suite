@@ -44,32 +44,53 @@ typedef struct {
 
 static ParkingBarrierState barrier_state;
 
-// UNUSED: Frequencies commented out - using SubGHz Jamming scene instead
-/*
+// WORLDWIDE ENTERPRISE: International frequency standards for global barrier testing
 static const uint32_t parking_frequencies[] = {
-    433920000,  // 433.92 MHz - Most common EU parking barriers
-    868350000,  // 868.35 MHz - Premium parking systems
-    315000000,  // 315 MHz - Some imported US systems
+    // North America (FCC)
+    315000000,  // 315 MHz - North America standard (US/Canada/Mexico)
+    318000000,  // 318 MHz - North America alternative
+    390000000,  // 390 MHz - US government/military systems
+    
+    // Europe/Africa/Asia (ETSI/ISM)
+    433920000,  // 433.92 MHz - Most common worldwide (ISM band)
+    433075000,  // 433.075 MHz - European alternative
     434075000,  // 434.075 MHz - European systems
-    433075000,  // 433.075 MHz - Alternative frequency
-    869850000,  // 869.85 MHz - Industrial parking
+    433420000,  // 433.42 MHz - Asian systems (Honda/Nissan/Toyota)
     434420000,  // 434.42 MHz - Specialized barriers
-    433420000   // 433.42 MHz - Honda/Nissan parking systems
+    
+    // Europe Premium (SRD band)
+    868350000,  // 868.35 MHz - EU Premium parking systems
+    868950000,  // 868.95 MHz - EU alternative
+    869850000,  // 869.85 MHz - EU Industrial parking
+    
+    // Asia-Pacific / Americas (ISM)
+    915000000,  // 915 MHz - Americas/Asia-Pacific ISM band
+    916500000,  // 916.5 MHz - Japan specific
+    
+    // Middle East / Emerging Markets
+    433050000,  // 433.05 MHz - Middle East systems
+    868000000   // 868 MHz - International standard
 };
 
 static const char* parking_frequency_names[] = {
-    "433.92 MHz (Standard)",
-    "868.35 MHz (Premium)",
-    "315 MHz (US Import)",
+    "315 MHz (N.America)",
+    "318 MHz (US Alt)",
+    "390 MHz (US Gov)",
+    "433.92 MHz (Global)",
+    "433.075 MHz (EU)",
     "434.075 MHz (EU)",
-    "433.075 MHz (Alt)",
-    "869.85 MHz (Industrial)",
+    "433.42 MHz (Asia)",
     "434.42 MHz (Special)",
-    "433.42 MHz (Auto)"
+    "868.35 MHz (EU Premium)",
+    "868.95 MHz (EU Alt)",
+    "869.85 MHz (EU Ind)",
+    "915 MHz (ISM)",
+    "916.5 MHz (Japan)",
+    "433.05 MHz (M.East)",
+    "868 MHz (Intl)"
 };
-*/
 
-#define PARKING_FREQUENCY_COUNT 8
+#define PARKING_FREQUENCY_COUNT 15
 
 static const char* barrier_type_names[] = {
     "Private Parking",

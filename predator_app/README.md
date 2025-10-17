@@ -23,16 +23,19 @@ The authors assume **NO LIABILITY** for any misuse. You are **SOLELY RESPONSIBLE
 
 ## About
 
-Predator is a comprehensive penetration testing toolkit designed for Flipper Zero with Momentum firmware. It integrates with the Predator 4-in-1 expansion module for advanced capabilities.
+Predator Security Suite is a **worldwide enterprise-grade** penetration testing toolkit designed for professional security researchers globally. Built for Flipper Zero with Momentum firmware, it provides advanced capabilities for authorized security testing across automotive, wireless, and access control systems.
+
+**Global Coverage**: Designed for security professionals in North America, Europe, Asia-Pacific, Middle East, Latin America, and Africa.
 
 ### Core Features
 
-#### 🚗 Automotive Security Testing
+#### 🚗 Automotive Security Testing (Worldwide)
 - **Cryptographic Protocols**: Keeloq, Hitag2, AES-128, Tesla-specific
-- **Rolling Code Analysis**: 400+ car models supported
-- **Key Fob Research**: Frequency analysis, protocol detection
-- **Attack Research**: Rolling code prediction, replay protection testing
-- **⚠️ AUTHORIZATION REQUIRED**: Test only vehicles you own or have written permission to test
+- **Rolling Code Analysis**: 400+ car models from Europe, Asia, and Americas
+- **Global Frequency Support**: 315MHz (North America), 433.92MHz (Europe/Asia), 868MHz (EU Premium), 915MHz (ISM)
+- **Enterprise Parking Barriers**: 10 major manufacturers (CAME, BFT, Nice, Somfy, Faac, Hörmann, Benincà, DEA, Ditec, Roger Tech)
+- **Professional Charging Stations**: Security testing for global EV infrastructure
+- **⚠️ AUTHORIZATION REQUIRED**: Test only vehicles/systems you own or have written permission to test
 
 #### 📡 WiFi Security Research
 - **Network Scanning**: SSID discovery, signal strength analysis
@@ -51,11 +54,17 @@ Predator is a comprehensive penetration testing toolkit designed for Flipper Zer
 - **Protocol Analysis**: Access control system research
 - **⚠️ AUTHORIZATION REQUIRED**: Test only your own cards and systems
 
-#### 📻 SubGHz/RF Analysis
-- **Frequency Analysis**: 315/433/868/915 MHz (region-dependent)
-- **Signal Research**: Modulation and encoding analysis
+#### 📻 SubGHz/RF Analysis (Multi-Region)
+- **Worldwide Frequency Support**: 
+  - **315MHz** - North America (US/Canada)
+  - **433.92MHz** - Europe, Asia, Africa (ISM band)
+  - **434.075MHz** - European systems
+  - **868.35MHz** - EU Premium (SRD band)
+  - **915MHz** - ISM band (Americas/Asia-Pacific)
+- **Signal Research**: OOK, ASK, FSK, PSK modulation analysis
 - **Protocol Testing**: Rolling code and fixed code research
-- **⚠️ AUTHORIZATION REQUIRED**: Comply with FCC/ETSI regulations
+- **Enterprise Mode**: Professional-grade cryptographic testing
+- **⚠️ AUTHORIZATION REQUIRED**: Comply with local regulations (FCC, ETSI, ARIB, etc.)
 
 #### 🛰️ GPS Integration
 - **Location Tracking**: Real-time positioning
