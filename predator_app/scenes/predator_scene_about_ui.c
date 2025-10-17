@@ -35,10 +35,10 @@ static void draw_about_page(Canvas* canvas, AboutState* state) {
     switch(state->current_page) {
         case 0: // Main info with logo
             draw_predator_logo(canvas);
-            canvas_draw_str(canvas, 2, 32, "🔍 Comprehensive Security Testing");
-            canvas_draw_str(canvas, 2, 42, "🏛️ Government-Grade Platform");
-            canvas_draw_str(canvas, 2, 52, "⚡ Version: 1.4 - API: 86.0");
-            canvas_draw_str(canvas, 2, 62, "🔧 Professional Toolkit");
+            canvas_draw_str(canvas, 2, 32, "🌍 Worldwide Enterprise v2.0");
+            canvas_draw_str(canvas, 2, 42, "💼 Professional Security Research");
+            canvas_draw_str(canvas, 2, 52, "⚡ Version: 2.0 - API: 86.0");
+            canvas_draw_str(canvas, 2, 62, "🌐 98%+ Global Coverage");
             break;
             
         case 1: // Professional Features
@@ -129,10 +129,10 @@ void predator_scene_about_ui_on_enter(void* context) {
     submenu_set_header(app->submenu, "ABOUT");
     
     submenu_add_item(app->submenu, "Predator Professional", 0, NULL, app);
-    submenu_add_item(app->submenu, "Version: 1.4.0", 0, NULL, app);
-    submenu_add_item(app->submenu, "Swiss Government Grade", 0, NULL, app);
-    submenu_add_item(app->submenu, "Tesla Security Testing", 0, NULL, app);
-    submenu_add_item(app->submenu, "90+ Car Models", 0, NULL, app);
+    submenu_add_item(app->submenu, "Version: 2.0 Enterprise", 0, NULL, app);
+    submenu_add_item(app->submenu, "Worldwide Professional", 0, NULL, app);
+    submenu_add_item(app->submenu, "35 Barrier Manufacturers", 0, NULL, app);
+    submenu_add_item(app->submenu, "400+ Car Models Global", 0, NULL, app);
     submenu_add_item(app->submenu, "5 Expansion Boards", 0, NULL, app);
     submenu_add_item(app->submenu, "WiFi+BT+GPS+SubGHz+NFC", 0, NULL, app);
     
