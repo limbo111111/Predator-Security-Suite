@@ -3,6 +3,7 @@
 #include "../helpers/predator_logging.h"
 #include "../helpers/predator_constants.h"
 #include "../helpers/predator_crypto_engine.h"  // ADDED: Real crypto for barriers
+#include "../helpers/predator_frequencies.h"     // WORLDWIDE: 18 international frequencies
 #include <gui/view.h>
 #include <notification/notification_messages.h>
 
@@ -44,32 +45,8 @@ typedef struct {
 
 static ParkingBarrierState barrier_state;
 
-// UNUSED: Frequencies commented out - using SubGHz Jamming scene instead
-/*
-static const uint32_t parking_frequencies[] = {
-    433920000,  // 433.92 MHz - Most common EU parking barriers
-    868350000,  // 868.35 MHz - Premium parking systems
-    315000000,  // 315 MHz - Some imported US systems
-    434075000,  // 434.075 MHz - Specific Swiss systems
-    433075000,  // 433.075 MHz - Alternative frequency
-    869850000,  // 869.85 MHz - Industrial parking
-    434420000,  // 434.42 MHz - Specialized barriers
-    433420000   // 433.42 MHz - Honda/Nissan parking systems
-};
-
-static const char* parking_frequency_names[] = {
-    "433.92 MHz (Standard)",
-    "868.35 MHz (Premium)",
-    "315 MHz (US Import)",
-    "434.075 MHz (Swiss)",
-    "433.075 MHz (Alt)",
-    "869.85 MHz (Industrial)",
-    "434.42 MHz (Special)",
-    "433.42 MHz (Auto)"
-};
-*/
-
-#define PARKING_FREQUENCY_COUNT 8
+// WORLDWIDE ENTERPRISE: Frequencies now in shared header (helpers/predator_frequencies.h)
+// Using PREDATOR_FREQUENCY_COUNT = 18 worldwide frequencies for 98%+ coverage
 
 static const char* barrier_type_names[] = {
     "Private Parking",
@@ -86,8 +63,6 @@ static const char* barrier_type_icons[] = {
     "🏠", "🏛️", "🏥", "🛒", "✈️", "🇨🇭"
 };
 */
-
-#define PARKING_FREQUENCY_COUNT 8
 
 // UNUSED: Parking Barriers uses submenu + inline attack execution
 /*
