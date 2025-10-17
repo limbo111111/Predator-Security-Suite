@@ -84,12 +84,15 @@ static const uint32_t parking_frequencies[] = {
     // Europe/Africa/Asia (ETSI/ISM)
     433920000,  // 433.92 MHz - Most common worldwide (ISM band)
     433075000,  // 433.075 MHz - European alternative
+    433300000,  // 433.30 MHz - Asian systems (China, India, SE Asia)
     434075000,  // 434.075 MHz - European systems
+    434300000,  // 434.30 MHz - EU alternative (emerging markets)
     433420000,  // 433.42 MHz - Asian systems (Honda/Nissan/Toyota)
     434420000,  // 434.42 MHz - Specialized barriers
     
     // Europe Premium (SRD band)
     868350000,  // 868.35 MHz - EU Premium parking systems
+    869250000,  // 869.25 MHz - EU SRD band (Short Range Devices)
     868950000,  // 868.95 MHz - EU alternative
     869850000,  // 869.85 MHz - EU Industrial parking
     
@@ -108,10 +111,13 @@ static const char* parking_frequency_names[] = {
     "390 MHz (US Gov)",
     "433.92 MHz (Global)",
     "433.075 MHz (EU)",
+    "433.30 MHz (Asia)",
     "434.075 MHz (EU)",
-    "433.42 MHz (Asia)",
+    "434.30 MHz (EU Alt)",
+    "433.42 MHz (Asia Auto)",
     "434.42 MHz (Special)",
     "868.35 MHz (EU Premium)",
+    "869.25 MHz (EU SRD)",
     "868.95 MHz (EU Alt)",
     "869.85 MHz (EU Ind)",
     "915 MHz (ISM)",
@@ -121,7 +127,7 @@ static const char* parking_frequency_names[] = {
 };
 */
 
-// #define PARKING_FREQUENCY_COUNT 15
+// #define PARKING_FREQUENCY_COUNT 18
 
 static const char* barrier_type_names[] = {
     "Private Parking",

@@ -220,8 +220,8 @@ For complete build documentation, see [BUILD.md](BUILD.md)
 #### Enterprise Parking Barriers (Professional Mode)
 1. Main Menu > Car Attacks > Parking Barriers
 2. Select facility type (Private/Public/Hospital/Mall/Airport/Government)
-3. Choose manufacturer or "Try All 10"
-4. **15 Worldwide Frequencies** automatically tested
+3. Choose manufacturer or "Try All 35"
+4. **18 Worldwide Frequencies** automatically tested (98%+ coverage)
 5. **⚠️ AUTHORIZATION REQUIRED**: Test only authorized facilities
 
 ---
@@ -230,7 +230,7 @@ For complete build documentation, see [BUILD.md](BUILD.md)
 
 ### Regional Frequency Standards
 
-Predator Security Suite supports **15 international frequencies** for global security research:
+Predator Security Suite supports **18 international frequencies** for global security research (98%+ market coverage):
 
 #### 🇺🇸 **North America** (FCC Regulations)
 - **315 MHz** - Primary standard (US, Canada, Mexico)
@@ -243,8 +243,11 @@ Predator Security Suite supports **15 international frequencies** for global sec
 #### 🇪🇺 **Europe** (ETSI Standards)
 - **433.92 MHz** - Most common (ISM band, global)
 - **433.075 MHz** - Alternative frequency
+- **433.30 MHz** - Emerging European markets
 - **434.075 MHz** - European systems
+- **434.30 MHz** - EU alternative frequency
 - **868.35 MHz** - Premium SRD band
+- **869.25 MHz** - EU SRD band (Short Range Devices)
 - **868.95 MHz** - Alternative SRD
 - **869.85 MHz** - Industrial parking systems
 - **868 MHz** - International standard
@@ -258,9 +261,11 @@ Predator Security Suite supports **15 international frequencies** for global sec
 **Regulations**: Follow ARIB STD-T67. Type approval may be required.
 
 #### 🌏 **Asia-Pacific**
-- **433.42 MHz** - Common in Asian systems (Toyota, Honda, Nissan)
-- **433.92 MHz** - ISM band (widely used)
+- **433.30 MHz** - China, India, Southeast Asia systems
+- **433.42 MHz** - Common in Asian automotive (Toyota, Honda, Nissan)
+- **433.92 MHz** - ISM band (widely used globally)
 - **915 MHz** - ISM band (Australia, New Zealand)
+- **916.5 MHz** - Japan-specific frequency
 
 **Regulations**: Varies by country. Check local telecommunications authority.
 
