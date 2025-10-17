@@ -11,9 +11,10 @@ ADD_SCENE(predator, protocol_test_ui, ProtocolTestUI)     // Protocol testing (K
 ADD_SCENE(predator, car_key_bruteforce_ui, CarKeyBruteforceUI)
 ADD_SCENE(predator, car_jamming_ui, CarJammingUI)
 ADD_SCENE(predator, car_passive_opener_ui, CarPassiveOpenerUI)
-ADD_SCENE(predator, parking_barriers_ui, ParkingBarriersUI)  // RE-ADDED: Swiss Gov requirement - Testing stability
-ADD_SCENE(predator, barrier_manufacturer_select_ui, BarrierManufacturerSelectUI)  // SWISS KKS: Choose manufacturer or try all
-ADD_SCENE(predator, barrier_attack_ui, BarrierAttackUI)      // SWISS KKS: Dedicated barrier opening with real manufacturer keys
+ADD_SCENE(predator, barrier_region_select_ui, BarrierRegionSelectUI)  // ENTERPRISE: Select region for smart manufacturer selection
+ADD_SCENE(predator, parking_barriers_ui, ParkingBarriersUI)  // ENTERPRISE: Professional parking barrier testing worldwide
+ADD_SCENE(predator, barrier_manufacturer_select_ui, BarrierManufacturerSelectUI)  // ENTERPRISE: Choose manufacturer or try all
+ADD_SCENE(predator, barrier_attack_ui, BarrierAttackUI)      // ENTERPRISE: Dedicated barrier security research with crypto
 
 // WiFi Attacks - REDUCED FOR MEMORY (Keep essentials only)
 ADD_SCENE(predator, wifi_attacks_ui, WifiAttacksUI)

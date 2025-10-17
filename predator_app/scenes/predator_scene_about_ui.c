@@ -57,11 +57,11 @@ static void draw_about_page(Canvas* canvas, AboutState* state) {
             break;
             
         case 3: // Professional Partnerships
-            canvas_draw_str(canvas, 2, 24, "🏛️ PARTNERSHIPS:");
-            canvas_draw_str(canvas, 2, 34, "🇺🇸 California State Contract");
-            canvas_draw_str(canvas, 2, 44, "🇨🇭 Switzerland Partnership");
-            canvas_draw_str(canvas, 2, 54, "🔧 Advanced Testing Platform");
-            canvas_draw_str(canvas, 2, 64, "🚗 Automotive Security Focus");
+            canvas_draw_str(canvas, 2, 24, "🏛️ WORLDWIDE PARTNERS:");
+            canvas_draw_str(canvas, 2, 34, "🌍 Enterprise Professional");
+            canvas_draw_str(canvas, 2, 44, "🇺🇸 North America Contracts");
+            canvas_draw_str(canvas, 2, 54, "🇪🇺 European Research Teams");
+            canvas_draw_str(canvas, 2, 64, "🌏 Global Security Platform");
             break;
             
         case 4: // Legal

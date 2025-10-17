@@ -4,7 +4,7 @@
 #include <string.h>
 
 // ADVANCED MEMORY OPTIMIZER - Consolidates 30+ helpers into one efficient module
-// Swiss Government Demo - Critical Memory Management
+// Enterprise Professional Worldwide - Critical Memory Management
 
 // Minimal watchdog implementation
 static bool watchdog_active = false;

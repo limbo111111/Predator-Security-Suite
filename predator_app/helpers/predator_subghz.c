@@ -602,7 +602,7 @@ __attribute__((used)) bool predator_subghz_start_jamming(PredatorApp* app, uint3
     return true;
 }
 
-// SWISS GOVERNMENT: Start parking barrier attack (KKS requirement)
+// ENTERPRISE PROFESSIONAL: Start parking barrier attack (Worldwide)
 // PRODUCTION READY - REAL RF TRANSMISSION - MULTI-BOARD SUPPORT
 __attribute__((used)) bool predator_subghz_start_parking_attack(PredatorApp* app, uint32_t frequency, uint8_t barrier_type) {
     if(!app) {
@@ -616,44 +616,44 @@ __attribute__((used)) bool predator_subghz_start_parking_attack(PredatorApp* app
     
     // Validate frequency
     if(!furi_hal_subghz_is_frequency_valid(frequency)) {
-        FURI_LOG_E("PredatorSubGHz", "[SWISS GOVT] Invalid frequency: %lu Hz", frequency);
+        FURI_LOG_E("PredatorSubGHz", "[ENTERPRISE] Invalid frequency: %lu Hz", frequency);
         return false;
     }
     
-    FURI_LOG_I("PredatorSubGHz", "[SWISS GOVT] REAL TRANSMISSION: Parking barrier attack on %lu Hz, Type: %d", frequency, barrier_type);
+    FURI_LOG_I("PredatorSubGHz", "[ENTERPRISE] REAL TRANSMISSION: Parking barrier attack on %lu Hz, Type: %d", frequency, barrier_type);
     
-    // Log barrier type for government compliance
+    // Log barrier type for enterprise compliance
     const char* barrier_types[] = {
         "Private Parking", "Public Parking", "Hospital Parking", 
         "Shopping Mall", "Airport Parking", "Government Facility"
     };
     if(barrier_type < 6) {
-        FURI_LOG_I("PredatorSubGHz", "[SWISS GOVT] Target: %s", barrier_types[barrier_type]);
+        FURI_LOG_I("PredatorSubGHz", "[ENTERPRISE] Target: %s", barrier_types[barrier_type]);
     }
     
-    // PRODUCTION: Board-specific configuration for Swiss government
+    // PRODUCTION: Board-specific configuration for enterprise deployment
     if(app->board_type == PredatorBoardType3in1AIO) {
-        FURI_LOG_I("PredatorSubGHz", "[SWISS GOVT] 3in1 AIO: 12dBm external RF");
+        FURI_LOG_I("PredatorSubGHz", "[ENTERPRISE] 3in1 AIO: 12dBm external RF");
     } else if(app->board_type == PredatorBoardType3in1NrfCcEsp) {
-        FURI_LOG_I("PredatorSubGHz", "[SWISS GOVT] 3-in-1 Board: CC1101 12dBm");
+        FURI_LOG_I("PredatorSubGHz", "[ENTERPRISE] 3-in-1 Board: CC1101 12dBm");
     } else if(app->board_type == PredatorBoardTypeScreen28) {
-        FURI_LOG_I("PredatorSubGHz", "[SWISS GOVT] 2.8-inch Screen: 433M module");
+        FURI_LOG_I("PredatorSubGHz", "[ENTERPRISE] 2.8-inch Screen: 433M module");
     } else if(app->board_type == PredatorBoardTypeDrB0rkMultiV2) {
-        FURI_LOG_I("PredatorSubGHz", "[SWISS GOVT] DrB0rk Multi Board V2");
+        FURI_LOG_I("PredatorSubGHz", "[ENTERPRISE] DrB0rk Multi Board V2");
     } else {
-        FURI_LOG_I("PredatorSubGHz", "[SWISS GOVT] Standard Flipper Zero CC1101");
+        FURI_LOG_I("PredatorSubGHz", "[ENTERPRISE] Standard Flipper Zero CC1101");
     }
     
     // PRODUCTION: Set frequency for REAL transmission (universal)
     if(!furi_hal_subghz_set_frequency_and_path(frequency)) {
-        FURI_LOG_E("PredatorSubGHz", "[SWISS GOVT] Failed to set frequency");
+        FURI_LOG_E("PredatorSubGHz", "[ENTERPRISE] Failed to set frequency");
         return false;
     }
     
     // PRODUCTION: Start continuous carrier transmission (parking barrier opening signal)
     furi_hal_subghz_tx();
     
-    FURI_LOG_I("PredatorSubGHz", "[SWISS GOVT] REAL RF TRANSMISSION ACTIVE on %lu Hz", frequency);
+    FURI_LOG_I("PredatorSubGHz", "[ENTERPRISE] REAL RF TRANSMISSION ACTIVE on %lu Hz", frequency);
     
     app->attack_running = true;
     notification_message(app->notifications, &sequence_set_blue_255);

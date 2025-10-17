@@ -6,8 +6,8 @@
 #include <gui/view.h>
 #include <notification/notification_messages.h>
 
-// SWISS GOVERNMENT KKS - PARKING BARRIER ATTACK
-// Dedicated barrier opening with proper manufacturer keys and button codes
+// ENTERPRISE PROFESSIONAL - PARKING BARRIER ATTACK
+// Dedicated barrier security research with proper manufacturer keys and button codes worldwide
 
 typedef enum {
     BarrierAttackStatusIdle,
@@ -142,15 +142,51 @@ static const uint64_t barrier_manufacturer_keys[] = {
 
 static const char* barrier_manufacturer_names[] = {
     // Europe (10)
+    // Europe (10)
     "CAME (Italy)",
     "BFT (Italy)",
     "Nice (France)",
     "Somfy (France)",
     "Faac (Italy)",
     "Hörmann (EU)",
+    "Hörmann (EU)",
     "Benincà (Italy)",
     "DEA System (Italy)",
     "Ditec (Italy)",
+    "Roger Tech (Italy)",
+    // North America (5)
+    "Chamberlain (USA)",
+    "LiftMaster (USA)",
+    "Linear (USA)",
+    "Genie (USA)",
+    "Overhead Door (USA)",
+    // Additional Europe (5)
+    "Marantec (Germany)",
+    "Sommer (Germany)",
+    "ERREKA (Spain)",
+    "Novoferm (Germany)",
+    "V2 (Italy)",
+    // Asia-Pacific / Global (3)
+    "ET (China)",
+    "SERAI (M.East)",
+    "Centurion (Africa)",
+    // High Security (2)
+    "Auto Systems (BE)",
+    "Parkare (Parking)",
+    // Japan / Asia (4)
+    "TOYO (Japan)",
+    "ASSA ABLOY (Global)",
+    "FUJITEC (Japan)",
+    "NICE-Apollo (China)",
+    // Australia (1)
+    "B&D (Australia)",
+    // Latin America (2)
+    "PPA (Brazil)",
+    "SEG (Argentina)",
+    // Global High-End (3)
+    "DORMA+KABA (Swiss)",
+    "Stanley Access (USA)",
+    "CAME Auto (Global)"
     "Roger Tech (Italy)",
     // North America (5)
     "Chamberlain (USA)",
@@ -503,8 +539,8 @@ void predator_scene_barrier_attack_ui_on_enter(void* context) {
     app->timer = furi_timer_alloc(barrier_attack_timer_callback, FuriTimerTypePeriodic, app);
     furi_timer_start(app->timer, 100);  // 10 FPS
     
-    predator_log_append(app, "BARRIER ATTACK: Swiss KKS Mode");
-    FURI_LOG_I("BarrierAttack", "Barrier attack UI initialized");
+    predator_log_append(app, "BARRIER ATTACK: Enterprise Professional Mode");
+    FURI_LOG_I("BarrierAttack", "[ENTERPRISE] Barrier attack UI initialized");
 }
 
 bool predator_scene_barrier_attack_ui_on_event(void* context, SceneManagerEvent event) {
