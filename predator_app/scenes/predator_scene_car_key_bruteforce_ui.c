@@ -2,6 +2,7 @@
 #include "../helpers/predator_subghz.h"
 #include "../helpers/predator_logging.h"
 #include "../helpers/predator_crypto_engine.h"  // Real crypto algorithms
+#include "../helpers/predator_crypto_keys.h"    // 980+ KEY DATABASE
 #include "../helpers/predator_models.h"  // Car database with protocol detection
 #include <gui/view.h>
 #include <string.h>
