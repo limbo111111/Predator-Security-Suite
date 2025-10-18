@@ -75,6 +75,7 @@ void predator_scene_main_menu_ui_on_enter(void* context) {
     submenu_add_item(app->submenu, "🚗 Tesla Security", 1, main_menu_submenu_callback, app);
     submenu_add_item(app->submenu, "🚗 Car Models", 2, main_menu_submenu_callback, app);
     // 🎮 Walking Open removed - replaced by Konami code easter egg!
+    submenu_add_item(app->submenu, "🔥 Dictionary Attack", 16, main_menu_submenu_callback, app);
     submenu_add_item(app->submenu, "🚧 Parking Barriers", 15, main_menu_submenu_callback, app);
     submenu_add_item(app->submenu, "📡 WiFi Attacks", 4, main_menu_submenu_callback, app);
     submenu_add_item(app->submenu, "📱 Bluetooth Attacks", 5, main_menu_submenu_callback, app);
@@ -148,6 +149,9 @@ bool predator_scene_main_menu_ui_on_event(void* context, SceneManagerEvent event
             break;
         case 2: // Car Models
             scene_manager_next_scene(app->scene_manager, PredatorSceneCarContinentUI);
+            break;
+        case 16: // 🔥 Dictionary Attack - 980+ keys
+            scene_manager_next_scene(app->scene_manager, PredatorSceneDictionaryAttackUI);
             break;
         case 15: // Parking Barriers - Enterprise Professional (Region → Facility → Attack)
             scene_manager_next_scene(app->scene_manager, PredatorSceneBarrierRegionSelectUI);

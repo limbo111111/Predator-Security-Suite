@@ -58,6 +58,7 @@ App(
         "scenes/predator_scene_barrier_attack_ui.c",   # ENTERPRISE: Dedicated barrier security research with crypto
         # "scenes/predator_scene_walking_open_ui.c",    # REMOVED: Konami code easter egg replaces this
         "scenes/predator_scene_car_key_bruteforce_ui.c",
+        "scenes/predator_scene_dictionary_attack_ui.c",  # 🔥 NEW: 980+ keys dictionary attack
         "scenes/predator_scene_car_jamming_ui.c",
         "scenes/predator_scene_car_passive_opener_ui.c",
         
