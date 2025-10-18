@@ -9,6 +9,7 @@ ADD_SCENE(predator, car_model_attacks_ui, CarModelAttacksUI) // Attacks for sele
 ADD_SCENE(predator, protocol_test_ui, ProtocolTestUI)     // Protocol testing (Keeloq/Hitag2/AES)
 // ADD_SCENE(predator, walking_open_ui, WalkingOpenUI)      // REMOVED: Replaced by Konami code easter egg 🎮
 ADD_SCENE(predator, car_key_bruteforce_ui, CarKeyBruteforceUI)
+ADD_SCENE(predator, dictionary_attack_ui, DictionaryAttackUI)  // 🔥 NEW: 980+ keys
 ADD_SCENE(predator, car_jamming_ui, CarJammingUI)
 ADD_SCENE(predator, car_passive_opener_ui, CarPassiveOpenerUI)
 ADD_SCENE(predator, barrier_region_select_ui, BarrierRegionSelectUI)  // ENTERPRISE: Select region for smart manufacturer selection

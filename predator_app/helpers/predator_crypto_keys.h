@@ -66,7 +66,7 @@ static const uint32_t EM4305_PASSWORDS[] = {
     
     // Atmel
     0x41544D4C,  // "ATML" in ASCII
-    0x5435353737,  // "T5577" truncated
+    0x54353537,  // "T557" (32-bit truncated)
     
     // ========== COMMON PATTERNS (High probability) ==========
     0x12345678,  // Sequential
@@ -136,7 +136,7 @@ static const uint32_t EM4305_PASSWORDS[] = {
     0x50415353,  // "PASS"
     0x54455354,  // "TEST"
     0x44454D4F,  // "DEMO"
-    0x41444D494E,  // "ADMIN" (truncated)
+    0x41444D49,  // "ADMI" (32-bit truncated)
     0x55534552,  // "USER"
     0x474F4F44,  // "GOOD"
     0x4F50454E,  // "OPEN"
@@ -257,7 +257,6 @@ static const uint32_t ISO15693_SLIX_PASSWORDS[] = {
     0x534C4958,  // "SLIX" in ASCII
     0x53583132,  // "SX12"
     0x4C2D3153,  // "L-1S"
-    0x49434F4445,  // "ICODE" truncated
     0x4E58503F,  // "NXP?"
     
     // ========== LIBRARY SYSTEMS ==========
@@ -668,7 +667,7 @@ static const uint64_t KEELOQ_KEYS[] = {
     0x424D574B455900ULL,  // "BMWKEY"
     
     // Mercedes-Benz (Research keys)
-    0x4D4552434544ESULL,  // "MERCEDE"
+    0x4D4552434544EULL,  // "MERCEDE"
     0x42454E5A000000ULL,  // "BENZ"
     
     // ========== AFTERMARKET KEYS ==========
@@ -681,7 +680,7 @@ static const uint64_t KEELOQ_KEYS[] = {
     0x444952454354EDULL,  // "DIRECT"
     
     // Autowatch
-    0x4155544F57415TULL,  // "AUTOWAT"
+    0x4155544F574154ULL,  // "AUTOWAT"
     
     // ========== COMMON TEST PATTERNS ==========
     0xDEADBEEFCAFEULL,
@@ -743,7 +742,7 @@ static const uint64_t KEELOQ_KEYS[] = {
     0x4E495353414E32ULL,    // "NISSAN2"
     
     // More Hyundai/Kia variants
-    0x4859554E44414A ULL,   // "HYUNDAJ"
+    0x4859554E44414AULL,   // "HYUNDAJ"
     0x4B49413230313500ULL,  // "KIA2015"
     
     // ========== AFTERMARKET EXPANDED ==========
@@ -785,7 +784,7 @@ static const uint64_t KEELOQ_KEYS[] = {
     0x4352494D45000000ULL,  // "CRIME"
     
     // Hornet
-    0x484F524E4554000000ULL,  // "HORNET"
+    0x484F524E4554000ULL,  // "HORNET"
     0x484F524E00000000ULL,    // "HORN"
     
     // Bulldog
@@ -873,7 +872,7 @@ static const uint64_t KEELOQ_KEYS[] = {
     0x444145575700000ULL,   // "DAEW"
     
     // Isuzu
-    0x495355A5A00000000ULL, // "ISUZU"
+    0x4953555A55000000ULL, // "ISUZU"
     0x49535500000000ULL,    // "ISU"
     
     // Suzuki
@@ -1274,7 +1273,7 @@ static const uint64_t KEELOQ_KEYS[] = {
     0x00000000DEADC0DEULL,
     0x00000000BAADC0DEULL,
     0x00000000C0DEC0DEULL,
-    0x00000000CODECAFEULL,
+    0x00000000C0DECAFEULL,
     0x0000000012345678ULL,   // Simple checksum
     0x00000000ABCD9876ULL,   // Checksum variant
 };

@@ -43,6 +43,7 @@ typedef enum {
     PredatorViewWalkingOpenUI,
     PredatorViewCarJammingUI,
     PredatorViewCarKeyBruteforceUI,
+    PredatorViewDictionaryAttackUI,  // 🔥 NEW: 980+ keys
     PredatorViewCarPassiveOpenerUI,
     PredatorViewRfidCloneUI,
     PredatorViewRfidBruteforceUI,
