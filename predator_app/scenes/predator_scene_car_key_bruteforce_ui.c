@@ -237,9 +237,10 @@ static bool car_key_bruteforce_ui_input_callback(InputEvent* event, void* contex
                     carkey_state.use_dictionary = true;
                     carkey_state.current_key_index = 0;
                     carkey_state.current_seed_index = 0;
-                    carkey_state.total_codes = KEELOQ_KEY_COUNT;
-                    predator_log_append(app, "🔥 DICTIONARY MODE: 480+ Keeloq keys loaded");
-                    FURI_LOG_I("CarKeyBrute", "Dictionary attack: %d Keeloq keys", KEELOQ_KEY_COUNT);
+                    carkey_state.total_codes = KEELOQ_KEY_COUNT * KEELOQ_SEED_COUNT; // Keys × Seeds
+                    predator_log_append(app, "🔥 DICTIONARY MODE: 480+ keys × 50+ seeds = 24,000+ combos");
+                    FURI_LOG_I("CarKeyBrute", "Dictionary: %d keys × %d seeds = %lu combos", 
+                              KEELOQ_KEY_COUNT, KEELOQ_SEED_COUNT, carkey_state.total_codes);
                 } else if(protocol == CryptoProtocolHitag2) {
                     carkey_state.use_dictionary = true;
                     carkey_state.current_key_index = 0;
@@ -358,13 +359,14 @@ static void car_key_bruteforce_ui_timer_callback(void* context) {
                         predator_subghz_send_raw_packet(app, packet, len);
                         app->packets_sent++;
                         FURI_LOG_I("CarKeyBruteforce", "[DICT] Hitag2 key %lu/%u TRANSMITTED", 
-                                  (unsigned long)carkey_state.current_key_index, HITAG2_KEY_COUNT);
+                                  (unsigned long)carkey_state.current_key_index + 1, HITAG2_KEY_COUNT);
                     }
                     
+                    // Increment and update counter
                     carkey_state.current_key_index++;
                     carkey_state.codes_tried = carkey_state.current_key_index;
                 } else {
-                    // Normal rolling code increment
+                    // Normal rolling code increment (fallback or after dictionary)
                     carkey_state.hitag2_ctx.rolling_code++;
                     uint8_t packet[16];
                     size_t len = 0;
@@ -401,8 +403,9 @@ static void car_key_bruteforce_ui_timer_callback(void* context) {
                     if(carkey_state.current_seed_index >= KEELOQ_SEED_COUNT) {
                         carkey_state.current_seed_index = 0;
                         carkey_state.current_key_index++;
-                        carkey_state.codes_tried = carkey_state.current_key_index;
                     }
+                    // Update counter on EVERY iteration (key * seeds + current_seed)
+                    carkey_state.codes_tried = (carkey_state.current_key_index * KEELOQ_SEED_COUNT) + carkey_state.current_seed_index;
                 } else {
                     // Normal counter increment
                     carkey_state.keeloq_ctx.counter++;
@@ -418,8 +421,10 @@ static void car_key_bruteforce_ui_timer_callback(void* context) {
             }
         }
         
-        // FIXED: Increment counter regardless of hardware state
-        carkey_state.codes_tried += 10; // Increment by 10 codes per 100ms tick
+        // FIXED: Increment counter (only if not using dictionary mode)
+        if(!carkey_state.use_dictionary) {
+            carkey_state.codes_tried += 10; // Increment by 10 codes per 100ms tick
+        }
         
         // Log progress every 100 codes
         if(carkey_state.codes_tried % 100 == 0) {
