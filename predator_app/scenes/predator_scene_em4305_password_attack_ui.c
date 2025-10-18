@@ -1,6 +1,7 @@
 #include "../predator_i.h"
 #include "../helpers/predator_crypto_em4305.h"
 #include "../helpers/predator_em4305_hal.h"
+#include "../helpers/predator_crypto_keys.h"
 #include <gui/elements.h>
 
 // EM4305 Password Attack - Dictionary + Brute Force
@@ -18,26 +19,11 @@ typedef struct {
     uint32_t current_password;
     uint32_t passwords_tried;
     uint32_t found_password;
-    uint8_t dictionary_index;
+    uint16_t dictionary_index;
     char status_text[64];
 } PasswordAttackState;
 
 static PasswordAttackState* pw_state = NULL;
-
-// Common EM4305/T55xx passwords
-static const uint32_t common_passwords[] = {
-    0x00000000, // Default
-    0x12345678,
-    0xAAAAAAAA,
-    0x55555555,
-    0xFFFFFFFF,
-    0x11111111,
-    0x22222222,
-    0x44444444,
-    0x88888888,
-    0xDEADBEEF,
-};
-#define COMMON_PASSWORD_COUNT (sizeof(common_passwords) / sizeof(uint32_t))
 
 static void password_draw_callback(Canvas* canvas, void* context) {
     PredatorApp* app = context;
@@ -101,9 +87,9 @@ static void password_timer_callback(void* context) {
     
     switch(pw_state->state) {
     case PasswordStateDictionary:
-        // Try dictionary passwords
-        if(pw_state->dictionary_index < COMMON_PASSWORD_COUNT) {
-            pw_state->current_password = common_passwords[pw_state->dictionary_index];
+        // Try comprehensive dictionary passwords (40+ known passwords)
+        if(pw_state->dictionary_index < EM4305_PASSWORD_COUNT) {
+            pw_state->current_password = EM4305_PASSWORDS[pw_state->dictionary_index];
             
             FURI_LOG_D("EM4305Password", "Trying dictionary password %u: %08lX",
                       pw_state->dictionary_index, pw_state->current_password);
@@ -121,10 +107,13 @@ static void password_timer_callback(void* context) {
                 pw_state->dictionary_index++;
                 pw_state->passwords_tried++;
                 
-                if(pw_state->dictionary_index >= COMMON_PASSWORD_COUNT) {
-                    // Dictionary exhausted, start brute force
+                if(pw_state->dictionary_index >= EM4305_PASSWORD_COUNT) {
+                    // Dictionary exhausted (tried all 40+ passwords), start brute force
                     pw_state->state = PasswordStateBruteForce;
                     pw_state->current_password = 0;
+                    
+                    FURI_LOG_I("EM4305Password", "Dictionary exhausted (%u passwords), starting brute force",
+                              EM4305_PASSWORD_COUNT);
                     
                     snprintf(pw_state->status_text, sizeof(pw_state->status_text),
                              "Brute forcing...");

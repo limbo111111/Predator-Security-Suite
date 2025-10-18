@@ -1,5 +1,6 @@
 #include "../predator_i.h"
 #include "../helpers/predator_crypto_iso15693.h"
+#include "../helpers/predator_crypto_keys.h"
 #include <gui/elements.h>
 
 // ISO 15693 Password Attack - SLIX password cracking
@@ -17,26 +18,11 @@ typedef struct {
     uint32_t current_password;
     uint32_t passwords_tried;
     uint32_t found_password;
-    uint8_t dictionary_index;
+    uint16_t dictionary_index;
     char status_text[64];
 } PasswordAttackState;
 
 static PasswordAttackState* pw_state = NULL;
-
-// Common SLIX passwords
-static const uint32_t slix_passwords[] = {
-    0x00000000, // Default
-    0x7FFD6E5B, // Common SLIX default
-    0x0F0F0F0F,
-    0xFFFFFFFF,
-    0x12345678,
-    0xAAAAAAAA,
-    0x55555555,
-    0x11111111,
-    0x22222222,
-    0x44444444,
-};
-#define SLIX_PASSWORD_COUNT (sizeof(slix_passwords) / sizeof(uint32_t))
 
 static void password_draw_callback(Canvas* canvas, void* context) {
     PredatorApp* app = context;
@@ -98,8 +84,9 @@ static void password_timer_callback(void* context) {
     
     switch(pw_state->state) {
     case PasswordStateDictionary:
-        if(pw_state->dictionary_index < SLIX_PASSWORD_COUNT) {
-            pw_state->current_password = slix_passwords[pw_state->dictionary_index];
+        // Try comprehensive SLIX dictionary (30+ known passwords)
+        if(pw_state->dictionary_index < ISO15693_PASSWORD_COUNT) {
+            pw_state->current_password = ISO15693_SLIX_PASSWORDS[pw_state->dictionary_index];
             
             // Real implementation: iso15693_try_password(app, pw_state->current_password)
             bool success = false; // Placeholder
@@ -114,8 +101,12 @@ static void password_timer_callback(void* context) {
                 pw_state->dictionary_index++;
                 pw_state->passwords_tried++;
                 
-                if(pw_state->dictionary_index >= SLIX_PASSWORD_COUNT) {
+                if(pw_state->dictionary_index >= ISO15693_PASSWORD_COUNT) {
                     pw_state->state = PasswordStateFailed;
+                    
+                    FURI_LOG_I("ISO15693Password", "Dictionary exhausted (%u passwords), no match",
+                              ISO15693_PASSWORD_COUNT);
+                    
                     snprintf(pw_state->status_text, sizeof(pw_state->status_text),
                              "No match found");
                 }
