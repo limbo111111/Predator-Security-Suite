@@ -7,7 +7,7 @@ This project is a **professional security research tool** for **authorized use o
 ---
 
 ## 🎯 **Our Pledge**
-
+--
 We pledge to make participation in the Predator Security Suite community a harassment-free, professional, and ethical experience for everyone, regardless of:
 
 - Age, body size, disability, ethnicity
