@@ -592,7 +592,8 @@ bool felica_detect_card(PredatorApp* app, uint16_t system_code, FeliCaCard* card
     uint8_t response[32];
     size_t response_len = 0;
     
-    // Real: furi_hal_nfc_felica_transceive(cmd, 6, response, &response_len);
+    // HAL: Poll for FeliCa card
+    furi_hal_nfc_felica_transceive(cmd, 6, response, &response_len);
     
     if(response_len >= 18) {
         memset(card, 0, sizeof(FeliCaCard));

@@ -259,12 +259,13 @@ bool calypso_open_secure_session(PredatorApp* app, const CalypsoCard* card,
     cmd[3] = 0x01;  // Record number
     cmd[4] = 0x04;  // Expected response length
     
-    uint8_t response[32];
+    uint8_t response[64];
     size_t response_len = 0;
     
-    // Real: furi_hal_nfc_iso14443b_transceive(cmd, 5, response, &response_len);
+    // HAL: Read record from card
+    furi_hal_nfc_iso14443b_transceive(cmd, 5, response, &response_len);
     
-    if(response_len >= 8) {
+    if(response_len > 2) {
         // Extract card challenge
         memcpy(auth_ctx->challenge, response, 8);
         
@@ -306,14 +307,13 @@ bool calypso_close_secure_session(PredatorApp* app, CalypsoAuthContext* auth_ctx
     uint8_t mac[4] = {0x00, 0x00, 0x00, 0x00};
     memcpy(&cmd[5], mac, 4);
     
-    uint8_t response[4];
+    uint8_t response[32];
     size_t response_len = 0;
     
-    // Real: transceive
+    // HAL: Select application
+    furi_hal_nfc_iso14443b_transceive(cmd, 12, response, &response_len);
     
-    auth_ctx->authenticated = false;
-    
-    FURI_LOG_I("Calypso", "Session closed");
+    FURI_LOG_I("Calypso", "Application selected");
     return true;
 }
 
@@ -337,7 +337,8 @@ uint32_t calypso_read_record(PredatorApp* app, const CalypsoCard* card,
     uint8_t response[64];
     size_t response_len = 0;
     
-    // Real: transceive
+    // HAL: Read record from card
+    furi_hal_nfc_iso14443b_transceive(cmd, 5, response, &response_len);
     
     if(response_len > 2) {
         uint32_t data_len = response_len - 2;  // Minus status bytes
