@@ -76,6 +76,9 @@ void predator_scene_main_menu_ui_on_enter(void* context) {
     submenu_add_item(app->submenu, "🚗 Car Models", 2, main_menu_submenu_callback, app);
     // 🎮 Walking Open removed - replaced by Konami code easter egg!
     submenu_add_item(app->submenu, "🔥 Dictionary Attack", 16, main_menu_submenu_callback, app);
+    submenu_add_item(app->submenu, "🚇 Transit Cards", 17, main_menu_submenu_callback, app);
+    // Access Control disabled to save 12KB for Transit Cards
+    // submenu_add_item(app->submenu, "🔑 Access Control", 18, main_menu_submenu_callback, app);
     submenu_add_item(app->submenu, "🚧 Parking Barriers", 15, main_menu_submenu_callback, app);
     submenu_add_item(app->submenu, "📡 WiFi Attacks", 4, main_menu_submenu_callback, app);
     submenu_add_item(app->submenu, "📱 Bluetooth Attacks", 5, main_menu_submenu_callback, app);
@@ -153,6 +156,10 @@ bool predator_scene_main_menu_ui_on_event(void* context, SceneManagerEvent event
         case 16: // 🔥 Dictionary Attack - 980+ keys
             scene_manager_next_scene(app->scene_manager, PredatorSceneDictionaryAttackUI);
             break;
+        case 17: // 🚇 Transit Cards - FeliCa & Calypso
+            scene_manager_next_scene(app->scene_manager, PredatorSceneTransitCardsMenu);
+            break;
+        // case 18: Access Control disabled (saves 12KB for Transit Cards)
         case 15: // Parking Barriers - Enterprise Professional (Region → Facility → Attack)
             scene_manager_next_scene(app->scene_manager, PredatorSceneBarrierRegionSelectUI);
             break;

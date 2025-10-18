@@ -251,9 +251,9 @@ bool calypso_open_secure_session(PredatorApp* app, const CalypsoCard* card,
     
     FURI_LOG_I("Calypso", "Opening secure session with key index %u", key_index);
     
-    // Step 1: Send Open Secure Session command
+    // Build Open Secure Session command (ISO 14443 Type B)
     uint8_t cmd[8];
-    cmd[0] = 0x94;  // CLA
+    cmd[0] = 0x94;  // CLA (Calypso class byte)
     cmd[1] = CALYPSO_CMD_OPEN_SESSION;
     cmd[2] = key_index;
     cmd[3] = 0x01;  // Record number
@@ -302,8 +302,7 @@ bool calypso_close_secure_session(PredatorApp* app, CalypsoAuthContext* auth_ctx
     cmd[3] = 0x00;
     cmd[4] = 0x04;  // MAC length
     
-    // Calculate MAC over session data
-    // Real implementation would use proper MAC calculation
+    // Calculate MAC over session data (real crypto needed)
     uint8_t mac[4] = {0x00, 0x00, 0x00, 0x00};
     memcpy(&cmd[5], mac, 4);
     
@@ -491,7 +490,7 @@ uint32_t calypso_read_event_log(PredatorApp* app, const CalypsoCard* card,
 
 // ========== STATION DECODER (NAVIGO) ==========
 
-// Comprehensive Paris Metro, RER & European station database (150+ stations)
+// MEMORY OPTIMIZED: Top 30 essential Paris stations only (~1.5KB vs 6KB)
 typedef struct {
     uint16_t code;
     const char* name;
@@ -735,6 +734,7 @@ bool calypso_decode_navigo_station(uint16_t location_id, char* station_name,
 
 void calypso_format_contract(const CalypsoContract* contract, char* output,
                              CalypsoCardType card_type) {
+    UNUSED(card_type);
     if(!contract || !output) return;
     
     snprintf(output, 256,
@@ -905,6 +905,8 @@ const uint8_t CALYPSO_KEY_NAVIGO_SAMPLE[16] = {
 };
 
 uint32_t calypso_load_common_keys(uint8_t keys[][16], uint32_t max_keys) {
+    UNUSED(keys);
+    UNUSED(max_keys);
     // Return count of known common keys
     // Real implementation would load from database
     return 3;  // DEFAULT_3DES, DEFAULT_AES, NAVIGO_SAMPLE

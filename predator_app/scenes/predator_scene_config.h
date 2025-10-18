@@ -9,8 +9,38 @@ ADD_SCENE(predator, car_model_attacks_ui, CarModelAttacksUI) // Attacks for sele
 ADD_SCENE(predator, protocol_test_ui, ProtocolTestUI)     // Protocol testing (Keeloq/Hitag2/AES)
 // ADD_SCENE(predator, walking_open_ui, WalkingOpenUI)      // REMOVED: Replaced by Konami code easter egg 🎮
 ADD_SCENE(predator, car_key_bruteforce_ui, CarKeyBruteforceUI)
-ADD_SCENE(predator, dictionary_attack_ui, DictionaryAttackUI)  // 🔥 NEW: 980+ keys
+ADD_SCENE(predator, dictionary_attack_ui, DictionaryAttackUI)  // NEW: 980+ keys
 ADD_SCENE(predator, car_jamming_ui, CarJammingUI)
+
+// Transit Cards (FeliCa & Calypso) - KEPT (User priority!)
+ADD_SCENE(predator, transit_cards_menu, TransitCardsMenu)
+ADD_SCENE(predator, felica_reader, FelicaReader)
+ADD_SCENE(predator, felica_actions, FelicaActions)
+ADD_SCENE(predator, felica_history, FelicaHistory)
+ADD_SCENE(predator, felica_balance, FelicaBalance)
+ADD_SCENE(predator, felica_dump, FelicaDump)
+ADD_SCENE(predator, calypso_reader, CalypsoReader)
+ADD_SCENE(predator, calypso_actions, CalypsoActions)
+ADD_SCENE(predator, calypso_journey, CalypsoJourney)
+ADD_SCENE(predator, calypso_contracts, CalypsoContracts)
+
+// Access Control DISABLED - Saves 12KB for Transit Cards
+// Can add later if needed
+// ADD_SCENE(predator, access_control_menu, AccessControlMenu)
+// ADD_SCENE(predator, wiegand_reader, WiegandReader)
+// ADD_SCENE(predator, wiegand_actions, WiegandActions)
+// ADD_SCENE(predator, wiegand_emulate, WiegandEmulate)
+// ADD_SCENE(predator, wiegand_bruteforce, WiegandBruteforce)
+// ADD_SCENE(predator, em4305_clone, EM4305Clone)
+// ADD_SCENE(predator, em4305_actions, EM4305Actions)
+// ADD_SCENE(predator, em4305_password_attack, EM4305PasswordAttack)
+// ADD_SCENE(predator, em4305_custom_write, EM4305CustomWrite)
+// ADD_SCENE(predator, iso15693_scanner, ISO15693Scanner)
+// ADD_SCENE(predator, iso15693_actions, ISO15693Actions)
+// ADD_SCENE(predator, iso15693_block_viewer, ISO15693BlockViewer)
+// ADD_SCENE(predator, iso15693_password_attack, ISO15693PasswordAttack)
+// ADD_SCENE(predator, iso15693_eas, ISO15693EAS)
+
 ADD_SCENE(predator, car_passive_opener_ui, CarPassiveOpenerUI)
 ADD_SCENE(predator, barrier_region_select_ui, BarrierRegionSelectUI)  // ENTERPRISE: Select region for smart manufacturer selection
 ADD_SCENE(predator, parking_barriers_ui, ParkingBarriersUI)  // ENTERPRISE: Professional parking barrier testing worldwide

@@ -16,9 +16,10 @@ typedef struct {
 } FelicaReaderState;
 
 static FelicaReaderState* reader_state = NULL;
+static View* reader_view = NULL;
 
 static void felica_reader_draw_callback(Canvas* canvas, void* context) {
-    PredatorApp* app = context;
+    UNUSED(context);
     if(!reader_state) return;
 
     canvas_clear(canvas);
@@ -33,7 +34,7 @@ static void felica_reader_draw_callback(Canvas* canvas, void* context) {
         // Animated waiting indicator
         char waiting[4] = ".  ";
         uint32_t ticks = furi_get_tick() / 500;
-        for(int i = 0; i < (ticks % 3) + 1; i++) {
+        for(uint32_t i = 0; i < (ticks % 3) + 1; i++) {
             waiting[i] = '.';
         }
         canvas_draw_str(canvas, 90, 24, waiting);
@@ -101,7 +102,7 @@ static bool felica_reader_input_callback(InputEvent* event, void* context) {
 }
 
 static void felica_reader_timer_callback(void* context) {
-    PredatorApp* app = context;
+    UNUSED(context);
     
     if(!reader_state) return;
     
@@ -125,28 +126,38 @@ static void felica_reader_timer_callback(void* context) {
                  "Press OK for actions");
     }
     
-    view_port_update(app->view_port);
+    // ViewDispatcher handles redraws automatically
 }
 
 void predator_scene_felica_reader_on_enter(void* context) {
     PredatorApp* app = context;
+    if(!app || !app->view_dispatcher) return;
     
     // Allocate state
     reader_state = malloc(sizeof(FelicaReaderState));
     memset(reader_state, 0, sizeof(FelicaReaderState));
     
     snprintf(reader_state->status_text, sizeof(reader_state->status_text),
-             "Ready");
+             "Waiting for card...");
     
-    // Setup view port
-    view_port_draw_callback_set(app->view_port, felica_reader_draw_callback, app);
-    view_port_input_callback_set(app->view_port, felica_reader_input_callback, app);
+    // Create view if needed
+    if(!reader_view) {
+        reader_view = view_alloc();
+        view_set_context(reader_view, app);
+        view_set_draw_callback(reader_view, felica_reader_draw_callback);
+        view_set_input_callback(reader_view, felica_reader_input_callback);
+        view_dispatcher_add_view(app->view_dispatcher, PredatorViewFelicaReader, reader_view);
+    }
     
-    // Start timer for card detection
+    view_dispatcher_switch_to_view(app->view_dispatcher, PredatorViewFelicaReader);
+    
+    // Start timer for animations and card detection
+    if(app->timer) {
+        furi_timer_stop(app->timer);
+        furi_timer_free(app->timer);
+    }
     app->timer = furi_timer_alloc(felica_reader_timer_callback, FuriTimerTypePeriodic, app);
-    furi_timer_start(app->timer, 500); // Check every 500ms
-    
-    gui_add_view_port(app->gui, app->view_port, GuiLayerFullscreen);
+    if(app->timer) furi_timer_start(app->timer, 100);
 }
 
 bool predator_scene_felica_reader_on_event(void* context, SceneManagerEvent event) {
@@ -158,15 +169,11 @@ bool predator_scene_felica_reader_on_event(void* context, SceneManagerEvent even
 void predator_scene_felica_reader_on_exit(void* context) {
     PredatorApp* app = context;
     
-    // Stop timer
-    if(app->timer) {
+    if(app && app->timer) {
         furi_timer_stop(app->timer);
         furi_timer_free(app->timer);
         app->timer = NULL;
     }
-    
-    // Cleanup
-    gui_remove_view_port(app->gui, app->view_port);
     
     if(reader_state) {
         free(reader_state);

@@ -14,9 +14,10 @@ typedef struct {
 } ContractsState;
 
 static ContractsState* state = NULL;
+static View* contracts_view = NULL;
 
 static void contracts_draw_callback(Canvas* canvas, void* context) {
-    PredatorApp* app = context;
+    UNUSED(context);
     if(!state) return;
 
     canvas_clear(canvas);
@@ -66,9 +67,8 @@ static void contracts_draw_callback(Canvas* canvas, void* context) {
     // Tariff code
     char tariff[64];
     snprintf(tariff, sizeof(tariff),
-             "Tariff: %02X%02X",
-             contract->tariff[0],
-             contract->tariff[1]);
+             "Tariff: %02X",
+             contract->tariff_code);
     canvas_draw_str(canvas, 2, 54, tariff);
     
     // Contract selector
@@ -98,14 +98,14 @@ static bool contracts_input_callback(InputEvent* event, void* context) {
         // Navigate between contracts
         if(event->key == InputKeyLeft && state->selected_index > 0) {
             state->selected_index--;
-            view_port_update(app->view_port);
+            // ViewDispatcher handles redraws automatically
             return true;
         }
         
         if(event->key == InputKeyRight && 
-           state->selected_index < state->contract_count - 1) {
+           state->selected_index + 1 < state->contract_count) {
             state->selected_index++;
-            view_port_update(app->view_port);
+            // ViewDispatcher handles redraws automatically
             return true;
         }
     }
@@ -115,6 +115,7 @@ static bool contracts_input_callback(InputEvent* event, void* context) {
 
 void predator_scene_calypso_contracts_on_enter(void* context) {
     PredatorApp* app = context;
+    if(!app || !app->view_dispatcher) return;
     
     // Allocate state
     state = malloc(sizeof(ContractsState));
@@ -125,19 +126,19 @@ void predator_scene_calypso_contracts_on_enter(void* context) {
     // state->contract_count = calypso_read_all_contracts(
     //     app, &state->card, state->contracts, 4);
     
-    if(state->contract_count > 1) {
-        snprintf(state->status_text, sizeof(state->status_text),
-                 "◀/▶ Switch, Back to exit");
-    } else {
-        snprintf(state->status_text, sizeof(state->status_text),
-                 "Back to exit");
+    snprintf(state->status_text, sizeof(state->status_text),
+             "←/→ Navigate, Back to exit");
+    
+    // Create view if needed
+    if(!contracts_view) {
+        contracts_view = view_alloc();
+        view_set_context(contracts_view, app);
+        view_set_draw_callback(contracts_view, contracts_draw_callback);
+        view_set_input_callback(contracts_view, contracts_input_callback);
+        view_dispatcher_add_view(app->view_dispatcher, PredatorViewCalypsoContracts, contracts_view);
     }
     
-    // Setup view port
-    view_port_draw_callback_set(app->view_port, contracts_draw_callback, app);
-    view_port_input_callback_set(app->view_port, contracts_input_callback, app);
-    
-    gui_add_view_port(app->gui, app->view_port, GuiLayerFullscreen);
+    view_dispatcher_switch_to_view(app->view_dispatcher, PredatorViewCalypsoContracts);
 }
 
 bool predator_scene_calypso_contracts_on_event(void* context, SceneManagerEvent event) {
@@ -147,9 +148,7 @@ bool predator_scene_calypso_contracts_on_event(void* context, SceneManagerEvent 
 }
 
 void predator_scene_calypso_contracts_on_exit(void* context) {
-    PredatorApp* app = context;
-    
-    gui_remove_view_port(app->gui, app->view_port);
+    UNUSED(context);
     
     if(state) {
         free(state);

@@ -76,11 +76,13 @@ bool predator_scene_calypso_actions_on_event(void* context, SceneManagerEvent ev
             consumed = true;
             break;
         case CalypsoActionsDumpCard:
-            scene_manager_next_scene(app->scene_manager, PredatorSceneCalypsoDump);
+            // TODO: Dump feature - disabled for now
+            // scene_manager_next_scene(app->scene_manager, PredatorSceneCalypsoJourney);
             consumed = true;
             break;
         case CalypsoActionsAnalyze:
-            scene_manager_next_scene(app->scene_manager, PredatorSceneCalypsoAnalyze);
+            // TODO: Analyze feature - disabled for now
+            // scene_manager_next_scene(app->scene_manager, PredatorSceneCalypsoContracts);
             consumed = true;
             break;
         case CalypsoActionsBack:
