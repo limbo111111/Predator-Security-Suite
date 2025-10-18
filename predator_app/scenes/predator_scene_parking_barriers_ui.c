@@ -47,10 +47,9 @@ static ParkingBarrierState barrier_state;
 // TODO: Re-enable for professional live UI
 // static FuriTimer* attack_timer = NULL;
 
-<<<<<<< HEAD
 // WORLDWIDE ENTERPRISE: Frequencies now in shared header (helpers/predator_frequencies.h)
 // Using PREDATOR_FREQUENCY_COUNT = 18 worldwide frequencies for 98%+ coverage
-=======
+
 // Timer callback for live attack updates (TODO: Future implementation)
 /*
 static void attack_timer_callback(void* context) {
@@ -133,7 +132,6 @@ static const char* parking_frequency_names[] = {
 */
 
 // #define PARKING_FREQUENCY_COUNT 18
->>>>>>> origin/main
 
 static const char* barrier_type_names[] = {
     "Private Parking",
@@ -150,12 +148,10 @@ static const char* barrier_type_names[] = {
 static const char* barrier_type_icons[] = {
     "🏠", "🏛️", "🏥", "🛒", "✈️", "🏛️"
 };
+*/
 
-<<<<<<< HEAD
 // UNUSED: Parking Barriers uses submenu + inline attack execution
 /*
-=======
->>>>>>> origin/main
 static void draw_parking_header(Canvas* canvas) {
     canvas_set_font(canvas, FontPrimary);
     canvas_draw_str(canvas, 5, 10, "🚧 PARKING BARRIERS");
