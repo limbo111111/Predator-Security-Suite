@@ -142,7 +142,7 @@ static void dict_attack_timer_callback(void* context) {
         dict_state.keys_tried++;
         
         // Log progress every 50 keys
-        if(dict_state.keys_tried % 50 == 0) {
+        if(dict_state.keys_tried % 50 == 0 && dict_state.total_keys > 0) {
             uint32_t percent = (dict_state.keys_tried * 100) / dict_state.total_keys;
             char log_msg[64];
             snprintf(log_msg, sizeof(log_msg), "Progress: %lu/%lu (%lu%%)", 
@@ -164,7 +164,15 @@ static void dict_attack_timer_callback(void* context) {
 
 void predator_scene_dictionary_attack_ui_on_enter(void* context) {
     PredatorApp* app = context;
-    if(!app) return;
+    if(!app) {
+        FURI_LOG_E("DictAttack", "ERROR: app context is NULL!");
+        return;
+    }
+    
+    if(!app->view_dispatcher) {
+        FURI_LOG_E("DictAttack", "ERROR: view_dispatcher is NULL!");
+        return;
+    }
     
     memset(&dict_state, 0, sizeof(DictAttackState));
     dict_state.status = DictAttackStatusIdle;
@@ -172,6 +180,10 @@ void predator_scene_dictionary_attack_ui_on_enter(void* context) {
     
     if(!dict_view) {
         dict_view = view_alloc();
+        if(!dict_view) {
+            FURI_LOG_E("DictAttack", "ERROR: Failed to allocate view!");
+            return;
+        }
         view_set_context(dict_view, app);
         view_set_draw_callback(dict_view, dict_attack_draw_callback);
         view_set_input_callback(dict_view, dict_attack_input_callback);
@@ -180,8 +192,19 @@ void predator_scene_dictionary_attack_ui_on_enter(void* context) {
     
     view_dispatcher_switch_to_view(app->view_dispatcher, PredatorViewDictionaryAttackUI);
     
+    // Safety: Stop any existing timer first
+    if(app->timer) {
+        furi_timer_stop(app->timer);
+        furi_timer_free(app->timer);
+        app->timer = NULL;
+    }
+    
     app->timer = furi_timer_alloc(dict_attack_timer_callback, FuriTimerTypePeriodic, app);
-    furi_timer_start(app->timer, 100);
+    if(app->timer) {
+        furi_timer_start(app->timer, 100);
+    } else {
+        FURI_LOG_E("DictAttack", "ERROR: Failed to allocate timer!");
+    }
     
     FURI_LOG_I("DictAttack", "Dictionary Attack UI initialized - 980+ keys ready");
 }

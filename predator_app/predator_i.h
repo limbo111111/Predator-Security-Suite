@@ -44,6 +44,35 @@ typedef enum {
     PredatorViewCarJammingUI,
     PredatorViewCarKeyBruteforceUI,
     PredatorViewDictionaryAttackUI,  // 🔥 NEW: 980+ keys
+    
+    // Transit Cards (Phase 3)
+    PredatorViewTransitCardsMenu,
+    PredatorViewFelicaReader,
+    PredatorViewFelicaActions,
+    PredatorViewFelicaHistory,
+    PredatorViewFelicaBalance,
+    PredatorViewFelicaDump,
+    PredatorViewCalypsoReader,
+    PredatorViewCalypsoActions,
+    PredatorViewCalypsoJourney,
+    PredatorViewCalypsoContracts,
+    
+    // Access Control (Phase 3)
+    PredatorViewAccessControlMenu,
+    PredatorViewWiegandReader,
+    PredatorViewWiegandActions,
+    PredatorViewWiegandEmulate,
+    PredatorViewWiegandBruteforce,
+    PredatorViewEM4305Clone,
+    PredatorViewEM4305Actions,
+    PredatorViewEM4305PasswordAttack,
+    PredatorViewEM4305CustomWrite,
+    PredatorViewISO15693Scanner,
+    PredatorViewISO15693Actions,
+    PredatorViewISO15693BlockViewer,
+    PredatorViewISO15693PasswordAttack,
+    PredatorViewISO15693EAS,
+    
     PredatorViewCarPassiveOpenerUI,
     PredatorViewRfidCloneUI,
     PredatorViewRfidBruteforceUI,

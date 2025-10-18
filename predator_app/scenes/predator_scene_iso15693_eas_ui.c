@@ -13,8 +13,10 @@ typedef struct {
 
 static EASState* eas_state = NULL;
 
+static View* eas_view = NULL;
+
 static void eas_draw_callback(Canvas* canvas, void* context) {
-    PredatorApp* app = context;
+    UNUSED(context);
     if(!eas_state) return;
 
     canvas_clear(canvas);
@@ -24,7 +26,8 @@ static void eas_draw_callback(Canvas* canvas, void* context) {
     canvas_set_font(canvas, FontSecondary);
     
     if(eas_state->operation_complete) {
-        canvas_draw_icon(canvas, 40, 20, &I_Success_25x25);
+        // Success indication (icon removed - not available in SDK)
+        canvas_draw_str(canvas, 40, 25, "[SUCCESS]");
         
         const char* result = eas_state->eas_enabled ? "Enabled" : "Disabled";
         char msg[64];
@@ -75,7 +78,7 @@ static bool eas_input_callback(InputEvent* event, void* context) {
                              "Success!");
                 }
                 
-                view_port_update(app->view_port);
+                if(eas_view) view_port_update(view_get_port(eas_view));
                 return true;
             }
             
@@ -93,7 +96,7 @@ static bool eas_input_callback(InputEvent* event, void* context) {
                              "Success!");
                 }
                 
-                view_port_update(app->view_port);
+                if(eas_view) view_port_update(view_get_port(eas_view));
                 return true;
             }
         }
@@ -104,21 +107,28 @@ static bool eas_input_callback(InputEvent* event, void* context) {
 
 void predator_scene_iso15693_eas_on_enter(void* context) {
     PredatorApp* app = context;
-    
-    eas_state = malloc(sizeof(EASState));
+    if(!app || !app->view_dispatcher) return;
+
+    // Allocate state
+    if(!eas_state) {
+        eas_state = malloc(sizeof(EASState));
+    }
     memset(eas_state, 0, sizeof(EASState));
     
-    // Read current EAS status
-    // Real implementation: eas_state->eas_enabled = iso15693_read_eas_status(app);
-    eas_state->eas_enabled = false; // Placeholder
+    // Initialize with current EAS status (would read from card)
+    eas_state->eas_enabled = false;
+    eas_state->operation_complete = false;
     
-    snprintf(eas_state->status_text, sizeof(eas_state->status_text),
-             "Ready");
+    // Create view if needed
+    if(!eas_view) {
+        eas_view = view_alloc();
+        view_set_context(eas_view, app);
+        view_set_draw_callback(eas_view, eas_draw_callback);
+        view_set_input_callback(eas_view, eas_input_callback);
+        view_dispatcher_add_view(app->view_dispatcher, PredatorViewISO15693EAS, eas_view);
+    }
     
-    view_port_draw_callback_set(app->view_port, eas_draw_callback, app);
-    view_port_input_callback_set(app->view_port, eas_input_callback, app);
-    
-    gui_add_view_port(app->gui, app->view_port, GuiLayerFullscreen);
+    view_dispatcher_switch_to_view(app->view_dispatcher, PredatorViewISO15693EAS);
 }
 
 bool predator_scene_iso15693_eas_on_event(void* context, SceneManagerEvent event) {
@@ -128,9 +138,10 @@ bool predator_scene_iso15693_eas_on_event(void* context, SceneManagerEvent event
 }
 
 void predator_scene_iso15693_eas_on_exit(void* context) {
-    PredatorApp* app = context;
+    UNUSED(context);
     
-    gui_remove_view_port(app->gui, app->view_port);
+    // State is kept for re-entry
+    // View is kept in dispatcher
     
     if(eas_state) {
         free(eas_state);

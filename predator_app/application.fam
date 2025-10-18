@@ -60,6 +60,35 @@ App(
         "scenes/predator_scene_car_key_bruteforce_ui.c",
         "scenes/predator_scene_dictionary_attack_ui.c",  # 🔥 NEW: 980+ keys dictionary attack
         "scenes/predator_scene_car_jamming_ui.c",
+        
+        # Transit Cards (FeliCa & Calypso) - FIXING ALL SCENES
+        "scenes/predator_scene_transit_cards_menu_ui.c",
+        "scenes/predator_scene_felica_reader_ui.c",
+        "scenes/predator_scene_felica_actions_ui.c",
+        "scenes/predator_scene_felica_history_ui.c",
+        "scenes/predator_scene_felica_balance_ui.c",
+        "scenes/predator_scene_felica_dump_ui.c",
+        "scenes/predator_scene_calypso_reader_ui.c",
+        "scenes/predator_scene_calypso_actions_ui.c",
+        "scenes/predator_scene_calypso_journey_ui.c",
+        "scenes/predator_scene_calypso_contracts_ui.c",
+        
+        # Access Control DISABLED - Saves 12KB for Transit Cards
+        # "scenes/predator_scene_access_control_menu_ui.c",
+        # "scenes/predator_scene_wiegand_reader_ui.c",
+        # "scenes/predator_scene_wiegand_actions_ui.c",
+        # "scenes/predator_scene_wiegand_emulate_ui.c",
+        # "scenes/predator_scene_wiegand_bruteforce_ui.c",
+        # "scenes/predator_scene_em4305_clone_ui.c",
+        # "scenes/predator_scene_em4305_actions_ui.c",
+        # "scenes/predator_scene_em4305_password_attack_ui.c",
+        # "scenes/predator_scene_em4305_custom_write_ui.c",
+        # "scenes/predator_scene_iso15693_scanner_ui.c",
+        # "scenes/predator_scene_iso15693_actions_ui.c",
+        # "scenes/predator_scene_iso15693_block_viewer_ui.c",
+        # "scenes/predator_scene_iso15693_password_attack_ui.c",
+        # "scenes/predator_scene_iso15693_eas_ui.c",
+        
         "scenes/predator_scene_car_passive_opener_ui.c",
         
         # WiFi Attacks - REDUCED FOR MEMORY (Keep essentials only)
