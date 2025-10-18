@@ -251,18 +251,20 @@ bool calypso_open_secure_session(PredatorApp* app, const CalypsoCard* card,
     
     FURI_LOG_I("Calypso", "Opening secure session with key index %u", key_index);
     
-    // Step 1: Send Open Secure Session command (ready for HAL)
-    // uint8_t cmd[8];
-    // cmd[0] = 0x94;  // CLA
-    // cmd[1] = CALYPSO_CMD_OPEN_SESSION;
-    // cmd[2] = key_index;
-    // cmd[3] = 0x01;  // Record number
-    // cmd[4] = 0x04;  // Expected response length
+    // Build Open Secure Session command (ISO 14443 Type B)
+    uint8_t cmd[8];
+    cmd[0] = 0x94;  // CLA (Calypso class byte)
+    cmd[1] = CALYPSO_CMD_OPEN_SESSION;
+    cmd[2] = key_index;
+    cmd[3] = 0x01;  // Record number
+    cmd[4] = 0x04;  // Expected response length
     
     uint8_t response[32];
     size_t response_len = 0;
     
-    // Real: furi_hal_nfc_iso14443b_transceive(...) (HAL pending);
+    // Phase 5: HAL integration point
+    // furi_hal_nfc_iso14443b_transceive(cmd, 5, response, &response_len);
+    UNUSED(cmd);
     
     if(response_len >= 8) {
         // Extract card challenge
@@ -301,15 +303,17 @@ bool calypso_close_secure_session(PredatorApp* app, CalypsoAuthContext* auth_ctx
     cmd[3] = 0x00;
     cmd[4] = 0x04;  // MAC length
     
-    // Calculate MAC over session data
-    // Real implementation would use proper MAC calculation
+    // Calculate MAC over session data (real crypto needed)
     uint8_t mac[4] = {0x00, 0x00, 0x00, 0x00};
     memcpy(&cmd[5], mac, 4);
     
-    // uint8_t response[4];  // Commented out until HAL integration
-    // size_t response_len = 0;
+    uint8_t response[4];
+    size_t response_len = 0;
     
-    // Real: transceive (HAL integration pending)
+    // Phase 5: HAL integration point
+    // furi_hal_nfc_iso14443b_transceive(cmd, 9, response, &response_len);
+    UNUSED(response);
+    UNUSED(response_len);
     
     auth_ctx->authenticated = false;
     
@@ -326,18 +330,20 @@ uint32_t calypso_read_record(PredatorApp* app, const CalypsoCard* card,
     
     FURI_LOG_D("Calypso", "Reading file 0x%02X record %u", file_id, record_number);
     
-    // Build Read Records command (ready for HAL integration)
-    // uint8_t cmd[5];
-    // cmd[0] = 0x94;  // CLA
-    // cmd[1] = CALYPSO_CMD_READ_RECORDS;
-    // cmd[2] = record_number;
-    // cmd[3] = (file_id << 3) | 0x04;  // File ID and mode
-    // cmd[4] = 0x1D;  // Expected length (29 bytes typical)
+    // Build Read Records command
+    uint8_t cmd[5];
+    cmd[0] = 0x94;  // CLA
+    cmd[1] = CALYPSO_CMD_READ_RECORDS;
+    cmd[2] = record_number;
+    cmd[3] = (file_id << 3) | 0x04;  // File ID and mode
+    cmd[4] = 0x1D;  // Expected length (29 bytes typical)
     
     uint8_t response[64];
     size_t response_len = 0;
     
-    // Real: transceive (HAL integration pending)
+    // Phase 5: HAL integration point
+    // furi_hal_nfc_iso14443b_transceive(cmd, 5, response, &response_len);
+    UNUSED(cmd);
     
     if(response_len > 2) {
         uint32_t data_len = response_len - 2;  // Minus status bytes
@@ -495,36 +501,16 @@ typedef struct {
 } NavigoStation;
 
 static const NavigoStation paris_stations[] = {
-    // === TOP 30 PARIS METRO STATIONS (Most frequented) ===
-    {0x0001, "Châtelet"},                    // Lines 1,4,7,11,14 - Largest
-    {0x0002, "Gare du Nord"},                // International trains
-    {0x0003, "Gare de Lyon"},                // TGV South/East
-    {0x0004, "Montparnasse"},                // TGV West
-    {0x0005, "Saint-Lazare"},                // Business
-    {0x0006, "République"},                  // Major hub
-    {0x0007, "Nation"},                      // Lines 1,2,6,9
-    {0x0008, "Bastille"},                    // Historic
-    {0x0009, "Opéra"},                       // Cultural
-    {0x000A, "Charles de Gaulle-Étoile"},    // Arc de Triomphe
-    {0x0011, "La Défense"},                  // Business district
-    {0x001C, "Louvre"},                      // Museum
-    {0x001E, "Hôtel de Ville"},              // City Hall
-    {0x004B, "Les Halles"},                  // Shopping
-    {0x004C, "Cité"},                        // Notre-Dame
-    {0x004D, "Saint-Michel"},                // Latin Quarter
-    {0x0064, "Trocadéro"},                   // Eiffel view
-    {0x0066, "Bir-Hakeim"},                  // Eiffel Tower
-    {0x0088, "Place d'Italie"},              // South hub
-    
-    // === RER & AIRPORTS (Essential only) ===
-    {0x0A03, "Châtelet-Les Halles"},         // RER hub
-    {0x0A22, "Disneyland Paris"},            // Tourist
-    {0x0B01, "CDG Airport T2"},              // Airport
-    {0x0B19, "Orly Airport"},                // Airport
-    {0x0C18, "Tour Eiffel"},                 // Eiffel Tower
-    {0x0C20, "Invalides"},                   // Museum
-    {0x0C21, "Musée d'Orsay"},               // Museum
-    {0x0C41, "Versailles"},                  // Palace
+    {0x0001, "Chatelet"}, {0x0002, "Gare du Nord"}, {0x0003, "Gare de Lyon"},
+    {0x0004, "Montparnasse"}, {0x0005, "Saint-Lazare"}, {0x0006, "Republique"},
+    {0x0007, "Nation"}, {0x0008, "Bastille"}, {0x0009, "Opera"},
+    {0x000A, "Ch.de Gaulle-Etoile"}, {0x0011, "La Defense"}, {0x001C, "Louvre"},
+    {0x001E, "Hotel de Ville"}, {0x004B, "Les Halles"}, {0x004C, "Cite"},
+    {0x004D, "Saint-Michel"}, {0x0064, "Trocadero"}, {0x0066, "Bir-Hakeim"},
+    {0x0088, "Place d'Italie"}, {0x0A03, "Chatelet-Halles"}, 
+    {0x0A22, "Disneyland"}, {0x0B01, "CDG Airport"}, {0x0B19, "Orly Airport"},
+    {0x0C18, "Tour Eiffel"}, {0x0C20, "Invalides"}, {0x0C21, "Musee d'Orsay"},
+    {0x0C41, "Versailles"}
 };
 
 bool calypso_decode_navigo_station(uint16_t location_id, char* station_name,
@@ -643,10 +629,13 @@ bool calypso_select_application(PredatorApp* app, const CalypsoCard* card,
     uint8_t aid[] = {0x31, 0x54, 0x49, 0x43, 0x2E, 0x49, 0x43};
     memcpy(&cmd[5], aid, 7);
     
-    // uint8_t response[32];  // Commented out until HAL integration
-    // size_t response_len = 0;
+    uint8_t response[32];
+    size_t response_len = 0;
     
-    // Real: transceive (HAL integration pending)
+    // Phase 5: HAL integration point
+    // furi_hal_nfc_iso14443b_transceive(cmd, 12, response, &response_len);
+    UNUSED(response);
+    UNUSED(response_len);
     
     FURI_LOG_I("Calypso", "Application selected");
     return true;

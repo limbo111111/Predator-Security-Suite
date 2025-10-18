@@ -427,19 +427,21 @@ bool felica_detect_card(PredatorApp* app, uint16_t system_code, FeliCaCard* card
     
     FURI_LOG_I("FeliCa", "Polling for system 0x%04X", system_code);
     
-    // Build Polling command (ready for HAL integration)
-    // uint8_t cmd[6];
-    // cmd[0] = 6;
-    // cmd[1] = FELICA_CMD_POLLING;
-    // cmd[2] = system_code & 0xFF;
-    // cmd[3] = (system_code >> 8) & 0xFF;
-    // cmd[4] = 0x01;  // Request code (system code)
-    // cmd[5] = 0x00;  // Time slot (0 = 1 slot)
+    // Build Polling command
+    uint8_t cmd[6];
+    cmd[0] = 6;
+    cmd[1] = FELICA_CMD_POLLING;
+    cmd[2] = system_code & 0xFF;
+    cmd[3] = (system_code >> 8) & 0xFF;
+    cmd[4] = 0x01;  // Request code (system code)
+    cmd[5] = 0x00;  // Time slot (0 = 1 slot)
     
     uint8_t response[32];
     size_t response_len = 0;
     
-    // Real: furi_hal_nfc_felica_transceive(...) (HAL integration pending)
+    // Phase 5: HAL integration point
+    // furi_hal_nfc_felica_transceive(cmd, 6, response, &response_len);
+    UNUSED(cmd);
     
     if(response_len >= 18) {
         memset(card, 0, sizeof(FeliCaCard));

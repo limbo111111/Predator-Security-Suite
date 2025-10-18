@@ -10,64 +10,39 @@ static const PredatorCarModel hardcoded_models[] = {
     // EUROPEAN BRANDS FIRST - Most Classic & Popular in Europe 🇪🇺
     // ========================================================================
     
-    // VOLKSWAGEN (German Engineering - #1 in Europe)
-    {"Volkswagen", "Atlas 2020+", 315000000, "Rolling Code", CarContinentEurope},
-    {"Volkswagen", "Various Fixed", 433920000, "Fixed Code", CarContinentEurope},
-    {"Volkswagen", "Various Rolling", 433920000, "Rolling Code", CarContinentEurope},
-    {"Volkswagen", "Various Smart", 433920000, "Smart Key", CarContinentEurope},
-    
-    // AUDI (Premium German Engineering)
-    {"Audi", "Various Rolling", 868350000, "Rolling Code", CarContinentEurope},
-    {"Audi", "Various Smart", 868350000, "Smart Key", CarContinentEurope},
-    
-    // BMW (Bavarian Motor Works)
-    {"BMW", "Various Rolling", 868350000, "Rolling Code", CarContinentEurope},
-    {"BMW", "Various Smart", 868350000, "Smart Key", CarContinentEurope},
-    
-    // MERCEDES (German Luxury)
-    {"Mercedes", "Various Rolling", 868350000, "Rolling Code", CarContinentEurope},
-    {"Mercedes", "Various Smart", 868350000, "Smart Key", CarContinentEurope},
-    {"Mercedes-Benz", "Sprinter 2018+", 868350000, "Rolling Code", CarContinentEurope},
-    
-    // RENAULT (French Innovation)
-    {"Renault", "Various Fixed", 433920000, "Fixed Code", CarContinentEurope},
-    {"Renault", "Various Rolling", 433920000, "Rolling Code", CarContinentEurope},
-    {"Renault", "Zoe 2019+", 433920000, "Smart Key", CarContinentEurope},
-    
-    // PEUGEOT (French Style)
-    {"Peugeot", "Landtrek 2020+", 433920000, "Fixed Code", CarContinentEurope},
-    {"Peugeot", "Various Rolling", 433920000, "Rolling Code", CarContinentEurope},
-    {"Peugeot", "Various Smart", 433920000, "Smart Key", CarContinentEurope},
-    
-    // FIAT (Italian Style)
-    {"Fiat", "500X 2018+", 433920000, "Fixed Code", CarContinentEurope},
-    {"Fiat", "Various Fixed", 315000000, "Fixed Code", CarContinentEurope},
-    {"Fiat", "Various Rolling", 433920000, "Rolling Code", CarContinentEurope},
-    
-    // PORSCHE (German Performance)
-    {"Porsche", "Various Rolling", 433920000, "Rolling Code", CarContinentEurope},
-    {"Porsche", "Various Smart", 433920000, "Smart Key", CarContinentEurope},
-    
-    // SKODA (Czech Engineering - VW Group)
-    {"Skoda", "Enyaq 2021+", 433920000, "Smart Key", CarContinentEurope},
-    {"Skoda", "Various Fixed", 433920000, "Fixed Code", CarContinentEurope},
-    {"Skoda", "Various Rolling", 433920000, "Rolling Code", CarContinentEurope},
-    
-    // SEAT (Spanish Design - VW Group)
-    {"Seat", "Various Fixed", 433920000, "Fixed Code", CarContinentEurope},
-    {"Seat", "Various Rolling", 433920000, "Rolling Code", CarContinentEurope},
-    
-    // VOLVO (Swedish Safety)
-    {"Volvo", "Various Rolling", 868350000, "Rolling Code", CarContinentEurope},
-    {"Volvo", "Various Smart", 868350000, "Smart Key", CarContinentEurope},
-    
-    // JAGUAR (British Elegance)
-    {"Jaguar", "Various Fixed", 433920000, "Fixed Code", CarContinentEurope},
-    {"Jaguar", "Various Smart", 433920000, "Smart Key", CarContinentEurope},
-    
-    // RANGE ROVER (British Luxury)
-    {"Range Rover", "Various Fixed", 433920000, "Fixed Code", CarContinentEurope},
-    {"Range Rover", "Various Smart", 433920000, "Smart Key", CarContinentEurope},
+    {"VW", "Atlas 20+", 315000000, "Rolling", CarContinentEurope},
+    {"VW", "Fixed", 433920000, "Fixed", CarContinentEurope},
+    {"VW", "Rolling", 433920000, "Rolling", CarContinentEurope},
+    {"VW", "Smart", 433920000, "Smart", CarContinentEurope},
+    {"Audi", "Rolling", 868350000, "Rolling", CarContinentEurope},
+    {"Audi", "Smart", 868350000, "Smart", CarContinentEurope},
+    {"BMW", "Rolling", 868350000, "Rolling", CarContinentEurope},
+    {"BMW", "Smart", 868350000, "Smart", CarContinentEurope},
+    {"Mercedes", "Rolling", 868350000, "Rolling", CarContinentEurope},
+    {"Mercedes", "Smart", 868350000, "Smart", CarContinentEurope},
+    {"Mercedes", "Sprinter 18+", 868350000, "Rolling", CarContinentEurope},
+    {"Renault", "Fixed", 433920000, "Fixed", CarContinentEurope},
+    {"Renault", "Rolling", 433920000, "Rolling", CarContinentEurope},
+    {"Renault", "Zoe 19+", 433920000, "Smart", CarContinentEurope},
+    {"Peugeot", "Landtrek 20+", 433920000, "Fixed", CarContinentEurope},
+    {"Peugeot", "Rolling", 433920000, "Rolling", CarContinentEurope},
+    {"Peugeot", "Smart", 433920000, "Smart", CarContinentEurope},
+    {"Fiat", "500X 18+", 433920000, "Fixed", CarContinentEurope},
+    {"Fiat", "Fixed", 315000000, "Fixed", CarContinentEurope},
+    {"Fiat", "Rolling", 433920000, "Rolling", CarContinentEurope},
+    {"Porsche", "Rolling", 433920000, "Rolling", CarContinentEurope},
+    {"Porsche", "Smart", 433920000, "Smart", CarContinentEurope},
+    {"Skoda", "Enyaq 21+", 433920000, "Smart", CarContinentEurope},
+    {"Skoda", "Fixed", 433920000, "Fixed", CarContinentEurope},
+    {"Skoda", "Rolling", 433920000, "Rolling", CarContinentEurope},
+    {"Seat", "Fixed", 433920000, "Fixed", CarContinentEurope},
+    {"Seat", "Rolling", 433920000, "Rolling", CarContinentEurope},
+    {"Volvo", "Rolling", 868350000, "Rolling", CarContinentEurope},
+    {"Volvo", "Smart", 868350000, "Smart", CarContinentEurope},
+    {"Jaguar", "Fixed", 433920000, "Fixed", CarContinentEurope},
+    {"Jaguar", "Smart", 433920000, "Smart", CarContinentEurope},
+    {"Range Rover", "Fixed", 433920000, "Fixed", CarContinentEurope},
+    {"Range Rover", "Smart", 433920000, "Smart", CarContinentEurope},
     
     // === PREMIUM EUROPEAN SUPERCARS ===
     
@@ -169,150 +144,9 @@ static const PredatorCarModel hardcoded_models[] = {
     {"Tesla", "Semi 2023+", 315000000, "Smart Key", CarContinentAmerica},
     
     // ========================================================================
-    // JAPANESE BRANDS 
+    // MEMORY OPTIMIZED: Asia/America brands removed (~5KB saved)
+    // Focus: Europe + Tesla only (78 models vs 178 models)
     // ========================================================================
-    
-    // TOYOTA (Japanese Quality)
-    {"Toyota", "Various Fixed 315", 315000000, "Fixed Code", CarContinentAsia},
-    {"Toyota", "Various Fixed 433", 433920000, "Fixed Code", CarContinentAsia},
-    {"Toyota", "Various Rolling 315", 315000000, "Rolling Code", CarContinentAsia},
-    {"Toyota", "Various Rolling 433", 433920000, "Rolling Code", CarContinentAsia},
-    {"Toyota", "Various Smart", 433920000, "Smart Key", CarContinentAsia},
-    
-    // HONDA (Japanese Reliability)
-    {"Honda", "Various Fixed", 315000000, "Fixed Code", CarContinentAsia},
-    {"Honda", "Various Rolling", 315000000, "Rolling Code", CarContinentAsia},
-    {"Honda", "Various Special", 433420000, "Rolling Code", CarContinentAsia},
-    {"Honda", "Various", 433420000, "Rolling Code", CarContinentAsia},
-    {"Honda", "Various", 433420000, "Fixed Code", CarContinentAsia},
-    {"Honda", "Various", 433420000, "Smart Key", CarContinentAsia},
-    
-    // NISSAN (Japanese Innovation)
-    {"Nissan", "Leaf 2019+", 433920000, "Smart Key", CarContinentAsia},
-    {"Nissan", "Various Fixed 315", 315000000, "Fixed Code", CarContinentAsia},
-    {"Nissan", "Various Fixed 433", 433920000, "Fixed Code", CarContinentAsia},
-    {"Nissan", "Various Rolling 315", 315000000, "Rolling Code", CarContinentAsia},
-    {"Nissan", "Various Rolling 433", 433920000, "Rolling Code", CarContinentAsia},
-    {"Nissan", "Various Smart", 315000000, "Smart Key", CarContinentAsia},
-    
-    // MAZDA (Japanese Engineering)
-    {"Mazda", "2 2018+", 433920000, "Fixed Code", CarContinentAsia},
-    {"Mazda", "Various Rolling", 433920000, "Rolling Code", CarContinentAsia},
-    {"Mazda", "Various Smart", 433920000, "Smart Key", CarContinentAsia},
-    
-    // MITSUBISHI (Japanese Reliability)
-    {"Mitsubishi", "Various Fixed", 433920000, "Fixed Code", CarContinentAsia},
-    {"Mitsubishi", "Various Rolling", 433920000, "Rolling Code", CarContinentAsia},
-    
-    // SUBARU (Japanese AWD)
-    {"Subaru", "Ascent 2019+", 315000000, "Rolling Code", CarContinentAsia},
-    {"Subaru", "Various Rolling", 433920000, "Rolling Code", CarContinentAsia},
-    {"Subaru", "Various Smart", 433920000, "Smart Key", CarContinentAsia},
-    
-    // LEXUS (Japanese Luxury)
-    {"Lexus", "LX 2019+", 315000000, "Smart Key", CarContinentAsia},
-    {"Lexus", "Various Rolling", 433920000, "Rolling Code", CarContinentAsia},
-    {"Lexus", "Various Smart", 433920000, "Smart Key", CarContinentAsia},
-    
-    // INFINITI (Japanese Luxury)
-    {"Infiniti", "Various Fixed", 315000000, "Fixed Code", CarContinentAsia},
-    {"Infiniti", "Various Rolling", 315000000, "Rolling Code", CarContinentAsia},
-    {"Infiniti", "Various Smart", 315000000, "Smart Key", CarContinentAsia},
-    
-    // ACURA (Japanese Luxury)
-    {"Acura", "Integra 2022+", 315000000, "Smart Key", CarContinentAsia},
-    {"Acura", "Various Fixed", 315000000, "Fixed Code", CarContinentAsia},
-    {"Acura", "Various Rolling", 315000000, "Rolling Code", CarContinentAsia},
-    
-    // ========================================================================
-    // KOREAN BRANDS 
-    // ========================================================================
-    
-    // HYUNDAI (Korean Innovation)
-    {"Hyundai", "Various Fixed", 433920000, "Fixed Code", CarContinentAsia},
-    {"Hyundai", "Various Rolling", 433920000, "Rolling Code", CarContinentAsia},
-    {"Hyundai", "Various Smart", 433920000, "Smart Key", CarContinentAsia},
-    
-    // KIA (Korean Quality)
-    {"Kia", "Various Fixed", 433920000, "Fixed Code", CarContinentAsia},
-    {"Kia", "Various Rolling", 433920000, "Rolling Code", CarContinentAsia},
-    {"Kia", "Various Smart", 433920000, "Smart Key", CarContinentAsia},
-    
-    // ========================================================================
-    // CHINESE MANUFACTURERS 🇨🇳 (China Standard 433.92MHz)
-    // ========================================================================
-    
-    // BYD (比亚迪) - World's Largest EV Maker
-    {"BYD", "Han 2020+", 433920000, "Smart Key", CarContinentAsia},
-    {"BYD", "Tang 2018+", 433920000, "Smart Key", CarContinentAsia},
-    {"BYD", "Song Plus", 433920000, "Rolling Code", CarContinentAsia},
-    {"BYD", "Seal 2022+", 433920000, "Smart Key", CarContinentAsia},
-    {"BYD", "Dolphin 2021+", 433920000, "Smart Key", CarContinentAsia},
-    {"BYD", "Various Rolling", 433920000, "Rolling Code", CarContinentAsia},
-    
-    // NIO (蔚来) - Premium EVs
-    {"NIO", "ES6 2019+", 433920000, "Smart Key", CarContinentAsia},
-    {"NIO", "ES8 2018+", 433920000, "Smart Key", CarContinentAsia},
-    {"NIO", "ET5 2022+", 433920000, "Smart Key", CarContinentAsia},
-    {"NIO", "ET7 2022+", 433920000, "Smart Key", CarContinentAsia},
-    
-    // XPENG (小鹏) - Tech-Focused EVs
-    {"Xpeng", "P7 2020+", 433920000, "Smart Key", CarContinentAsia},
-    {"Xpeng", "P5 2021+", 433920000, "Smart Key", CarContinentAsia},
-    {"Xpeng", "G9 2022+", 433920000, "Smart Key", CarContinentAsia},
-    {"Xpeng", "G3 2019+", 433920000, "Smart Key", CarContinentAsia},
-    
-    // GEELY (吉利) - Major Manufacturer
-    {"Geely", "Emgrand GT", 433920000, "Rolling Code", CarContinentAsia},
-    {"Geely", "Boyue 2018+", 433920000, "Rolling Code", CarContinentAsia},
-    {"Geely", "Coolray 2020+", 433920000, "Smart Key", CarContinentAsia},
-    {"Geely", "Various Rolling", 433920000, "Rolling Code", CarContinentAsia},
-    
-    // GREAT WALL (长城) - SUVs & Pickups
-    {"Great Wall", "Haval H6", 433920000, "Rolling Code", CarContinentAsia},
-    {"Great Wall", "WEY VV7", 433920000, "Smart Key", CarContinentAsia},
-    {"Great Wall", "Tank 300", 433920000, "Rolling Code", CarContinentAsia},
-    
-    // MG (SAIC Motor) - Global Brand
-    {"MG", "ZS EV 2019+", 433920000, "Smart Key", CarContinentAsia},
-    {"MG", "HS 2019+", 433920000, "Rolling Code", CarContinentAsia},
-    {"MG", "Various", 433920000, "Rolling Code", CarContinentAsia},
-    
-    // ROEWE (上汽荣威) - SAIC Brand
-    {"Roewe", "RX5 2016+", 433920000, "Rolling Code", CarContinentAsia},
-    {"Roewe", "i6 2017+", 433920000, "Rolling Code", CarContinentAsia},
-    
-    // CHANGAN (长安)
-    {"Changan", "CS75 Plus", 433920000, "Rolling Code", CarContinentAsia},
-    {"Changan", "UNI-T 2020+", 433920000, "Smart Key", CarContinentAsia},
-    {"Changan", "Eado 2018+", 433920000, "Rolling Code", CarContinentAsia},
-    
-    // HONGQI (红旗) - Luxury State Cars
-    {"Hongqi", "H9 2020+", 433920000, "Smart Key", CarContinentAsia},
-    {"Hongqi", "E-HS9 2021+", 433920000, "Smart Key", CarContinentAsia},
-    
-    // LI AUTO (理想) - Extended-Range EVs
-    {"Li Auto", "Li ONE 2019+", 433920000, "Smart Key", CarContinentAsia},
-    {"Li Auto", "L7 2023+", 433920000, "Smart Key", CarContinentAsia},
-    {"Li Auto", "L8 2022+", 433920000, "Smart Key", CarContinentAsia},
-    {"Li Auto", "L9 2022+", 433920000, "Smart Key", CarContinentAsia},
-    
-    // ZEEKR (极氪) - Geely's Premium EV
-    {"Zeekr", "001 2021+", 433920000, "Smart Key", CarContinentAsia},
-    {"Zeekr", "X 2023+", 433920000, "Smart Key", CarContinentAsia},
-    
-    // LYNK & CO (领克) - Geely-Volvo Joint
-    {"Lynk & Co", "01 2017+", 433920000, "Rolling Code", CarContinentAsia},
-    {"Lynk & Co", "03 2018+", 433920000, "Smart Key", CarContinentAsia},
-    
-    // JAC (江淮) - Commercial & Passenger
-    {"JAC", "iEV7S", 433920000, "Fixed Code", CarContinentAsia},
-    {"JAC", "Various", 433920000, "Rolling Code", CarContinentAsia},
-    
-    // AIWAYS (爱驰) - EV Startup
-    {"Aiways", "U5 2019+", 433920000, "Smart Key", CarContinentAsia},
-    
-    // === END CHINESE MANUFACTURERS ===
 };
 
 static const size_t hardcoded_models_count = sizeof(hardcoded_models) / sizeof(hardcoded_models[0]);
