@@ -260,7 +260,8 @@ bool predator_scene_protocol_test_ui_on_event(void* context, SceneManagerEvent e
                 
                 // Test authentication (placeholder - will be implemented in v2.1)
                 uint8_t challenge[8] = {0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08};
-                uint8_t response[8];
+                uint8_t response[8] = {0};
+                UNUSED(response); // Placeholder for v2.1 implementation
                 
                 predator_log_append(app, "");
                 predator_log_append(app, "Testing challenge-response...");
