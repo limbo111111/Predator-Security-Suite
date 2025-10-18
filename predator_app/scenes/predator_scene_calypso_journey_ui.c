@@ -14,9 +14,10 @@ typedef struct {
 } JourneyState;
 
 static JourneyState* state = NULL;
+static View* journey_view = NULL;
 
 static void journey_draw_callback(Canvas* canvas, void* context) {
-    PredatorApp* app = context;
+    UNUSED(context);
     if(!state) return;
 
     canvas_clear(canvas);
@@ -80,9 +81,9 @@ static void journey_draw_callback(Canvas* canvas, void* context) {
         char line2[128];
         snprintf(line2, sizeof(line2),
                  "  %02X/%02X/%02X Contract #%u",
-                 state->events[i].event_date[2],
-                 state->events[i].event_date[1],
-                 state->events[i].event_date[0],
+                 state->events[i].date[2],
+                 state->events[i].date[1],
+                 state->events[i].date[0],
                  state->events[i].contract_used);
         canvas_draw_str(canvas, 2, y + 9, line2);
         
@@ -123,14 +124,14 @@ static bool journey_input_callback(InputEvent* event, void* context) {
         
         if(event->key == InputKeyUp && state->scroll_offset > 0) {
             state->scroll_offset--;
-            view_port_update(app->view_port);
+            // ViewDispatcher handles redraws automatically
             return true;
         }
         
         if(event->key == InputKeyDown && 
            state->scroll_offset + 3 < state->event_count) {
             state->scroll_offset++;
-            view_port_update(app->view_port);
+            // ViewDispatcher handles redraws automatically
             return true;
         }
     }
@@ -140,12 +141,13 @@ static bool journey_input_callback(InputEvent* event, void* context) {
 
 void predator_scene_calypso_journey_on_enter(void* context) {
     PredatorApp* app = context;
+    if(!app || !app->view_dispatcher) return;
     
     // Allocate state
     state = malloc(sizeof(JourneyState));
     memset(state, 0, sizeof(JourneyState));
     
-    // Read event log
+    // Read journey history
     // Real implementation would call:
     // state->event_count = calypso_read_event_log(
     //     app, &state->card, state->events, 20);
@@ -153,11 +155,16 @@ void predator_scene_calypso_journey_on_enter(void* context) {
     snprintf(state->status_text, sizeof(state->status_text),
              "↑/↓ Scroll, Back to exit");
     
-    // Setup view port
-    view_port_draw_callback_set(app->view_port, journey_draw_callback, app);
-    view_port_input_callback_set(app->view_port, journey_input_callback, app);
+    // Create view if needed
+    if(!journey_view) {
+        journey_view = view_alloc();
+        view_set_context(journey_view, app);
+        view_set_draw_callback(journey_view, journey_draw_callback);
+        view_set_input_callback(journey_view, journey_input_callback);
+        view_dispatcher_add_view(app->view_dispatcher, PredatorViewCalypsoJourney, journey_view);
+    }
     
-    gui_add_view_port(app->gui, app->view_port, GuiLayerFullscreen);
+    view_dispatcher_switch_to_view(app->view_dispatcher, PredatorViewCalypsoJourney);
 }
 
 bool predator_scene_calypso_journey_on_event(void* context, SceneManagerEvent event) {
@@ -167,9 +174,7 @@ bool predator_scene_calypso_journey_on_event(void* context, SceneManagerEvent ev
 }
 
 void predator_scene_calypso_journey_on_exit(void* context) {
-    PredatorApp* app = context;
-    
-    gui_remove_view_port(app->gui, app->view_port);
+    UNUSED(context);
     
     if(state) {
         free(state);

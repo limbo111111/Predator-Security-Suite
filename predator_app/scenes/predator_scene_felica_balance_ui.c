@@ -14,9 +14,10 @@ typedef struct {
 } BalanceState;
 
 static BalanceState* state = NULL;
+static View* balance_view = NULL;
 
 static void balance_draw_callback(Canvas* canvas, void* context) {
-    PredatorApp* app = context;
+    UNUSED(context);
     if(!state) return;
 
     canvas_clear(canvas);
@@ -70,7 +71,7 @@ static bool balance_input_callback(InputEvent* event, void* context) {
             
             snprintf(state->status_text, sizeof(state->status_text),
                      "Balance refreshed!");
-            view_port_update(app->view_port);
+            // ViewDispatcher handles redraws automatically
             return true;
         }
     }
@@ -80,6 +81,7 @@ static bool balance_input_callback(InputEvent* event, void* context) {
 
 void predator_scene_felica_balance_on_enter(void* context) {
     PredatorApp* app = context;
+    if(!app || !app->view_dispatcher) return;
     
     // Allocate state
     state = malloc(sizeof(BalanceState));
@@ -97,11 +99,16 @@ void predator_scene_felica_balance_on_enter(void* context) {
     snprintf(state->status_text, sizeof(state->status_text),
              "OK to refresh");
     
-    // Setup view port
-    view_port_draw_callback_set(app->view_port, balance_draw_callback, app);
-    view_port_input_callback_set(app->view_port, balance_input_callback, app);
+    // Create view if needed
+    if(!balance_view) {
+        balance_view = view_alloc();
+        view_set_context(balance_view, app);
+        view_set_draw_callback(balance_view, balance_draw_callback);
+        view_set_input_callback(balance_view, balance_input_callback);
+        view_dispatcher_add_view(app->view_dispatcher, PredatorViewFelicaBalance, balance_view);
+    }
     
-    gui_add_view_port(app->gui, app->view_port, GuiLayerFullscreen);
+    view_dispatcher_switch_to_view(app->view_dispatcher, PredatorViewFelicaBalance);
 }
 
 bool predator_scene_felica_balance_on_event(void* context, SceneManagerEvent event) {
@@ -111,9 +118,7 @@ bool predator_scene_felica_balance_on_event(void* context, SceneManagerEvent eve
 }
 
 void predator_scene_felica_balance_on_exit(void* context) {
-    PredatorApp* app = context;
-    
-    gui_remove_view_port(app->gui, app->view_port);
+    UNUSED(context);
     
     if(state) {
         free(state);

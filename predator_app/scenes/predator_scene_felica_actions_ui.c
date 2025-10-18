@@ -80,7 +80,8 @@ bool predator_scene_felica_actions_on_event(void* context, SceneManagerEvent eve
             consumed = true;
             break;
         case FelicaActionsAnalyze:
-            scene_manager_next_scene(app->scene_manager, PredatorSceneFelicaAnalyze);
+            // TODO: Analyze feature - disabled for now
+            // scene_manager_next_scene(app->scene_manager, PredatorSceneFelicaHistory);
             consumed = true;
             break;
         case FelicaActionsBack:

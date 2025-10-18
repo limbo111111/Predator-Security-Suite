@@ -24,9 +24,10 @@ typedef struct {
 } DumpState;
 
 static DumpState* state = NULL;
+static View* dump_view = NULL;
 
 static void dump_draw_callback(Canvas* canvas, void* context) {
-    PredatorApp* app = context;
+    UNUSED(context);
     if(!state) return;
 
     canvas_clear(canvas);
@@ -43,7 +44,8 @@ static void dump_draw_callback(Canvas* canvas, void* context) {
     }
     
     if(state->dump_state == DumpStateComplete) {
-        canvas_draw_icon(canvas, 40, 20, &I_Success_25x25);
+        // Success indication (icon not available in SDK)
+        canvas_draw_str(canvas, 35, 30, "[SUCCESS]");
         canvas_draw_str(canvas, 25, 50, "Dump Complete!");
         canvas_draw_str(canvas, 10, 58, "Saved to SD card");
         return;
@@ -141,27 +143,36 @@ static void dump_timer_callback(void* context) {
         break;
     }
     
-    view_port_update(app->view_port);
+    // ViewDispatcher handles redraws automatically
 }
 
 void predator_scene_felica_dump_on_enter(void* context) {
     PredatorApp* app = context;
+    if(!app || !app->view_dispatcher) return;
     
     // Allocate state
     state = malloc(sizeof(DumpState));
     memset(state, 0, sizeof(DumpState));
-    
     state->dump_state = DumpStateInitializing;
     
-    // Setup view port
-    view_port_draw_callback_set(app->view_port, dump_draw_callback, app);
-    view_port_input_callback_set(app->view_port, dump_input_callback, app);
+    // Create view if needed
+    if(!dump_view) {
+        dump_view = view_alloc();
+        view_set_context(dump_view, app);
+        view_set_draw_callback(dump_view, dump_draw_callback);
+        view_set_input_callback(dump_view, dump_input_callback);
+        view_dispatcher_add_view(app->view_dispatcher, PredatorViewFelicaDump, dump_view);
+    }
+    
+    view_dispatcher_switch_to_view(app->view_dispatcher, PredatorViewFelicaDump);
     
     // Start timer for progress
+    if(app->timer) {
+        furi_timer_stop(app->timer);
+        furi_timer_free(app->timer);
+    }
     app->timer = furi_timer_alloc(dump_timer_callback, FuriTimerTypePeriodic, app);
-    furi_timer_start(app->timer, 200); // Update every 200ms
-    
-    gui_add_view_port(app->gui, app->view_port, GuiLayerFullscreen);
+    if(app->timer) furi_timer_start(app->timer, 200);
 }
 
 bool predator_scene_felica_dump_on_event(void* context, SceneManagerEvent event) {
@@ -173,13 +184,11 @@ bool predator_scene_felica_dump_on_event(void* context, SceneManagerEvent event)
 void predator_scene_felica_dump_on_exit(void* context) {
     PredatorApp* app = context;
     
-    if(app->timer) {
+    if(app && app->timer) {
         furi_timer_stop(app->timer);
         furi_timer_free(app->timer);
         app->timer = NULL;
     }
-    
-    gui_remove_view_port(app->gui, app->view_port);
     
     if(state) {
         free(state);
