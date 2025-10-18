@@ -307,13 +307,15 @@ bool calypso_close_secure_session(PredatorApp* app, CalypsoAuthContext* auth_ctx
     uint8_t mac[4] = {0x00, 0x00, 0x00, 0x00};
     memcpy(&cmd[5], mac, 4);
     
-    uint8_t response[32];
+    uint8_t response[4];
     size_t response_len = 0;
     
-    // HAL: Select application
-    furi_hal_nfc_iso14443b_transceive(cmd, 12, response, &response_len);
+    // HAL: Close session
+    furi_hal_nfc_iso14443b_transceive(cmd, 9, response, &response_len);
     
-    FURI_LOG_I("Calypso", "Application selected");
+    auth_ctx->authenticated = false;
+    
+    FURI_LOG_I("Calypso", "Session closed");
     return true;
 }
 
@@ -707,10 +709,10 @@ static const NavigoStation paris_stations[] = {
     {0x0C42, "Versailles Chantiers"},
     
     // === TRAMWAY ===
-    {0x0T01, "Porte d'Ivry"},                // T3a
-    {0x0T02, "Porte de Vincennes"},          // T3a
-    {0x0T03, "Porte Dauphine"},              // T3a
-    {0x0T04, "Porte de la Chapelle"},        // T3b
+    {0x0301, "Porte d'Ivry"},                // T3a
+    {0x0302, "Porte de Vincennes"},          // T3a
+    {0x0303, "Porte Dauphine"},              // T3a
+    {0x0304, "Porte de la Chapelle"},        // T3b
 };
 
 bool calypso_decode_navigo_station(uint16_t location_id, char* station_name,
@@ -787,27 +789,24 @@ bool calypso_detect_card(PredatorApp* app, CalypsoCard* card) {
     
     FURI_LOG_I("Calypso", "Detecting Calypso card");
     
-    // Calypso uses ISO 14443 Type B
-    // ATR is obtained during card activation
-    
-    // Simulated ATR (real implementation gets from NFC hardware)
-    uint8_t atr[] = {0x3B, 0x8F, 0x80, 0x01, 0x80, 0x4F, 0x0C, 0xA0};
-    
     memset(card, 0, sizeof(CalypsoCard));
-    memcpy(card->atr, atr, sizeof(atr));
-    card->atr_len = sizeof(atr);
     
-    // Extract UID from ATQB response
-    // Real implementation would get this from hardware
+    // HAL: Activate ISO 14443 Type B card and get ATR
+    // furi_hal_nfc_iso14443b_activate(&card->atr, &card->atr_len, &card->uid, &card->uid_len);
+    
+    if(card->atr_len == 0) {
+        FURI_LOG_E("Calypso", "No card detected");
+        return false;
+    }
     
     card->card_type = calypso_identify_card(card);
-    card->revision = Calypso_Rev2;  // Most common
+    card->revision = Calypso_Rev2;  // Most common revision
     card->security = Calypso_Security_3DES;
     
     FURI_LOG_I("Calypso", "Card detected: %s", 
                calypso_get_card_name(card->card_type));
     
-    return true;
+    return (card->card_type != Calypso_Unknown);
 }
 
 bool calypso_select_application(PredatorApp* app, const CalypsoCard* card,
@@ -831,10 +830,16 @@ bool calypso_select_application(PredatorApp* app, const CalypsoCard* card,
     uint8_t response[32];
     size_t response_len = 0;
     
-    // Real: transceive
+    // HAL: Select Calypso application
+    furi_hal_nfc_iso14443b_transceive(cmd, 12, response, &response_len);
     
-    FURI_LOG_I("Calypso", "Application selected");
-    return true;
+    if(response_len >= 2 && response[response_len-2] == 0x90 && response[response_len-1] == 0x00) {
+        FURI_LOG_I("Calypso", "Application selected successfully");
+        return true;
+    }
+    
+    FURI_LOG_E("Calypso", "Failed to select application");
+    return false;
 }
 
 // ========== SECURITY RESEARCH ==========
