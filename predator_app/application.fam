@@ -40,6 +40,10 @@ App(
         "helpers/predator_crypto_engine.c",  # PRODUCTION: Keeloq, Hitag2, AES-128
         "helpers/predator_crypto_packets.c",  # PRODUCTION: Manufacturer-specific packets
         
+        # Phase 3: Transit Cards Implementation (FeliCa & Calypso)
+        "helpers/predator_crypto_felica_impl.c",   # FeliCa: Station DB, card names, crypto
+        "helpers/predator_crypto_calypso_impl.c",  # Calypso: Station DB, card names, crypto
+        
         # Scene router
         "scenes/predator_scene.c",
 
