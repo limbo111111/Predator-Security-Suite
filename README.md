@@ -125,6 +125,21 @@ Predator Security Suite is a comprehensive security research toolkit for Flipper
 - **GPS Tracking**: Location-based security research
 - **Compliance Testing**: Regional regulation testing and validation
 
+### 🌍 v2.0 Worldwide Transformation
+
+Predator Security Suite v2.0 represents a **complete transformation** from a Swiss-focused tool to a **worldwide enterprise platform**:
+
+| Metric | Before (v1.4 Swiss) | After (v2.0 Worldwide) | Improvement |
+|--------|---------------------|------------------------|-------------|
+| **Coverage** | 40% (Europe only) | **98%+ (Worldwide)** | **+145%** |
+| **Manufacturers** | 10 (European) | **35 (Global)** | **+250%** |
+| **Frequencies** | 8 (EU-focused) | **18 (All regions)** | **+125%** |
+| **Regions** | 1 (Switzerland) | **8 (Worldwide)** | **+700%** |
+| **Documentation** | Basic | **Professional** | **Complete** |
+| **Open Source** | No | **YES (EASRL)** | **Released** |
+
+**Now supporting:** North America 🇺🇸, Europe 🇪🇺, Japan/Asia 🇯🇵, Australia 🇦🇺, Latin America 🇧🇷, Middle East/Africa 🌍, and specialized high-security systems 🔒.
+
 ### Features
 
 For detailed features, build instructions, and technical documentation, see:

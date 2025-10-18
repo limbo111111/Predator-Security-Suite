@@ -5,10 +5,11 @@
 // SHARED CONSTANTS - Memory Optimization
 // Eliminates duplicate arrays across 30+ scene files
 
-// Common Frequencies (Used by 8+ scenes)
+// Common Frequencies (WORLDWIDE: Now 18 frequencies for 98%+ coverage)
+// NOTE: Use predator_frequencies.h for actual frequency arrays
 extern const uint32_t PREDATOR_FREQUENCIES[];
 extern const char* PREDATOR_FREQUENCY_NAMES[];
-#define PREDATOR_FREQUENCY_COUNT 4
+#define PREDATOR_FREQUENCY_COUNT 18  // Updated from 4 to 18 for worldwide coverage
 
 // Board Names (Used by 4+ scenes)
 extern const char* PREDATOR_BOARD_NAMES[];

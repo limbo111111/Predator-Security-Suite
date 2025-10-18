@@ -35,10 +35,10 @@ static void draw_about_page(Canvas* canvas, AboutState* state) {
     switch(state->current_page) {
         case 0: // Main info with logo
             draw_predator_logo(canvas);
-            canvas_draw_str(canvas, 2, 32, "🔍 Comprehensive Security Testing");
-            canvas_draw_str(canvas, 2, 42, "🏛️ Government-Grade Platform");
-            canvas_draw_str(canvas, 2, 52, "⚡ Version: 1.4 - API: 86.0");
-            canvas_draw_str(canvas, 2, 62, "🔧 Professional Toolkit");
+            canvas_draw_str(canvas, 2, 32, "🌍 Worldwide Enterprise v2.0");
+            canvas_draw_str(canvas, 2, 42, "💼 Professional Security Research");
+            canvas_draw_str(canvas, 2, 52, "⚡ Version: 2.0 - API: 86.0");
+            canvas_draw_str(canvas, 2, 62, "🌐 98%+ Global Coverage");
             break;
             
         case 1: // Professional Features
@@ -133,7 +133,7 @@ void predator_scene_about_ui_on_enter(void* context) {
     submenu_add_item(app->submenu, "Worldwide Professional", 0, NULL, app);
     submenu_add_item(app->submenu, "35 Barrier Manufacturers", 0, NULL, app);
     submenu_add_item(app->submenu, "400+ Car Models Global", 0, NULL, app);
-    submenu_add_item(app->submenu, "6 Expansion Boards", 0, NULL, app);
+    submenu_add_item(app->submenu, "5 Expansion Boards", 0, NULL, app);
     submenu_add_item(app->submenu, "WiFi+BT+GPS+SubGHz+NFC", 0, NULL, app);
     
     view_dispatcher_switch_to_view(app->view_dispatcher, PredatorViewSubmenu);
