@@ -264,7 +264,7 @@ bool calypso_open_secure_session(PredatorApp* app, const CalypsoCard* card,
     
     // HAL: Read record from card
     // Real: furi_hal_nfc_iso14443b_transceive(cmd, 5, response, &response_len);
-    // Placeholder: Function not available yet
+    // STUB: Function not available yet - authentication will fail until HAL is implemented
     response_len = 0;
     
     if(response_len > 2) {
@@ -313,7 +313,7 @@ bool calypso_close_secure_session(PredatorApp* app, CalypsoAuthContext* auth_ctx
     
     // HAL: Close session
     // Real: furi_hal_nfc_iso14443b_transceive(cmd, 9, response, &response_len);
-    // Placeholder: Function not available yet
+    // STUB: Function not available yet - session will appear closed even without real transaction
     response_len = 0;
     
     auth_ctx->authenticated = false;
@@ -344,7 +344,7 @@ uint32_t calypso_read_record(PredatorApp* app, const CalypsoCard* card,
     
     // HAL: Read record from card
     // Real: furi_hal_nfc_iso14443b_transceive(cmd, 5, response, &response_len);
-    // Placeholder: Function not available yet
+    // STUB: Function not available yet - read will always fail until HAL is implemented
     response_len = 0;
     
     if(response_len > 2) {
@@ -838,7 +838,7 @@ bool calypso_select_application(PredatorApp* app, const CalypsoCard* card,
     
     // HAL: Select Calypso application
     // Real: furi_hal_nfc_iso14443b_transceive(cmd, 12, response, &response_len);
-    // Placeholder: Function not available yet
+    // STUB: Function not available yet - selection will always fail until HAL is implemented
     response_len = 0;
     
     if(response_len >= 2 && response[response_len-2] == 0x90 && response[response_len-1] == 0x00) {
