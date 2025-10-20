@@ -258,6 +258,7 @@ bool calypso_open_secure_session(PredatorApp* app, const CalypsoCard* card,
     cmd[2] = key_index;
     cmd[3] = 0x01;  // Record number
     cmd[4] = 0x04;  // Expected response length
+    UNUSED(cmd);  // Prepared for HAL implementation
     
     uint8_t response[64];
     size_t response_len = 0;
@@ -310,11 +311,12 @@ bool calypso_close_secure_session(PredatorApp* app, CalypsoAuthContext* auth_ctx
     
     uint8_t response[4];
     size_t response_len = 0;
+    UNUSED(response);  // Prepared for HAL implementation
+    UNUSED(response_len);  // Prepared for HAL implementation
     
     // HAL: Close session
     // Real: furi_hal_nfc_iso14443b_transceive(cmd, 9, response, &response_len);
     // STUB: Function not available yet - session will appear closed even without real transaction
-    response_len = 0;
     
     auth_ctx->authenticated = false;
     
@@ -338,6 +340,7 @@ uint32_t calypso_read_record(PredatorApp* app, const CalypsoCard* card,
     cmd[2] = record_number;
     cmd[3] = (file_id << 3) | 0x04;  // File ID and mode
     cmd[4] = 0x1D;  // Expected length (29 bytes typical)
+    UNUSED(cmd);  // Prepared for HAL implementation
     
     uint8_t response[64];
     size_t response_len = 0;
