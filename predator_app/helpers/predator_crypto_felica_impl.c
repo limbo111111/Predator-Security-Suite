@@ -139,6 +139,7 @@ bool felica_authenticate_mutual(PredatorApp* app, const FeliCaCard* card,
     memcpy(&cmd[2], card->idm, 8);
     cmd[10] = 0x00;  // Number of services (0 for auth)
     memcpy(&cmd[11], rr, 8);  // Reader's random
+    (void)cmd;  // Suppress unused warning until HAL is implemented
     
     uint8_t response[32];
     size_t response_len = 0;
@@ -179,6 +180,7 @@ uint32_t felica_read_without_encryption(PredatorApp* app, const FeliCaCard* card
     
     // Add block list
     memcpy(&cmd[14], block_list, block_count * 2);
+    (void)cmd;  // Suppress unused warning until HAL is implemented
     
     uint8_t response[256];
     size_t response_len = 0;
@@ -378,6 +380,7 @@ uint32_t felica_request_system_code(PredatorApp* app, const FeliCaCard* card,
     cmd[0] = 10;
     cmd[1] = FELICA_CMD_REQUEST_SYSTEM_CODE;
     memcpy(&cmd[2], card->idm, 8);
+    (void)cmd;  // Suppress unused warning until HAL is implemented
     
     uint8_t response[32];
     size_t response_len = 0;
@@ -435,12 +438,12 @@ bool felica_detect_card(PredatorApp* app, uint16_t system_code, FeliCaCard* card
     cmd[3] = (system_code >> 8) & 0xFF;
     cmd[4] = 0x01;  // Request code (system code)
     cmd[5] = 0x00;  // Time slot (0 = 1 slot)
+    (void)cmd;  // Suppress unused warning until HAL is implemented
     
     uint8_t response[32];
     size_t response_len = 0;
     
-    // HAL: Poll for FeliCa card
-    furi_hal_nfc_felica_transceive(cmd, 6, response, &response_len);
+    // Real: furi_hal_nfc_felica_transceive(cmd, 6, response, &response_len);
     
     if(response_len >= 18) {
         memset(card, 0, sizeof(FeliCaCard));
