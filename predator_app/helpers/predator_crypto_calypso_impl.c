@@ -263,7 +263,9 @@ bool calypso_open_secure_session(PredatorApp* app, const CalypsoCard* card,
     size_t response_len = 0;
     
     // HAL: Read record from card
-    furi_hal_nfc_iso14443b_transceive(cmd, 5, response, &response_len);
+    // Real: furi_hal_nfc_iso14443b_transceive(cmd, 5, response, &response_len);
+    // STUB: Function not available yet - authentication will fail until HAL is implemented
+    response_len = 0;
     
     if(response_len > 2) {
         // Extract card challenge
@@ -295,7 +297,7 @@ bool calypso_close_secure_session(PredatorApp* app, CalypsoAuthContext* auth_ctx
     FURI_LOG_I("Calypso", "Closing secure session");
     
     // Build Close Session command with MAC
-    uint8_t cmd[8];
+    uint8_t cmd[9];  // Need 9 bytes: 5 header + 4 MAC
     cmd[0] = 0x94;
     cmd[1] = CALYPSO_CMD_CLOSE_SESSION;
     cmd[2] = 0x00;
@@ -310,7 +312,9 @@ bool calypso_close_secure_session(PredatorApp* app, CalypsoAuthContext* auth_ctx
     size_t response_len = 0;
     
     // HAL: Close session
-    furi_hal_nfc_iso14443b_transceive(cmd, 9, response, &response_len);
+    // Real: furi_hal_nfc_iso14443b_transceive(cmd, 9, response, &response_len);
+    // STUB: Function not available yet - session will appear closed even without real transaction
+    response_len = 0;
     
     auth_ctx->authenticated = false;
     
@@ -339,7 +343,9 @@ uint32_t calypso_read_record(PredatorApp* app, const CalypsoCard* card,
     size_t response_len = 0;
     
     // HAL: Read record from card
-    furi_hal_nfc_iso14443b_transceive(cmd, 5, response, &response_len);
+    // Real: furi_hal_nfc_iso14443b_transceive(cmd, 5, response, &response_len);
+    // STUB: Function not available yet - read will always fail until HAL is implemented
+    response_len = 0;
     
     if(response_len > 2) {
         uint32_t data_len = response_len - 2;  // Minus status bytes
@@ -831,7 +837,9 @@ bool calypso_select_application(PredatorApp* app, const CalypsoCard* card,
     size_t response_len = 0;
     
     // HAL: Select Calypso application
-    furi_hal_nfc_iso14443b_transceive(cmd, 12, response, &response_len);
+    // Real: furi_hal_nfc_iso14443b_transceive(cmd, 12, response, &response_len);
+    // STUB: Function not available yet - selection will always fail until HAL is implemented
+    response_len = 0;
     
     if(response_len >= 2 && response[response_len-2] == 0x90 && response[response_len-1] == 0x00) {
         FURI_LOG_I("Calypso", "Application selected successfully");
