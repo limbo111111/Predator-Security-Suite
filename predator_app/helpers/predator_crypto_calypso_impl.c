@@ -258,8 +258,8 @@ bool calypso_open_secure_session(PredatorApp* app, const CalypsoCard* card,
     cmd[2] = key_index;
     cmd[3] = 0x01;  // Record number
     cmd[4] = 0x04;  // Expected response length
-    UNUSED(cmd);  // Prepared for HAL implementation
     
+    UNUSED(cmd);  // Prepared for HAL implementation
     uint8_t response[64];
     size_t response_len = 0;
     
