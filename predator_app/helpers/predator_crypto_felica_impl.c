@@ -380,8 +380,8 @@ uint32_t felica_request_system_code(PredatorApp* app, const FeliCaCard* card,
     cmd[0] = 10;
     cmd[1] = FELICA_CMD_REQUEST_SYSTEM_CODE;
     memcpy(&cmd[2], card->idm, 8);
-    UNUSED(cmd);  // Suppress unused warning until HAL is implemented
     
+    UNUSED(cmd);  // Suppress unused warning until HAL is implemented
     uint8_t response[32];
     size_t response_len = 0;
     
